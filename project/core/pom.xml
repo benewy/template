@@ -7,10 +7,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web</artifactId>
+    <artifactId>core</artifactId>
     <packaging>jar</packaging>
-
-    <name>web</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,22 +17,8 @@
     <dependencies>
         <dependency>
             <groupId>com.beneway</groupId>
-            <artifactId>basic</artifactId>
+            <artifactId>web</artifactId>
             <version>0.0.1</version>
         </dependency>
-        <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.31.0</version>
-        </dependency>
-
-        <!-- Sa-Token 整合 Redis （使用 jdk 默认序列化方式） -->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis</artifactId>
-            <version>1.31.0</version>
-        </dependency>
-
     </dependencies>
 </project>
