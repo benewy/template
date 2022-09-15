@@ -30,7 +30,6 @@ const plainTeamMembers: CoreTeam[] = [
     name: 'Elone Hoo',
     github: 'elonehoo',
     twitter: 'huchengye',
-    sponsor: 'https://opencollective.com/elonehoo',
     title: '一个狂热的开源爱好者',
     desc: 'Vite的狂热追随者',
   },
@@ -51,14 +50,12 @@ const plainTeamMembers: CoreTeam[] = [
     desc: 'simple-robot 和 generator 的作者',
   },
   {
-
-    avatar: 'https://github.com/antfu.png',
-    name: 'Anthony Fu',
-    github: 'antfu',
-    twitter: 'antfu7',
-    sponsor: 'https://github.com/sponsors/antfu',
-    title: '狂热的开源者，在 NuxtLabs 工作',
-    desc: 'Vite 和 Vue 的核心团队成员',
+    avatar: 'https://github.com/2434017367.png',
+    name: 'zhy',
+    github: '2434017367',
+    twitter: 'unknown',
+    title: '技术负责人，全栈开发人员',
+    desc: 'minio-serve-java 的作者',
   },
 ]
 
