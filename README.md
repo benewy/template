@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/logo.svg">
+  <img src="./public/logo.svg" wigth='100px' height='100px'>
 </div>
 
 可以靠这个机会把java的一些版本升级一下，由于国内的中间件断层升级比较严重，所以在编写例如 [sa-token] 和 [mybatis plus] 的之前代码务必小心。
