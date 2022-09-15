@@ -37,8 +37,8 @@ export default defineConfig({
       { icon: 'github', link: github },
     ],
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2022-PRESENT Elone Hoo',
+      message: 'Released under the GNU Lesser General Public License.',
+      copyright: 'Copyright © 2022-PRESENT 杭州融慧数据科技有限公司',
     }
   },
 })
