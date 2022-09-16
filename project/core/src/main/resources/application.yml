@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  cache:
+    type: redis
+sa-token:
+  token-name: access_token
+  # token风格
+  token-style: uuid
