@@ -10,3 +10,7 @@ sa-token:
   is-share: false
   # 是否输出操作日志
   is-log: true
+  # token 名称
+  token-name: access_token
+  # token风格
+  token-style: uuid
