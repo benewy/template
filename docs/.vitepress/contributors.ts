@@ -57,6 +57,14 @@ const plainTeamMembers: CoreTeam[] = [
     title: '技术负责人，全栈开发人员',
     desc: 'minio-serve-java 的作者',
   },
+  {
+    avatar: 'https://github.com/cjloveqhy.png',
+    name: 'cjloveqhy',
+    github: 'cjloveqhy',
+    twitter: 'unknown',
+    title: '后端开发人员',
+    desc: 'INet社区团队成员',
+  },
 ]
 
 const teamMembers = plainTeamMembers.map(tm => createLinks(tm))
