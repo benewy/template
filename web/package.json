@@ -1,0 +1,18 @@
+{
+  "name": "@beneway/ts-seven-lists-monorepo",
+  "version": "1.0.0",
+  "description": "桐庐七张清单项目",
+  "author": "杭州融慧数据科技有限公司",
+  "license": "GNU Lesser General Public",
+  "scripts": {
+  },
+  "dependencies": {
+    "vue": "^3.2.39"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.1.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vue-tsc": "^0.40.13"
+  }
+}
