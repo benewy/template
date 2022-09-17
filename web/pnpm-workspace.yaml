@@ -3,3 +3,5 @@ packages:
   - composables
   - core
   - store
+  - types
+  - util

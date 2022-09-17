@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from '~/components/demo/HelloWorld.vue'
+import HelloWorld from '@beneway/tl-seven-lists-components/src/demo/HelloWorld.vue'
 </script>
 
 <template>
