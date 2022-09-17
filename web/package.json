@@ -5,9 +5,30 @@
   "author": "杭州融慧数据科技有限公司",
   "license": "GNU Lesser General Public",
   "scripts": {
-    "dev": "pnpm -C core run dev",
-    "build": "pnpm -C core run build",
-    "preview": "pnpm -C core run preview"
+    "bootstrap": "yarn install",
+    "serve": "npm run dev",
+    "dev": "vite",
+    "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
+    "build:test": "cross-env vite build --mode test && esno ./build/script/postBuild.ts",
+    "build:no-cache": "yarn clean:cache && npm run build",
+    "report": "cross-env REPORT=true npm run build",
+    "type:check": "vue-tsc --noEmit --skipLibCheck",
+    "preview": "npm run build && vite preview",
+    "preview:dist": "vite preview",
+    "log": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
+    "clean:lib": "rimraf node_modules",
+    "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
+    "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
+    "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "test:unit": "jest",
+    "test:unit-coverage": "jest --coverage",
+    "test:gzip": "npx http-server dist --cors --gzip -c-1",
+    "test:br": "npx http-server dist --cors --brotli -c-1",
+    "reinstall": "rimraf yarn.lock && rimraf package.lock.json && rimraf node_modules && npm run bootstrap",
+    "prepare": "husky install",
+    "gen:icon": "esno ./build/generate/icon/index.ts"
   },
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
@@ -108,5 +129,12 @@
     "vite-plugin-windicss": "^1.4.12",
     "vue-eslint-parser": "^8.0.1",
     "vue-tsc": "^0.28.10"
+  },
+  "resolutions": {
+    "bin-wrapper": "npm:bin-wrapper-china",
+    "rollup": "^2.56.3"
+  },
+  "engines": {
+    "node": "^12 || >=14"
   }
 }
