@@ -35,8 +35,6 @@ import java.util.stream.Collectors;
  * @time: 18:03
  */
 @Data
-@Component
-@ConfigurationProperties(prefix = "customize.file")
 public class SysFilesUtils {
 
     /**

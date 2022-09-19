@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: basic
+mybatis-plus:
+  mapper-locations: classpath:com/beneway/basic/**/mapper/*.xml
+  type-aliases-package: com.beneway.**.entity
+  global-config:
+    banner: false
+    db-config:
+      id-type: ASSIGN_UUID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+sa-token:
+  token-name: access_token
+  token-style: tik

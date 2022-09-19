@@ -1,0 +1,6 @@
+server:
+  servlet:
+    context-path: /lists
+spring:
+  profiles:
+    active: basic,dev
