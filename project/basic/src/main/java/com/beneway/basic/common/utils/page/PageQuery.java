@@ -12,22 +12,35 @@
  * 许可证下的限制。
  */
 
-package com.beneway.core;
+package com.beneway.basic.common.utils.page;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.Data;
 
-@EnableCaching
-@EnableAspectJAutoProxy(proxyTargetClass = true) // aop切面
-@MapperScan(value = {"com.beneway.**.dao"})
-@SpringBootApplication(scanBasePackages = {"com.beneway.*"})
-public class Core {
+import java.io.Serializable;
+
+/**
+ * Create by zhy on 2022/2/28 13:52
+ *
+ * 分页查询参数类
+ */
+@Data
+public class PageQuery implements Serializable {
+
+    private int page = 1;
+
+    private int size = 10;
+
+    private Boolean isMax = false;
+
+    public Page getPageObj() {
+        int size = isMax ? Integer.MAX_VALUE : this.size;
+        Page page = new Page(this.page, size);
+        return page;
+    }
 
     public static void main(String[] args) {
-        SpringApplication.run(Core.class, args);
+        System.out.println(Integer.MAX_VALUE);
     }
 
 }

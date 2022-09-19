@@ -12,22 +12,15 @@
  * 许可证下的限制。
  */
 
-package com.beneway.core;
+package com.beneway.basic.common.mybatisplus;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-@EnableCaching
-@EnableAspectJAutoProxy(proxyTargetClass = true) // aop切面
-@MapperScan(value = {"com.beneway.**.dao"})
-@SpringBootApplication(scanBasePackages = {"com.beneway.*"})
-public class Core {
+public interface MyIService<T> extends IService<T> {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Core.class, args);
+    default boolean isExist(Wrapper<T> queryWrapper){
+        return count(queryWrapper) > 0;
     }
 
 }
