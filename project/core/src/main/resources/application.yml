@@ -3,4 +3,7 @@ server:
     context-path: /lists
 spring:
   profiles:
-    active: basic,dev
+    include:
+      - basic
+      - dev
+      - basic-dev

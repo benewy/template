@@ -1,45 +1,11 @@
 server:
-  port: 4444
+  port: 8080
 spring:
   servlet:
     multipart:
       enabled: true
       max-file-size: 50MB
       max-request-size: 100MB
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      name: tl-seven-lists
-      url: jdbc:mysql://192.168.0.128:3307/tl-seven-lists?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: Beneway2021
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 60000
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        login-username: admin
-        login-password: 123456
-      filter:
-        config:
-          enabled: true
-        stat:
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: false
-        wall:
-          config:
-            multi-statement-allow: true
   redis:
     database: 0
     host: 127.0.0.1

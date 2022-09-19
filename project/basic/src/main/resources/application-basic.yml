@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: basic
+      on-profile: "basic"
 mybatis-plus:
   mapper-locations: classpath:com/beneway/basic/**/mapper/*.xml
   type-aliases-package: com.beneway.**.entity
@@ -15,5 +15,6 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
 sa-token:
+  is-print: false
   token-name: access_token
   token-style: tik

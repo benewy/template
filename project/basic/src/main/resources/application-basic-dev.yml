@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: basic-dev
+      on-profile: "basic-dev"
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
