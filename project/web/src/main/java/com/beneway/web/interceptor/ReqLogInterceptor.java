@@ -3,9 +3,12 @@ package com.beneway.web.interceptor;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.thread.ExecutorBuilder;
 import com.beneway.basic.enums.UserTypeEnum;
+import com.beneway.basic.log.entity.logReq.LogReq;
+import com.beneway.basic.log.service.LogReqService;
 import com.beneway.basic.utils.AppUtils;
 import com.beneway.basic.utils.IPUtil;
 import com.beneway.basic.utils.SpringContextHolder;
+import com.beneway.web.exception.AutoExceptionInfo;
 import com.beneway.web.interceptor.service.LoginUserService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.DisposableBean;
@@ -109,15 +112,15 @@ public class ReqLogInterceptor implements HandlerInterceptor, DisposableBean {
       String finalParams = params;
       String finalBody = body;
       String finalLoginUserId = loginUserId;
-      MyExceptionInfo myExceptionInfo = MyExceptionInfo.getExceptionInfo();
+      AutoExceptionInfo autoExceptionInfo = AutoExceptionInfo.getExceptionInfo();
       Future<?> submit = executor.submit(() -> {
         // 日志封装
         String logs = String.format("用户：%s，uri：%s，method：%s，ip：%s，执行耗时：%dms，params：%s, body：%s", username, requestURI, method, ip, duration, finalParams, finalBody);
         // 查看是否有异常信息
         boolean isError = false;
-        if (myExceptionInfo != null) {
-          logs = "errCode：" + myExceptionInfo.getCode() + "，errMsg：" + myExceptionInfo.getMsg() + "，" + logs;
-          log.warning(logs, myExceptionInfo.getE());
+        if (autoExceptionInfo != null) {
+          logs = "errCode：" + autoExceptionInfo.getCode() + "，errMsg：" + autoExceptionInfo.getMsg() + "，" + logs;
+          log.warning(logs + autoExceptionInfo.getE());
           isError = true;
         } else {
           log.info(logs);
@@ -136,7 +139,7 @@ public class ReqLogInterceptor implements HandlerInterceptor, DisposableBean {
         logReq.setDuration((int)duration);
         logReq.setIsError(isError);
         if (isError) {
-          Throwable throwable = myExceptionInfo.getE();
+          Throwable throwable = autoExceptionInfo.getE();
           if (throwable != null) {
             PrintWriter pw = null;
             try {
@@ -152,10 +155,10 @@ public class ReqLogInterceptor implements HandlerInterceptor, DisposableBean {
               }
             }
           }
-          int code = myExceptionInfo.getCode();
+          int code = autoExceptionInfo.getCode();
           String errorCode = String.valueOf(code);
           logReq.setErrorCode(errorCode);
-          logReq.setErrorMsg(myExceptionInfo.getMsg());
+          logReq.setErrorMsg(autoExceptionInfo.getMsg());
         }
         logReq.setModuleType(appUtils.getModuleType());
         logReq.setCreateTime(new Date());

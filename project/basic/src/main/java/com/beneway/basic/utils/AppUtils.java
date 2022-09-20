@@ -3,11 +3,15 @@ package com.beneway.basic.utils;
 import com.beneway.basic.config.AppConfig;
 import com.beneway.basic.enums.UserTypeEnum;
 import com.beneway.basic.exception.RRException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.beneway.basic.utils.login_user.LoginUserUtils;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
+@Component
 public class AppUtils {
 
-  @Autowired
+  @Resource
   private AppConfig appConfig;
 
   /**
@@ -42,14 +46,6 @@ public class AppUtils {
    */
   public String getModuleType() {
     return appConfig.getModuleType();
-  }
-
-  /**
-   * 获取是否为正式环境
-   * @return
-   */
-  public boolean isProd() {
-    return "prod".equals(appConfig.getActive());
   }
 
 }

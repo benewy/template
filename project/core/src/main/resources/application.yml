@@ -7,3 +7,6 @@ spring:
       - basic
       - dev
       - basic-dev
+appConfig:
+  moduleType: admin
+  excludePaths: /admin_sys_user/login,/admin_sys_user/qrLogin,/login/getLoginVerifyImg

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beneway.basic.system.sys_user.dao.SysUserDao">
+  <resultMap id="res" type="com.beneway.basic.system.sys_user.entity.po.SysUser" />
+  <select id="queryPage" resultType="com.beneway.basic.system.sys_user.entity.vo.SysUserVo">
+    select
+    su.*
+    from sys_user as su
+    <where>
+      <include refid="del"></include>
+      and su.id in (select suu.sys_user_id from sys_user_unit as suu where suu.sys_unit_id in
+      <foreach collection="params.unitIdList" item="unitId" open="(" separator="," close=")">
+        #{unitId}
+      </foreach>
+      )
+      <if test="params.username != null and params.username != ''">
+        and su.username like concat('%', #{params.username}, '%')
+      </if>
+    </where>
+    order by su.create_time, su.id
+  </select>
+  <select id="queryList" resultType="com.beneway.basic.system.sys_user.entity.po.SysUser">
+    select
+    su.*
+    from sys_user as su
+    <where>
+      <include refid="del"></include>
+      <if test="unitIdList != null and unitIdList.size() > 0">
+        and su.id in (select suu.sys_user_id from sys_user_unit as suu where suu.sys_unit_id in
+        <foreach collection="unitIdList" item="unitId" open="(" separator="," close=")">
+          #{unitId}
+        </foreach>
+        )
+      </if>
+      <if test="tagIdList != null and tagIdList.size() > 0">
+        and su.id in (select stm.ass_id from sys_tag_map as stm where stm.sys_tag_id in
+        <foreach collection="tagIdList" item="tagId" open="(" separator="," close=")">
+          #{tagId}
+        </foreach>
+        )
+      </if>
+      <if test="userIdList != null and userIdList.size() > 0">
+        and su.id in
+        <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+          #{userId}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <sql id="del">
+    AND su.deleted = 0 and su.id != '1'
+  </sql>
+
+
+</mapper>

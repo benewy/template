@@ -1,7 +1,9 @@
 package com.beneway.web.config;
 
 import com.beneway.basic.config.AppConfig;
+import com.beneway.web.interceptor.AuthInterceptor;
 import com.beneway.web.interceptor.ReqLogInterceptor;
+import com.beneway.web.xss.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
