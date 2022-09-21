@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beneway.basic.system.sys_message.dao.SysMessageDao">
+  <resultMap id="res" type="com.beneway.basic.system.sys_message.po.SysMessage" />
+
+  <select id="queryPageMessage" resultType="com.beneway.basic.system.sys_message.vo.SysMessageVo">
+    select
+      m.*,
+      c.title
+    from sys_message as m
+    LEFT JOIN problem as c ON m.problem_id = c.id
+    where m.look_user = #{param.lookUser}
+    and m.user_type = #{param.userType}
+    order by m.create_time desc
+  </select>
+
+</mapper>

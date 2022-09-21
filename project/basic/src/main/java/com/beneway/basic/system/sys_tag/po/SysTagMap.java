@@ -3,7 +3,7 @@ package com.beneway.basic.system.sys_tag.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.beneway.common.system.entity.sys_tag.enums.SysTagTypeEnum;
+import com.beneway.basic.system.sys_tag.enums.SysTagTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

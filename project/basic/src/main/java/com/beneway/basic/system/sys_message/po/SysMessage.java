@@ -3,7 +3,7 @@ package com.beneway.basic.system.sys_message.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.beneway.common.common.enums.UserTypeEnum;
+import com.beneway.basic.enums.UserTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
