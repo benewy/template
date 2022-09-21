@@ -2,6 +2,7 @@ package com.beneway.basic.system.sys_tag.service;
 
 import com.beneway.basic.mybatisplus.MyIService;
 import com.beneway.basic.system.sys_tag.enums.SysTagTypeEnum;
+import com.beneway.basic.system.sys_tag.po.SysTag;
 import com.beneway.basic.system.sys_tag.po.SysTagMap;
 
 import java.util.List;

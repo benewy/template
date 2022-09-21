@@ -8,11 +8,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.beneway.basic.enums.UserTypeEnum;
 import com.beneway.basic.system.sys_message.dao.SysMessageDao;
 import com.beneway.basic.system.sys_message.fo.SysMessageQueryFo;
+import com.beneway.basic.system.sys_message.modules.MessageModuleUtils;
 import com.beneway.basic.system.sys_message.po.SysMessage;
 import com.beneway.basic.system.sys_message.service.SysMessageService;
 import com.beneway.basic.system.sys_message.vo.SysMessageVo;
 import com.beneway.basic.system.sys_user.entity.po.SysUser;
 import com.beneway.basic.system.sys_user.service.SysUserService;
+import com.beneway.basic.utils.dd.ZWDDPhoneUtils;
+import com.beneway.basic.utils.dd.entity.msg.Card;
 import com.beneway.basic.utils.page.PageUtils;
 import org.springframework.stereotype.Service;
 

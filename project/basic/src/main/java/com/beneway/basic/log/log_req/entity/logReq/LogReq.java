@@ -1,4 +1,4 @@
-package com.beneway.basic.log.entity.logReq;
+package com.beneway.basic.log.log_req.entity.logReq;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

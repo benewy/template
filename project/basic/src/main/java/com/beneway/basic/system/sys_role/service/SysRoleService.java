@@ -1,18 +1,12 @@
 package com.beneway.basic.system.sys_role.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.beneway.basic.mybatisplus.MyIService;
 import com.beneway.basic.system.sys_role.enums.SysRoleTypeEnum;
 import com.beneway.basic.system.sys_role.fo.SysRoleFo;
 import com.beneway.basic.system.sys_role.fo.SysRolePageQueryFo;
 import com.beneway.basic.system.sys_role.po.SysRole;
 import com.beneway.basic.system.sys_role.vo.SysRoleVo;
-import com.beneway.common.common.mybatisplus.MyIService;
-import com.beneway.common.common.result.Result;
-import com.beneway.common.system.entity.sys_role.SysRole;
-import com.beneway.common.system.entity.sys_role.enums.SysRoleTypeEnum;
-import com.beneway.common.system.entity.sys_role.fo.SysRoleFo;
-import com.beneway.common.system.entity.sys_role.fo.SysRolePageQueryFo;
-import com.beneway.common.system.entity.sys_role.vo.SysRoleVo;
 import com.restful.Result;
 
 import java.util.List;

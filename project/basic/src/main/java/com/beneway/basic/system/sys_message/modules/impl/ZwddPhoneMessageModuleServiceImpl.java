@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.beneway.basic.system.sys_message.modules.MessageModuleService;
 import com.beneway.basic.system.sys_user.entity.po.SysUser;
 import com.beneway.basic.system.sys_user.service.SysUserService;
+import com.beneway.basic.utils.dd.ZWDDPhoneUtils;
+import com.beneway.basic.utils.dd.entity.msg.Card;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

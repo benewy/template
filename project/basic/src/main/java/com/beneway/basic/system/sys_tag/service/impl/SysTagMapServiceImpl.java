@@ -8,16 +8,10 @@ import com.beneway.basic.system.sys_tag.po.SysTag;
 import com.beneway.basic.system.sys_tag.po.SysTagMap;
 import com.beneway.basic.system.sys_tag.service.SysTagMapService;
 import com.beneway.basic.system.sys_tag.service.SysTagService;
-import com.beneway.common.system.dao.SysTagMapDao;
-import com.beneway.common.system.entity.sys_tag.SysTag;
-import com.beneway.common.system.entity.sys_tag.SysTagMap;
-import com.beneway.common.system.entity.sys_tag.enums.SysTagTypeEnum;
-import com.beneway.common.system.service.sys_tag.SysTagMapService;
-import com.beneway.common.system.service.sys_tag.SysTagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -33,10 +27,10 @@ import java.util.stream.Collectors;
 @Service("sysTagMapService")
 public class SysTagMapServiceImpl extends ServiceImpl<SysTagMapDao, SysTagMap> implements SysTagMapService {
 
-    @Autowired
+    @Resource
     private SysTagMapDao sysTagMapDao;
 
-    @Autowired
+    @Resource
     private SysTagService sysTagService;
 
     @Transactional(rollbackFor = Exception.class)
@@ -80,8 +74,7 @@ public class SysTagMapServiceImpl extends ServiceImpl<SysTagMapDao, SysTagMap> i
     @Override
     public List<SysTag> getListByAssId(String assId, SysTagTypeEnum sysTagTypeEnum) {
         List<Integer> tagIdList = getIdListByAssId(assId, sysTagTypeEnum);
-        List<SysTag> tagList = sysTagService.listByIds(tagIdList);
-        return tagList;
+      return sysTagService.listByIds(tagIdList);
     }
 
     @Override
