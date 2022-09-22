@@ -2,10 +2,31 @@
   <img src="./public/logo.svg" wigth='100px' height='100px'>
 </div>
 
-可以靠这个机会把java的一些版本升级一下，由于国内的中间件断层升级比较严重，所以在编写例如 [sa-token] 和 [mybatis plus] 的之前代码务必小心。
+<div align="center">
+杭州融慧科技数据有限公司的项目模板
+</div>
 
-还有一些通用数据表的使用也记录在案，先不涉及 七张清单项目，只考虑通用的部分，成为模板，日后只需要维护该模板就可以了！
+## 特性
 
-SpringBoot 的版本为 2.7.3 配置将会产生一些变化，因为要去迎接 SpringBoot 3。
+- ⚡️ [pnpm](https://pnpm.io),[vite 3](https://github.com/vitejs/vite),[vue 3](https://github.com/vuejs/core),[ESBuild](https://github.com/evanw/esbuild) - 就是快
+- 🍍 [使用 Pinia 的状态管理](https://pinia.vuejs.org)
+- 🔥 使用 [新的 `<script setup>` 语法](https://github.com/vuejs/rfcs/pull/227)
+- 🤙🏻 默认开启 [响应性语法糖](https://vuejs.org/guide/extras/reactivity-transform.html)
+- 🦾 [SpringBoot 2.7.3](https://github.com/spring-projects/spring-boot) - 最先进的 SpringBoot 版本。
 
-JDK版本为 11， 因为过高和 Spring 的兼容度不高。由于是公司项目无法贸然的选择 Spring 6 和 SpringBoot3。在迁移 [application.yml] 的时候也需要注意版本问题。
+## 预配置
+
+### UI框架
+
+- [Ant Design Vue](https://2x.antdv.com/docs/vue/migration-v2-cn) - 提炼自企业级中后台产品的交互语言和视觉风格。
+
+### Icons
+
+- [@ant-design/icons-vue](https://2x.antdv.com/components/icon-cn) - 使用任意的图标。
+
+## 插件
+
+- [MyBatis](https://github.com/mybatis/mybatis-3),[MyBatis plus](https://github.com/baomidou/mybatis-plus) - 自定义 SQL、存储过程以及高级映射的持久层框架。
+- [sa Token](https://github.com/dromara/Sa-Token) - 一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！
+- [restful return](https://github.com/elonehoo/restful-return) - 浏览器支持基于 Spring Boot 的返回值类型。
+- [lombok](https://github.com/projectlombok/lombok) - Java 编程语言的非常辛辣的补充。
