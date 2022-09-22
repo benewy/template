@@ -1,0 +1,53 @@
+spring:
+  config:
+    activate:
+      on-profile: "basic-dev"
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      name: tl-seven-lists
+      url: jdbc:mysql://192.168.0.128:3307/tl-seven-lists?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: Beneway2021
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: 123456
+      filter:
+        config:
+          enabled: true
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+# 钉钉配置信息
+dd-config:
+  domainname: openplatform-pro.ding.zj.gov.cn
+  tenantId: 196729
+  pc:
+    key:
+    secret:
+    appId:
+  qrcode:
+    key: zsht-ydjr_dingoa-cab47knRJraym
+    secret: ht6X4YAUMHIwwDX0G0E23A4rwTNtKA71HL5vJ25k
+  phone:
+    key: zsht-m15L07V1tCqlak9kfgS3QNfIj
+    secret: ish1fmuCeotCs6V99H2j4AUIeDI0COD5Ov43n5R2
+    appId:

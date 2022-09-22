@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beneway.basic.system.sys_tag.dao.SysTagDao">
+    <resultMap id="res" type="com.beneway.basic.system.sys_tag.po.SysTag" />
+
+    <select id="queryPage" resultType="com.beneway.basic.system.sys_tag.vo.SysTagVo">
+        select * from sys_tag
+    </select>
+
+</mapper>
