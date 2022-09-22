@@ -21,45 +21,59 @@ package com.beneway.basic.utils.sys_files;
  */
 public enum FilePathEnum {
 
-    /**
-     * 文件存放地址
-     */
-    FILES("files", true),
-    /**
-     * 模板文档文件夹
-     */
-    TEMPLATE("template", true),
+  /**
+   * 文件存放地址
+   */
+  FILES("files", true),
+  /**
+   * 临时文件存放地址
+   */
+  INTERIM("interim", true),
+  /**
+   * 模板文件存放地址
+   */
+  TEMPLATE("template", true),
+  /**
+   * 水印PDF存放地址
+   */
+  WATERMARK("watermark", true),
+  /**
+   * 水印PNG存放地址
+   */
+  WATERPNG("water.png", false),
+  /**
+   * 二维码文件夹
+   */
+  LOGO("images/logo.png", false),
+  /**
+   * 驾驶舱数据
+   */
+  VIEWJSON("viewJson", true),
+  /**
+   * 二维码文件夹
+   */
+  CODE("code", true);
 
-    LOGO("images/logo.png", false),
+  /**
+   * 路径
+   */
+  private final String path;
 
-    /**
-     * 临时文件存放地址
-     */
-    INTERIM("interim", true),
+  /**
+   * 是否为文件夹
+   */
+  private final boolean isFolder;
 
-    CODE("code", true);
+  FilePathEnum(String path, boolean isFolder) {
+    this.path = path;
+    this.isFolder = isFolder;
+  }
 
+  public String getPath() {
+    return path;
+  }
 
-    /**
-     * 路径
-     */
-    private final String path;
-
-    /**
-     * 是否为文件夹
-     */
-    private final boolean isFolder;
-
-    FilePathEnum(String path, boolean isFolder) {
-        this.path = path;
-        this.isFolder = isFolder;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public boolean isFolder() {
-        return isFolder;
-    }
+  public boolean isFolder() {
+    return isFolder;
+  }
 }

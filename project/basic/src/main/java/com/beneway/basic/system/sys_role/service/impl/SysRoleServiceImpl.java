@@ -52,9 +52,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRole> impleme
     private SysUserRoleService sysUserRoleService;
 
     @Resource
-    private SysUserService sysUserService;
-
-    @Resource
     private SysTagMapService sysTagMapService;
 
     @Transactional(rollbackFor = Exception.class)
