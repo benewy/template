@@ -1,6 +1,6 @@
-export const name = '七张清单'
-export const shortName = '七张清单'
-export const description = '七张清单'
+export const name = '项目模板'
+export const shortName = '项目模板'
+export const description = '项目模板'
 
 /* CDN fonts and styles */
 export const googleapis = 'https://fonts.googleapis.com'

@@ -39,6 +39,49 @@ export default defineConfig({
     footer: {
       message: 'Released under the GNU Lesser General Public License.',
       copyright: 'Copyright © 2022-PRESENT 杭州融惠数据科技有限公司',
+    },
+    nav: [
+      { text: '指引', link: '/guide/' },
+      { text: '工具', link: '/composable/event/mouse' },
+      {
+        text: `v${version}`,
+        items: [
+          {
+            text: '版本发布',
+            link: releases,
+          },
+        ],
+      },
+    ],
+    sidebar: {
+      '/':[
+        {
+          text:'指引',
+          items:[
+            {
+              text:'为什么会有这个项目？',
+              link:'/guide/why'
+            },
+            {
+              text:'开始',
+              link:'/guide/'
+            },
+            {
+              text:'特点',
+              link:'/guide/features'
+            },
+          ]
+        },
+        {
+          text:'前端',
+          items:[
+            {
+              text: '前端介绍',
+              link: '/vue/'
+            }
+          ]
+        }
+      ]
     }
   },
 })

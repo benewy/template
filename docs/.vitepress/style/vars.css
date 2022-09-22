@@ -6,10 +6,11 @@
 :root {
   --vp-c-brand: #646cff;
   --vp-c-brand-light: #747bff;
-  --vp-c-brand-lighter: #ffffff;
+  --vp-c-brand-lighter: #9499ff;
   --vp-c-brand-lightest: #bcc0ff;
   --vp-c-brand-dark: #535bf2;
   --vp-c-brand-darker: #454ce1;
+  --vp-code-block-bg: rgba(125,125,125,0.04);
   --vp-c-brand-dimm: rgba(100, 108, 255, 0.08);
 }
 
@@ -72,6 +73,7 @@
 }
 
 .dark {
+  --vp-code-block-bg: rgba(0,0,0,0.2);
   --vp-custom-block-tip-border: var(--vp-c-brand);
   --vp-custom-block-tip-text: var(--vp-c-brand-lightest);
   --vp-custom-block-tip-bg: var(--vp-c-brand-dimm);

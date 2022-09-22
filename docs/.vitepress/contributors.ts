@@ -65,6 +65,46 @@ const plainTeamMembers: CoreTeam[] = [
     title: '后端开发人员',
     desc: 'INet社区团队成员',
   },
+  {
+    avatar: 'https://github.com/wkx160312746.png',
+    name: 'Fenta',
+    github: 'wkx160312746',
+    twitter: 'unknown',
+    title: '全栈开发人员',
+    desc: '给予了很多好创意',
+  },
+  {
+    avatar: 'https://github.com/011011100.png',
+    name: 'Li-Zhuohan',
+    github: '011011100',
+    twitter: 'unknown',
+    title: '开源开发者',
+    desc: 'INet社区的核心团队成员',
+  },
+  {
+    avatar: 'https://github.com/qiuzhe-top.png',
+    name: '秋哲',
+    github: 'qiuzhe-top',
+    twitter: 'unknown',
+    title: '非常自律的程序员',
+    desc: 'ChileCat 的创建者/项目负责人',
+  },
+  {
+    avatar: 'https://github.com/yhz2490200610.png',
+    name: 'yhz2490200610',
+    github: 'yhz2490200610',
+    twitter: 'unknown',
+    title: '全栈开发人员',
+    desc: '热爱古风和游戏的程序员',
+  },
+  {
+    avatar: 'https://github.com/Anrink.png',
+    name: 'Anrink',
+    github: 'Anrink',
+    twitter: 'unknown',
+    title: '全栈开发人员',
+    desc: '游戏超级厉害的程序员',
+  },
 ]
 
 const teamMembers = plainTeamMembers.map(tm => createLinks(tm))
