@@ -34,3 +34,7 @@
 - [Pinia](https://github.com/vuejs/pinia) - 直接的, 类型安全的, 使用 Composition api 的轻便灵活的 Vue 状态管理
 - [VueUse](https://github.com/vueuse/vueuse) - 实用的 Composition API 工具合集
 - [Windicss](https://github.com/windicss/windicss) - 下一代实用程序优先的 CSS 框架。
+
+## License
+
+[GNU Lesser General Public](./LICENSE) License © 2022 杭州融慧科技数据有限公司
