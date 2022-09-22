@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 前端模块的开始
 
 ::: warning 提示
@@ -32,4 +36,11 @@ git clone git@github.com:elonehoo/tl-serve-list.git
 
 ## 安装
 
+### 安装 Node.js
+
+如果您电脑未安装 [Node.js](https://nodejs.org/zh-cn/) ，请安装它。
+
+### 安装 pnpm
+
+务必使用 [pnpm](https://pnpm.io/zh/) 进行安装，如果没安装 [pnpm](https://pnpm.io/zh/) 可以参考文档进行[安装](https://pnpm.io/zh/installation#%E9%80%9A%E8%BF%87-npm-%E5%AE%89%E8%A3%85)
 

@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 特点
 
 <FeaturesList class="!gap-1 text-lg" />
