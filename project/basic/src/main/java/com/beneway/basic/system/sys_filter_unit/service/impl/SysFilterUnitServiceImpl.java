@@ -62,10 +62,10 @@ public class SysFilterUnitServiceImpl implements SysFilterUnitService {
 
             // 封装数据
             String unitData = sysFilterUnitVo.getUnitData();
-            List<Integer> idList = Arrays.stream(StrUtil.split(unitData, ","))
+            List<Integer> idList = Arrays.stream((String[])StrUtil.split(unitData, ",").toArray())
                     .map(Integer::valueOf)
                     .collect(Collectors.toList());
-            if (SysFilterUnitModeEnum.UNIT_LIST.equals(unitMode)
+          if (SysFilterUnitModeEnum.UNIT_LIST.equals(unitMode)
                 || SysFilterUnitModeEnum.UNIT_AREA.equals(unitMode)) {
                 sysFilterUnitVo.setUnitIdList(idList);
             } else if (SysFilterUnitModeEnum.UNIT_TAG.equals(unitMode)) {
@@ -113,14 +113,14 @@ public class SysFilterUnitServiceImpl implements SysFilterUnitService {
     public Set<Integer> getUnitIdSet(SysFilterUnitModeEnum unitModeEnum, String unitData) {
         Set<Integer> parentUnitIdList = new HashSet<>();
         if (SysFilterUnitModeEnum.UNIT_TAG.equals(unitModeEnum)) {
-            List<Integer> tagIdList = Arrays.stream(StrUtil.split(unitData, ","))
+            List<Integer> tagIdList = Arrays.stream((String[])StrUtil.split(unitData, ",").toArray())
                    .map(Integer::valueOf)
                    .collect(Collectors.toList());
             Set<String> idList = sysTagMapService.getAssIdSetByTagIdList(tagIdList);
             Set<Integer> collect = idList.stream().map(Integer::valueOf).collect(Collectors.toSet());
             return collect;
         } else if (SysFilterUnitModeEnum.UNIT_LIST.equals(unitModeEnum)) {
-            Set<Integer> unitIdList = Arrays.stream(StrUtil.split(unitData, ","))
+            Set<Integer> unitIdList = Arrays.stream((String[])StrUtil.split(unitData, ",").toArray())
                    .map(Integer::valueOf)
                    .collect(Collectors.toSet());
             parentUnitIdList.addAll(unitIdList);
@@ -139,7 +139,7 @@ public class SysFilterUnitServiceImpl implements SysFilterUnitService {
             Integer areaUnitId = LoginUserUtils.getCurrentAreaId();
             Set<Integer> unitIdSet = sysUnitService.getAreaUnderIdList(areaUnitId);
 
-            List<Integer> tagIdList = Arrays.stream(StrUtil.split(unitData, ","))
+            List<Integer> tagIdList = Arrays.stream((String[])StrUtil.split(unitData, ",").toArray())
                     .map(Integer::valueOf)
                     .collect(Collectors.toList());
             Set<String> tagUnitidSet = sysTagMapService.getAssIdSetByTagIdList(tagIdList);

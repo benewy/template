@@ -78,7 +78,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
             SysFilterUnitModeEnum unitMode = sysFilterUserVo.getUnitMode();
             String unitData = sysFilterUserVo.getUnitData();
 
-            List<Integer> collect = Arrays.stream(StrUtil.split(unitData, ","))
+            List<Integer> collect = Arrays.stream((String[])StrUtil.split(unitData, ",").toArray())
                     .map(Integer::valueOf)
                     .collect(Collectors.toList());
 
@@ -102,7 +102,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
             SysFilterUserModeEnum userMode = sysFilterUserVo.getUserMode();
             String userData = sysFilterUserVo.getUserData();
 
-            List<Integer> collect = Arrays.stream(StrUtil.split(userData, ","))
+            List<Integer> collect = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                     .map(Integer::valueOf)
                     .collect(Collectors.toList());
 
@@ -169,13 +169,13 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
         if (SysFilterUserTypeEnum.USER.equals(type)) {
             String userData = sysFilterUser.getUserData();
             if (SysFilterUserModeEnum.USER_TAG.equals(userMode)) {
-                List<Integer> tagIdList = Arrays.stream(StrUtil.split(userData, ","))
+                List<Integer> tagIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                         .map(Integer::valueOf)
                         .collect(Collectors.toList());
                 Set<String> userIdList = sysTagMapService.getAssIdSetByTagIdList(tagIdList);
                 return userIdList;
             } else {
-                Set<String> userIdList = Arrays.stream(StrUtil.split(userData, ","))
+                Set<String> userIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                         .collect(Collectors.toSet());
                 return userIdList;
             }
@@ -188,7 +188,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
                 return collect;
             } else {
                 String userData = sysFilterUser.getUserData();
-                List<Integer> tagIdList = Arrays.stream(StrUtil.split(userData, ","))
+                List<Integer> tagIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                         .map(Integer::valueOf)
                         .collect(Collectors.toList());
                 Set<String> userIdList = sysTagMapService.getAssIdSetByTagIdList(tagIdList);
@@ -220,7 +220,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
         }
 
         String userData = sysFilterUser.getUserData();
-        List<Integer> tagIdList = Arrays.stream(StrUtil.split(userData, ","))
+        List<Integer> tagIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
         Set<String> userIdList = sysTagMapService.getAssIdSetByTagIdList(tagIdList);
@@ -299,11 +299,11 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
         String userData = sysFilterUser.getUserData();
         if (StrUtil.isNotEmpty(userData)) {
             if (SysFilterUserModeEnum.USER_TAG.equals(userMode)) {
-                userTagIdList = Arrays.stream(StrUtil.split(userData, ","))
+                userTagIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                         .map(Integer::parseInt)
                         .collect(Collectors.toList());
             } else if (SysFilterUserModeEnum.USER_LIST.equals(userMode)) {
-                userIdList = Arrays.stream(StrUtil.split(userData, ","))
+                userIdList = Arrays.stream((String[])StrUtil.split(userData, ",").toArray())
                         .collect(Collectors.toList());
             }
         }
@@ -333,7 +333,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
     @Override
     public List<SysUser> getUserList(String userIds) {
         if (StrUtil.isNotEmpty(userIds)) {
-            List<String> userIdList = Arrays.asList(StrUtil.split(userIds, ","));
+            List<String> userIdList = StrUtil.split(userIds, ",");
             List<SysUser> userList = sysUserService.queryList(null, null, userIdList);
             return userList;
         } else {

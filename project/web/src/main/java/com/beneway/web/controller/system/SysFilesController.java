@@ -7,6 +7,7 @@ import com.beneway.basic.system.sys_files.po.SysFiles;
 import com.beneway.basic.system.sys_files.service.SysFilesService;
 import com.beneway.basic.utils.file.FileRuntimeException;
 import com.beneway.basic.utils.file.FileUtil;
+import com.beneway.basic.utils.office.WordUtils;
 import com.beneway.basic.utils.sys_files.FilePathEnum;
 import com.beneway.basic.utils.sys_files.FileTypeEnum;
 import com.beneway.basic.utils.sys_files.SysFilesUtils;
@@ -58,7 +59,7 @@ public class SysFilesController {
             String suffix = "."+split[split.length - 1].toLowerCase();
             // 判断文件类型是否在白名单中
             if (FileTypeEnum.isNotExistFileType(suffix)){
-                return Result.Err("该文件类型不允许上传");
+                return Result.internalServerError("该文件类型不允许上传");
             }
 
             // 封装文件地址
