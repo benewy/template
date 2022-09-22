@@ -27,6 +27,10 @@
 ## 插件
 
 - [MyBatis](https://github.com/mybatis/mybatis-3),[MyBatis plus](https://github.com/baomidou/mybatis-plus) - 自定义 SQL、存储过程以及高级映射的持久层框架。
-- [sa Token](https://github.com/dromara/Sa-Token) - 一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！
-- [restful return](https://github.com/elonehoo/restful-return) - 浏览器支持基于 Spring Boot 的返回值类型。
-- [lombok](https://github.com/projectlombok/lombok) - Java 编程语言的非常辛辣的补充。
+- [Sa Token](https://github.com/dromara/Sa-Token) - 一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！
+- [Restful Return](https://github.com/elonehoo/restful-return) - 浏览器支持基于 Spring Boot 的返回值类型。
+- [Lombok](https://github.com/projectlombok/lombok) - Java 编程语言的非常辛辣的补充。
+- [Vue Router](https://github.com/vuejs/router) - Vue.js 的官方路由
+- [Pinia](https://github.com/vuejs/pinia) - 直接的, 类型安全的, 使用 Composition api 的轻便灵活的 Vue 状态管理
+- [VueUse](https://github.com/vueuse/vueuse) - 实用的 Composition API 工具合集
+- [Windicss](https://github.com/windicss/windicss) - 下一代实用程序优先的 CSS 框架。
