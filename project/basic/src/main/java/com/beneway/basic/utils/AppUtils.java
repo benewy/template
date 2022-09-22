@@ -48,4 +48,13 @@ public class AppUtils {
     return appConfig.getModuleType();
   }
 
+  public Boolean isProd(){
+    for (String active : appConfig.getActives()) {
+      if ("prod".equals(active)){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

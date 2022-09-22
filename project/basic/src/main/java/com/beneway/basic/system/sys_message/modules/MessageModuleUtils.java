@@ -10,6 +10,7 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -26,7 +27,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Component("messageModuleUtils")
 public class MessageModuleUtils implements DisposableBean {
 
-    @Autowired
+    @Resource
     private AppUtils appUtils;
 
     /**

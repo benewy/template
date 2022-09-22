@@ -22,11 +22,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
+    @Value("${spring.profiles.include}")
+    private String[] actives;
+
     @Value("${appConfig.excludePaths}")
     private String[] excludePaths;
 
     @Value("${appConfig.moduleType}")
     private String moduleType;
+
+    public void setActive(String[] actives) {
+      if (this.actives == null){
+        this.actives = actives;
+      }
+    }
 
     public void setExcludePaths(String[] excludePaths) {
         if (this.excludePaths == null) {

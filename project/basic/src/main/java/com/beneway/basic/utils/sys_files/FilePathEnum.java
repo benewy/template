@@ -29,10 +29,16 @@ public enum FilePathEnum {
      * 模板文档文件夹
      */
     TEMPLATE("template", true),
+
+    LOGO("images/logo.png", false),
+
     /**
      * 临时文件存放地址
      */
-    INTERIM("interim", true);
+    INTERIM("interim", true),
+
+    CODE("code", true);
+
 
     /**
      * 路径
