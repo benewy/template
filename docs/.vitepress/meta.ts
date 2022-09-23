@@ -1,4 +1,4 @@
-export const name = '项目模板'
+export const name = '杭州融慧数据科技有限公司'
 export const shortName = '项目模板'
 export const description = '项目模板'
 
