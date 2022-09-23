@@ -1,6 +1,5 @@
 # 目录说明
-```markdown
-
+```shell
 .
 ├── build # 打包脚本相关
 │   ├── config # 配置文件

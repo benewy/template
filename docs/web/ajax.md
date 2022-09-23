@@ -152,7 +152,7 @@ axios 请求封装存放于 [src/utils/http/axios](https://github.com/elonehoo/t
 
 除 `index.ts` 文件内容需要根据项目自行修改外，其余文件无需修改
 
-```markdown
+```shell
 ├── Axios.ts // axios实例
 ├── axiosCancel.ts // axiosCancel实例，取消重复请求
 ├── axiosTransform.ts // 数据转换类

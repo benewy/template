@@ -110,6 +110,22 @@ export default defineConfig({
               text: '联调配置',
               link: '/web/ajax'
             },
+            {
+              text: '组件注册',
+              link: '/web/component'
+            },
+            {
+              text: '样式',
+              link: '/web/design'
+            },
+            {
+              text: '外部模块',
+              link: '/web/external'
+            },
+            {
+              text: '构建&部署',
+              link: '/web/deploy'
+            },
           ]
         }
       ]
