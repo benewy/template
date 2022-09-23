@@ -42,7 +42,10 @@ export default defineConfig({
     },
     nav: [
       { text: '指引', link: '/guide/' },
-      { text: '工具', link: '/composable/event/mouse' },
+      { text: '前端', link: '/web/' },
+      { text: '前端组件', link: '/components/' },
+      { text: '后端', link: '/app/' },
+      { text: '后端工具', link: '/utils/' },
       {
         text: `v${version}`,
         items: [
@@ -94,6 +97,18 @@ export default defineConfig({
             {
               text: '路由配置',
               link: '/web/router'
+            },
+            {
+              text: '菜单配置',
+              link: '/web/menu'
+            },
+            {
+              text: '权限配置',
+              link: '/web/role'
+            },
+            {
+              text: '联调配置',
+              link: '/web/ajax'
             },
           ]
         }
