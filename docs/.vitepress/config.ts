@@ -91,6 +91,10 @@ export default defineConfig({
               text: '环境配置',
               link: '/web/settings'
             },
+            {
+              text: '路由配置',
+              link: '/web/router'
+            },
           ]
         }
       ]

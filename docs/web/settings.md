@@ -376,5 +376,158 @@ export const localeList: DropMenu[] = [
 
 ## 主题色配置
 
-默认全局主题色配置位于 [build/config/glob/themeConfig.ts]() 内
+默认全局主题色配置位于 [build/config/glob/themeConfig.ts](https://github.com/elonehoo/tl-serve-list/blob/main/web/build/config/themeConfig.ts) 内
 
+只需要修改 primaryColor 为您需要的配色，然后重新执行 yarn serve 即可
+
+```typescript
+/**
+ * less global variable
+ */
+export const primaryColor = '#0960bd'
+```
+
+## 样式配置
+
+### css 前缀设置
+
+> 用于修改项目内组件 class 的统一前缀
+
+- 在 [src/settings/designSetting.ts](https://github.com/elonehoo/tl-serve-list/blob/main/web/src/settings/designSetting.ts) 内配置
+
+```typescript
+export const prefixCls = 'vben'
+```
+
+- 在 [src/design/var/index.less](https://github.com/elonehoo/tl-serve-list/blob/main/web/src/design/var/index.less) 配置 css 前缀
+
+```less
+@namespace: vben;
+```
+
+### 前缀使用
+
+ 在 css 内
+
+```vue
+<style lang="less" scoped>
+  /* namespace已经全局注入，不需要额外在引入 */
+  @prefix-cls: ~'@{namespace}-app-logo';
+
+  .@{prefix-cls} {
+    width: 100%;
+  }
+</style>
+```
+
+在 vue/ts 内
+
+```typescript
+import { useDesign } from '/@/hooks/web/useDesign';
+
+const { prefixCls } = useDesign('app-logo');
+
+// prefixCls => vben-app-logo
+```
+
+## 颜色配置
+
+> 用于预设一些颜色数组
+
+在 [src/settings/designSetting.ts](https://github.com/elonehoo/tl-serve-list/blob/main/web/src/settings/designSetting.ts) 内配置
+
+```typescript
+//  app主题色预设
+export const APP_PRESET_COLOR_LIST: string[] = [
+  '#0960bd',
+  '#0084f4',
+  '#009688',
+  '#536dfe',
+  '#ff5c93',
+  '#ee4f12',
+  '#0096c7',
+  '#9c27b0',
+  '#ff9800',
+]
+
+// 顶部背景色预设
+export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
+  '#ffffff',
+  '#009688',
+  '#5172DC',
+  '#1E9FFF',
+  '#018ffb',
+  '#409eff',
+  '#4e73df',
+  '#e74c3c',
+  '#24292e',
+  '#394664',
+  '#001529',
+  '#383f45',
+]
+
+// 左侧菜单背景色预设
+export const SIDE_BAR_BG_COLOR_LIST: string[] = [
+  '#001529',
+  '#273352',
+  '#ffffff',
+  '#191b24',
+  '#191a23',
+  '#304156',
+  '#001628',
+  '#28333E',
+  '#344058',
+  '#383f45',
+]
+```
+
+## 组件默认参数配置
+
+在 [src/settings/componentSetting.ts](https://github.com/elonehoo/tl-serve-list/blob/main/web/src/settings/componentSetting.ts) 内配置
+
+```typescript
+// 用于配置某些组件的常规配置，而无需修改组件
+import type { SorterResult } from '../components/Table'
+
+export default {
+  // 表格配置
+  table: {
+    // 表格接口请求通用配置，可在组件prop覆盖
+    // 支持 xxx.xxx.xxx格式
+    fetchSetting: {
+      // 传给后台的当前页字段
+      pageField: 'page',
+      // 传给后台的每页显示多少条的字段
+      sizeField: 'pageSize',
+      // 接口返回表格数据的字段
+      listField: 'items',
+      // 接口返回表格总数的字段
+      totalField: 'total',
+    },
+    // 可选的分页选项
+    pageSizeOptions: ['10', '50', '80', '100'],
+    //默认每页显示多少条
+    defaultPageSize: 10,
+    // 默认排序方法
+    defaultSortFn: (sortInfo: SorterResult) => {
+      const { field, order } = sortInfo;
+      return {
+        // 排序字段
+        field,
+        // 排序方式 asc/desc
+        order,
+      };
+    },
+    // 自定义过滤方法
+    defaultFilterFn: (data: Partial<Recordable<string[]>>) => {
+      return data;
+    },
+  },
+  // 滚动组件配置
+  scrollbar: {
+    // 是否使用原生滚动样式
+    // 开启后，菜单，弹窗，抽屉会使用原生滚动条组件
+    native: false,
+  },
+}
+```
