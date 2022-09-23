@@ -77,8 +77,20 @@ export default defineConfig({
           items:[
             {
               text: '前端介绍',
-              link: '/vue/'
-            }
+              link: '/web/'
+            },
+            {
+              text: 'npm script',
+              link: '/web/npm-script'
+            },
+            {
+              text: '目录说明',
+              link: '/web/folder'
+            },
+            {
+              text: '环境配置',
+              link: '/web/settings'
+            },
           ]
         }
       ]
