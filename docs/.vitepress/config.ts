@@ -204,6 +204,42 @@ export default defineConfig({
                   text: 'CollapseContainer 区域折叠卡片',
                   link: '/components/collapse-container'
                 },
+                {
+                  text: 'ScrollContainer 滚动容器',
+                  link: '/components/scroll-container'
+                },
+                {
+                  text: 'LazyContainer 懒加载',
+                  link: '/components/lazy-container'
+                },
+                {
+                  text: 'CodeEditor 代码编辑器',
+                  link: '/components/code-editor'
+                },
+                {
+                  text: 'JsonPreview JSON预览',
+                  link: '/components/json-preview'
+                },
+                {
+                  text: 'CountDown 倒计时',
+                  link: '/components/count-down'
+                },
+                {
+                  text: 'ClickOutSide 包裹监听',
+                  link: '/components/click-out-side'
+                },
+                {
+                  text: 'CountTo 数字动画',
+                  link: '/components/count-to'
+                },
+                {
+                  text: 'Cropper 图片裁剪',
+                  link: '/components/cropper'
+                },
+                {
+                  text: 'Description 详情',
+                  link: '/components/description'
+                },
               ]
             },
           ]
