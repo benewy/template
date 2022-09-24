@@ -240,6 +240,66 @@ export default defineConfig({
                   text: 'Description 详情',
                   link: '/components/description'
                 },
+                {
+                  text: 'Drawer 抽屉',
+                  link: '/components/drawer'
+                },
+                {
+                  text: 'Modal 弹窗',
+                  link: '/components/modal'
+                },
+                {
+                  text: 'FlowChart 流程图',
+                  link: '/components/flow-chart'
+                },
+                {
+                  text: 'Upload 文件上传',
+                  link: '/components/upload'
+                },
+                {
+                  text: 'Tree 树',
+                  link: '/components/tree'
+                },
+                {
+                  text: 'Excel Excel组件',
+                  link: '/components/excel'
+                },
+                {
+                  text: 'QrCode 二维码',
+                  link: '/components/qrcode'
+                },
+                {
+                  text: 'Markdown',
+                  link: '/components/markdown'
+                },
+                {
+                  text: 'Loading 基础加载',
+                  link: '/components/basic-loading'
+                },
+                {
+                  text: 'Tinymce 富文本',
+                  link: '/components/tinymce'
+                },
+                {
+                  text: 'Time 时间',
+                  link: '/components/time'
+                },
+                {
+                  text: 'StrengthMeter 密码校验',
+                  link: '/components/strength-meter'
+                },
+                {
+                  text: 'Verify 校验',
+                  link: '/components/verify'
+                },
+                {
+                  text: 'Transition 切换动画',
+                  link: '/components/transition'
+                },
+                {
+                  text: 'VirtualScroll 虚拟滚动',
+                  link: '/components/virtual-scroll'
+                },
               ]
             },
           ]
