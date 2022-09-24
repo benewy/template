@@ -127,7 +127,47 @@ export default defineConfig({
               link: '/web/deploy'
             },
           ]
-        }
+        },
+        {
+          text: '深入前端',
+          items:[
+            {
+              text: '跨域处理',
+              link: '/web/cors'
+            },
+            {
+              text: '图标',
+              link: '/web/icon'
+            },
+          ]
+        },
+        {
+          text: '前端组件',
+          items:[
+            {
+              text: '组件介绍',
+              link: '/components/'
+            },
+            {
+              text: '全局组件',
+              items:[
+                {
+                  text: 'Button 按钮',
+                  link: '/components/button'
+                }
+              ]
+            },
+            {
+              text:'常用组件',
+              items:[
+                {
+                  text: 'title 标题',
+                  link: '/components/basic-title'
+                }
+              ]
+            },
+          ]
+        },
       ]
     }
   },
