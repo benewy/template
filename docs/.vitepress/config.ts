@@ -163,7 +163,47 @@ export default defineConfig({
                 {
                   text: 'title 标题',
                   link: '/components/basic-title'
-                }
+                },
+                {
+                  text: 'arrow 箭头',
+                  link: '/components/basic-arrow'
+                },
+                {
+                  text: 'help 帮助按钮',
+                  link: '/components/basic-help'
+                },
+                {
+                  text: 'PageWrapper 页面包裹组件',
+                  link: '/components/page-wrapper'
+                },
+                {
+                  text: 'PageFooter 页面底部组件',
+                  link: '/components/page-footer'
+                },
+                {
+                  text: 'icon 图标',
+                  link: '/components/icon'
+                },
+                {
+                  text: 'authority 权限',
+                  link: '/components/authority'
+                },
+                {
+                  text: 'form 表单',
+                  link: '/components/form'
+                },
+                {
+                  text: 'table 表格',
+                  link: '/components/table'
+                },
+                {
+                  text: 'PopConfirmButton 按钮',
+                  link: '/components/pop-confirm-button'
+                },
+                {
+                  text: 'CollapseContainer 区域折叠卡片',
+                  link: '/components/collapse-container'
+                },
               ]
             },
           ]

@@ -1,4 +1,8 @@
-## 组件前言
+---
+outline: deep
+---
+
+# 组件前言
 
 ::: danger 注意事项
 组件的 `defaultXXX` 属性不要使用，`ant-design-vue 2.2` 版本之后将会逐步移除。二次封装的组件也不兼容 `defaultXXX` 属性。
