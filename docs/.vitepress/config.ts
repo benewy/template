@@ -302,6 +302,23 @@ export default defineConfig({
                 },
               ]
             },
+            {
+              text: '函数组件',
+              items:[
+                {
+                  text:'ContextMenu 右键菜单',
+                  link: '/components/context-menu'
+                },
+                {
+                  text:'Loading 函数式加载',
+                  link: '/components/function-loading'
+                },
+                {
+                  text:'Preview 函数式图片预览',
+                  link: '/components/function-preview'
+                },
+              ]
+            },
           ]
         },
       ]
