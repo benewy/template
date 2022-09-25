@@ -46,6 +46,7 @@ export default defineConfig({
       { text: '前端组件', link: '/components/' },
       { text: '后端', link: '/app/' },
       { text: '后端工具', link: '/utils/' },
+      { text: '常见问题', link: '/faq/' },
       {
         text: `v${version}`,
         items: [
@@ -321,6 +322,15 @@ export default defineConfig({
             },
           ]
         },
+        {
+          text:'后端',
+          items:[
+            {
+              text: '后端介绍',
+              link: '/app/'
+            }
+          ]
+        }
       ]
     }
   },
