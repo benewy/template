@@ -328,6 +328,23 @@ export default defineConfig({
             {
               text: '后端介绍',
               link: '/app/'
+            },
+            {
+              text: '目录说明',
+              link: '/app/folder'
+            }
+          ]
+        },
+        {
+          text:'常见问题',
+          items:[
+            {
+              text: '前端常见问题',
+              link: '/faq/#前端常见问题'
+            },
+            {
+              text: '后端常见问题',
+              link: '/faq/#后端常见问题'
             }
           ]
         }
