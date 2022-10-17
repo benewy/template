@@ -7,7 +7,8 @@ titleTemplate: 杭州融慧科技数据有限公司
 
 hero:
   name: 项目模板
-  text: 杭州融慧科技数据有限公司
+  text: 一个专门针对公司所开发的开箱即用的模板项目，技术栈足够新，足够快，这就是它的优点
+  tagline: 杭州融慧科技数据有限公司
   image:
     src: /logo.svg
     alt: serve-list
