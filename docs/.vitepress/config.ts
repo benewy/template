@@ -332,6 +332,10 @@ export default defineConfig({
             {
               text: '目录说明',
               link: '/app/folder'
+            },
+            {
+              text: '环境配置',
+              link: '/app/settings'
             }
           ]
         },
