@@ -112,52 +112,53 @@ spring:
     activate:
       on-profile: "basic-dev"
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource # 数据源类型
     druid:
-      name: tl-seven-lists
+      name: tl-seven-lists # 数据源名称
+      # 连接数据库的url
       url: jdbc:mysql://192.168.0.128:3307/tl-seven-lists?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: Beneway2021
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 60000
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
+      username: root # 连接数据库的用户名
+      password: Beneway2021 # 连接数据库的密码
+      driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
+      initial-size: 10 # 初始化时建立物理连接的个数
+      max-active: 100 # 最大连接池数量
+      min-idle: 10 # 最小连接池数量
+      max-wait: 60000 # 获取连接时最大等待时间
+      pool-prepared-statements: true # 是否缓存preparedStatement
+      max-pool-prepared-statement-per-connection-size: 20 # 要启用PSCache
+      time-between-eviction-runs-millis: 60000 # 检测连接的间隔时间
+      min-evictable-idle-time-millis: 300000 # 连接保持空闲而不被驱逐的最小时间
+      test-while-idle: true # 执行validationQuery检测连接是否有效
+      test-on-borrow: false # 申请连接时执行validationQuery检测连接是否有效
+      test-on-return: false # 归还连接时执行validationQuery检测连接是否有效
       stat-view-servlet:
-        enabled: true
+        enabled: true # 启用DruidStatViewServlet
         url-pattern: /druid/*
-        login-username: admin
-        login-password: 123456
+        login-username: admin # 登录名
+        login-password: 123456 # 登录密码
       filter:
         config:
-          enabled: true
+          enabled: true # 启用监控统计拦截
         stat:
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: false
+          log-slow-sql: true # 开启慢查询记录
+          slow-sql-millis: 1000 # 慢SQL记录标准，超过1000ms，就是慢查询
+          merge-sql: false # 是否使用sql合并统计
         wall:
           config:
-            multi-statement-allow: true
+            multi-statement-allow: true # 是否允许一次执行多条语句
 # 钉钉配置信息
 dd-config:
-  domainname: openplatform-pro.ding.zj.gov.cn
-  tenantId: 196729
+  domainname: openplatform-pro.ding.zj.gov.cn # 政务钉钉的域名
+  tenantId: 196729 # 租户 id
   pc:
     key:
     secret:
     appId:
   qrcode:
-    key: zsht-ydjr_dingoa-cab47knRJraym
-    secret: ht6X4YAUMHIwwDX0G0E23A4rwTNtKA71HL5vJ25k
+    key: zsht-ydjr_dingoa-cab47knRJraym # AccessKey秘钥
+    secret: ht6X4YAUMHIwwDX0G0E23A4rwTNtKA71HL5vJ25k # SecretKey秘钥
   phone:
-    key: zsht-m15L07V1tCqlak9kfgS3QNfIj
-    secret: ish1fmuCeotCs6V99H2j4AUIeDI0COD5Ov43n5R2
+    key: zsht-m15L07V1tCqlak9kfgS3QNfIj # AccessKey秘钥
+    secret: ish1fmuCeotCs6V99H2j4AUIeDI0COD5Ov43n5R2 # SecretKey秘钥
     appId:
 ```
