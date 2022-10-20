@@ -162,3 +162,367 @@ dd-config:
     secret: ish1fmuCeotCs6V99H2j4AUIeDI0COD5Ov43n5R2 # SecretKey秘钥
     appId:
 ```
+
+## 自定义应用配置
+
+> 加载自定义应用配置，扩展应用配置需求
+
+::: tip 提示
+
+如若还需要添加其他的应用配置，可自行在 [application.yml](./settings#application-yml) 文件的`appConfig`下添加所需属性，并在 [AppConfig](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/config/AppConfig.java) 中添加其私有变量和对应方法，可参考如下示例代码
+
+:::
+
+````java
+package com.beneway.basic.config;
+
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+@Data
+@Configuration
+public class AppConfig {
+
+    @Value("${spring.profiles.include}")
+    private String[] actives;
+
+    @Value("${appConfig.excludePaths}")
+    private String[] excludePaths;
+
+    @Value("${appConfig.moduleType}")
+    private String moduleType;
+
+    public void setActive(String[] actives) {
+      if (this.actives == null){
+        this.actives = actives;
+      }
+    }
+
+    public void setExcludePaths(String[] excludePaths) {
+        if (this.excludePaths == null) {
+            this.excludePaths = excludePaths;
+        }
+    }
+
+    public void setModuleType(String moduleType) {
+        if (this.moduleType == null) {
+            this.moduleType = moduleType;
+        }
+    }
+}
+````
+
+## WebMVC 配置
+
+项目的WebMVC文件位于项目根项目下 [WebMvcConfig](https://github.com/elonehoo/benewy-template/blob/main/project/web/src/main/java/com/beneway/web/config/WebMvcConfig.java)
+
+> 用于配置WebMVC的拦截器、跨域请求、静态资源等
+
+### 拦截器配置
+
+> 用于日志记录、登录判断、权限检查等作用
+
+```java
+package com.beneway.web.config;
+
+import com.beneway.basic.config.AppConfig;
+import com.beneway.web.interceptor.AuthInterceptor;
+import com.beneway.web.interceptor.ReqLogInterceptor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
+import java.util.logging.Logger;
+
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    public static Logger log = Logger.getLogger("com.beneway.web.config.WebMvcConfig");
+
+    @Resource
+    private AppConfig appConfig;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 添加登录日志拦截器，匹配所有路径
+        registry.addInterceptor(new ReqLogInterceptor())
+                .addPathPatterns("/**");
+
+        // 全局排除的访问路径
+        String[] excludePaths = appConfig.getExcludePaths();
+        if (excludePaths != null) {
+            for (String excludePath : excludePaths) {
+                log.info("excludepath:" + excludePath);
+            }
+        }
+
+        // 添加自动登录拦截器，匹配所有路径，指定排除的访问路径，如若未指定则放入一个长度为0的空数组
+        registry.addInterceptor(new AuthInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(excludePaths == null ? new String[0] : excludePaths);
+    }
+}
+```
+
+### 跨域请求配置
+
+> 用于设置跨域资源共享
+
+```java
+package com.beneway.web.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+
+    // 设置跨域访问
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                // 允许所有域名访问
+                .allowedOrigins("*")
+                // 允许的请求方式
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE")
+                // 允许发送Cookie
+                .allowCredentials(true);
+    }
+}
+```
+
+## MyBatis-Plus 配置
+
+> 用于配置MyBatis-Plus插件、扩展方法等
+
+### 全局配置
+
+MyBatis-Plus默认全局配置在 [basic/config/MyBatisPlusConfig](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/config/MyBatisPlusConfig.java) 内配置
+
+```java
+package com.beneway.basic.config;
+
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyBatisPlusConfig {
+
+  /**
+   * 新的分页插件,一缓和二缓遵循mybatis的规则,需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
+   */
+  @Bean
+  public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+    interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+    return interceptor;
+  }
+
+}
+```
+
+### 扩展方法
+
+> 用于扩展 MyBatis-Plus 默认提供的方法，丰富 IService 接口。
+>
+> 扩展文件位于项目根项目下 [basic/mybatisplus/MyIService](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/mybatisplus/MyIService.java)
+
+::: warning 注意
+所有新创建的 Service 接口需继承 MyIService 接口即可使用扩展的方法
+:::
+
+```java
+// 继承于MyBatis-Plus的IService接口
+package com.beneway.basic.mybatisplus;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+public interface MyIService<T> extends IService<T> {
+
+  default boolean isExist(Wrapper<T> queryWrapper){
+    return count(queryWrapper) > 0;
+  }
+
+}
+```
+
+## Redis配置
+
+> Redis 是一个高性能的key-value数据库，用于缓存项目中高频请求数据，减小后台数据库压力。同时也能为其他已接入的框架提供缓存功能
+
+Redis 相关配置属性移步 [application-dev.yml](./settings#application-dev-yml) 查看详情
+
+::: warning 注意
+若要使用 Redis 的缓存功能，需要在主入口（[Core](https://github.com/elonehoo/benewy-template/blob/main/project/core/src/main/java/com/beneway/core/Core.java)）上加上`@EnableCaching` 注解，即可开启缓存功能
+:::
+
+### 初始化 Redis 配置
+
+```java
+package com.beneway.basic.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.annotation.Resource;
+
+/**
+ * Redis配置
+ *
+ * @author Mark sunlightcs@gmail.com
+ */
+@Configuration
+public class RedisConfig {
+    @Resource
+    private RedisConnectionFactory factory;
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        // 使用StringRedisSerializer进行序列化，只能存储类型为String的Key
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        // 只能存储类型为String的HashKey
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        // 只能存储类型为String的HashValue
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        // 使用JdkSerializationRedisSerializer进行序列化，只能存储Jdk序列化的value
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setConnectionFactory(factory);
+        return redisTemplate;
+    }
+
+    @Bean
+    public HashOperations<String, String, Object> hashOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForHash();
+    }
+
+    @Bean
+    public ValueOperations<String, String> valueOperations(RedisTemplate<String, String> redisTemplate) {
+        return redisTemplate.opsForValue();
+    }
+
+    @Bean
+    public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForList();
+    }
+
+    @Bean
+    public SetOperations<String, Object> setOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForSet();
+    }
+
+    @Bean
+    public ZSetOperations<String, Object> zSetOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForZSet();
+    }
+}
+```
+
+## Sa-Token配置
+
+Sa-Token 的全局配置项请移步 [application-dev.yml](./settings#application-dev-yml)、[application-basic.yml](./settings#application-basic-yml) 查看详情
+
+> 关于 Sa-Token 的更多配置，可查看[此处](https://sa-token.dev33.cn/doc.html#/use/config?id=%e6%89%80%e6%9c%89%e5%8f%af%e9%85%8d%e7%bd%ae%e9%a1%b9)
+
+## 钉钉配置
+
+政务钉钉的全局配置项请移步 [application-basic-dev.yml](./settings#application-basic-dev-yml) 查看详情
+
+### 初始化数据
+
+初始化配置文件存在于项目根目录下 [StartService](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/utils/dd/StartService.java)
+
+```java
+package com.beneway.basic.utils.dd;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
+/**
+ * 服务启动时执行的方法
+ */
+@Slf4j
+@Component
+public class StartService implements ApplicationRunner {
+
+    @Resource
+    private ZWDDQrcodeUtils zwddQrcodeUtils;
+
+    @Resource
+    private ZWDDPhoneUtils zwddPhoneUtils;
+
+    /**
+     * 进行小程序token的初次获取
+     */
+    @Override
+    public void run(ApplicationArguments args) {
+        // 刷新政务钉钉二维码的Token属性值
+        zwddQrcodeUtils.flushToken();
+        // 刷新政务钉钉电话的Token属性值
+        zwddPhoneUtils.flushToken();
+    }
+}
+```
+
+## Druid 监控配置
+
+Druid 相关监控配置属性移步 [application-dev.yml](./settings.html#application-basic-dev-yml) 查看 `spring.datasource.druid.stat-view-servlet`
+
+> 用于监控数据库访问性能，详细统计SQL的执行性能，线上分析数据库访问性能
+
+### 初始化 Web 监控 Filter
+
+监控配置文件存在于项目根目录下 [DruidConfig](https://github.com/elonehoo/benewy-template/blob/main/project/web/src/main/java/com/beneway/web/config/DruidConfig.java)
+
+
+```java
+package com.beneway.web.config;
+
+import com.alibaba.druid.support.http.WebStatFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author zhy
+ * @create_date 2019-01-26 20:18
+ */
+
+@Configuration
+public class DruidConfig {
+
+    //2、配置一个web监控的filter
+    @Bean
+    public FilterRegistrationBean webStatFilter(){
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        bean.setFilter(new WebStatFilter());
+        Map<String,String> initParams = new HashMap<>();
+        // 排除静态资源请求监控
+        initParams.put("exclusions","*.js,*.css,/druid/*");
+        bean.setInitParameters(initParams);
+
+        bean.setUrlPatterns(Arrays.asList("/"));
+        return bean;
+    }
+
+}
+```
