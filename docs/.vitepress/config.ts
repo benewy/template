@@ -336,6 +336,10 @@ export default defineConfig({
             {
               text: '环境配置',
               link: '/app/settings'
+            },
+            {
+              text: '安全防护',
+              link: '/app/security'
             }
           ]
         },
