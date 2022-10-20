@@ -340,6 +340,10 @@ export default defineConfig({
             {
               text: '安全防护',
               link: '/app/security'
+            },
+            {
+              text: '权限配置',
+              link: '/app/role'
             }
           ]
         },
