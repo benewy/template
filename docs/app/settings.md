@@ -246,7 +246,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 添加登录日志拦截器，匹配所有路径
+        // 添加访问日志记录拦截器，匹配所有路径
         registry.addInterceptor(new ReqLogInterceptor())
                 .addPathPatterns("/**");
 
@@ -258,12 +258,176 @@ public class WebMvcConfig implements WebMvcConfigurer {
             }
         }
 
-        // 添加自动登录拦截器，匹配所有路径，指定排除的访问路径，如若未指定则放入一个长度为0的空数组
+        // 添加权限校验拦截器，匹配所有路径，指定排除的访问路径，如若未指定则放入一个长度为0的空数组
         registry.addInterceptor(new AuthInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePaths == null ? new String[0] : excludePaths);
     }
 }
+```
+
+#### 日志记录拦截器
+
+> 其作用为拦截所有请求，并对所有请求进行记录
+
+以下为核心代码，可查看 [ReqLogInterceptor](https://github.com/elonehoo/benewy-template/blob/main/project/web/src/main/java/com/beneway/web/interceptor/ReqLogInterceptor.java) 文件的具体配置
+
+```java
+@Override
+public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+  if ("OPTIONS".equals(request.getMethod())){
+    return;
+  }
+
+  try {
+    long startTime = threadLocal.get();
+    threadLocal.remove();
+
+    long endTime = System.currentTimeMillis();
+    // 获取请求url
+    String requestURI = request.getRequestURI();
+    // 获取请求方法
+    String method = request.getMethod();
+    // 获取请求ip
+    String ip = IPUtil.getIpAddr(request);
+    // 获取请求用户名
+    String username = loginuserService.getUsername();
+
+    // 获取请求params
+    String params = null;
+    Map<String, String[]> parameterMap = request.getParameterMap();
+    if (CollUtil.isNotEmpty(parameterMap)) {
+      params = gson.toJson(parameterMap);
+    }
+
+    // 获取请求body
+    String body = null;
+
+    // 获取登录用户id
+    String loginUserId = null;
+    try {
+      loginUserId = appUtils.getLoginUserId();
+    } catch (NullPointerException e) {
+
+    } catch (Exception e) {
+      log.warning("获取用户id失败");
+    }
+
+    // 计算请求执行耗时
+    long duration = endTime - startTime;
+
+    String finalParams = params;
+    String finalBody = body;
+    String finalLoginUserId = loginUserId;
+    AutoExceptionInfo autoExceptionInfo = AutoExceptionInfo.getExceptionInfo();
+    Future<?> submit = executor.submit(() -> {
+      // 日志封装
+      String logs = String.format("用户：%s，uri：%s，method：%s，ip：%s，执行耗时：%dms，params：%s, body：%s", username, requestURI, method, ip, duration, finalParams, finalBody);
+      // 查看是否有异常信息
+      boolean isError = false;
+      if (autoExceptionInfo != null) {
+        logs = "errCode：" + autoExceptionInfo.getCode() + "，errMsg：" + autoExceptionInfo.getMsg() + "，" + logs;
+        log.warning(logs + autoExceptionInfo.getE());
+        isError = true;
+      } else {
+        log.info(logs);
+      }
+
+      // 保存日志信息
+      LogReq logReq = new LogReq();
+      logReq.setUserId(finalLoginUserId);
+      UserTypeEnum loginUserType = appUtils.getLoginUserType();
+      logReq.setUserType(loginUserType);
+      logReq.setReqUrl(requestURI);
+      logReq.setReqMethod(method);
+      logReq.setReqIp(ip);
+      logReq.setReqParams(finalParams);
+      logReq.setReqBody(finalBody);
+      logReq.setDuration((int)duration);
+      logReq.setIsError(isError);
+      if (isError) {
+        Throwable throwable = autoExceptionInfo.getE();
+        if (throwable != null) {
+          PrintWriter pw = null;
+          try {
+            StringWriter sw = new StringWriter();
+            pw = new PrintWriter(sw);
+            throwable.printStackTrace(pw);
+            logReq.setErrorInfo(sw.toString());
+          } catch (Exception e) {
+            log.warning("请求日志异常信息获取失败 " + e);
+          } finally {
+            if (pw != null) {
+            pw.close();
+            }
+          }
+        }
+        int code = autoExceptionInfo.getCode();
+        String errorCode = String.valueOf(code);
+        logReq.setErrorCode(errorCode);
+        logReq.setErrorMsg(autoExceptionInfo.getMsg());
+      }
+      logReq.setModuleType(appUtils.getModuleType());
+      logReq.setCreateTime(new Date());
+
+      logReqService.save(logReq);
+    });
+
+    submit.get();
+
+  } catch (Exception e) {
+    e.printStackTrace();
+    log.warning("请求日志处理错误!" + e);
+  }
+}
+```
+
+#### 权限校验拦截器
+
+> 校验用户的访问的权限
+
+以下为核心代码，可查看 [AuthInterceptor](https://github.com/elonehoo/benewy-template/blob/main/project/web/src/main/java/com/beneway/web/interceptor/AuthInterceptor.java) 文件的具体配置
+
+```java
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    if ("OPTIONS".equals(request.getMethod())) {
+      return true;
+    }
+
+    if (!(object instanceof HandlerMethod)) {
+      return true;
+    }
+
+    HandlerMethod handlerMethod = (HandlerMethod) object;
+    Method method = handlerMethod.getMethod();
+
+    // 获取请求用户id
+    String userId = null;
+    try {
+      userId = StpUtil.getLoginIdAsString();
+    } catch (Exception e) {
+      // 获取用户id失败，封装错误信息
+      String message = e.getMessage();
+      Result result = Result.internalServerError(message);
+      error(response, result, e);
+      return false;
+    }
+
+    ReqApi reqApi = method.getAnnotation(ReqApi.class);
+
+    // 校验
+    Result result = loginuserService.checkUser(userId, reqApi);
+    HttpStatus code = result.getStatusCode();
+    if (HttpStatus.OK.equals(code)) {
+      return true;
+    } else {
+      error(response, result, null);
+      return false;
+    }
+
+  }
 ```
 
 ### 跨域请求配置
