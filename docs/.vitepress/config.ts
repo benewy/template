@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { description, discord, font, github, name, releases, twitter,} from './meta'
+import { description, font, github, name, releases} from './meta'
 
 const version = '0.0.0'
 
@@ -32,8 +32,6 @@ export default defineConfig({
       text: '为此页提供修改建议',
     },
     socialLinks: [
-      { icon: 'twitter', link: twitter },
-      { icon: 'discord', link: discord },
       { icon: 'github', link: github },
     ],
     footer: {
@@ -338,12 +336,96 @@ export default defineConfig({
               link: '/app/settings'
             },
             {
-              text: '安全防护',
+              text: 'Xss配置',
               link: '/app/security'
             },
             {
               text: '权限配置',
               link: '/app/role'
+            },
+            {
+              text: '构建&部署',
+              link: '/app/deploy'
+            }
+          ]
+        },
+        {
+          text: '后端工具',
+          items: [
+            {
+              text: '工具介绍',
+              link: '/utils/'
+            },
+            {
+              text: '全局工具',
+              items: [
+                {
+                  text: 'dd 政务钉钉',
+                  link: '/utils/zwdd'
+                },
+                {
+                  text: 'file 文件操作',
+                  link: ''
+                },
+                {
+                  text: 'IRS',
+                  link: ''
+                },
+                {
+                  text: 'login_user 用户登录',
+                  link: ''
+                },
+                {
+                  text: 'office 文档',
+                  link: ''
+                },
+                {
+                  text: 'page 分页',
+                  link: ''
+                },
+                {
+                  text: 'string_to_list 类型转换',
+                  link: ''
+                },
+                {
+                  text: 'sys_files 系统文件',
+                  link: ''
+                },
+                {
+                  text: 'app 应用',
+                  link: ''
+                },
+                {
+                  text: 'class 类',
+                  link: ''
+                },
+                {
+                  text: 'code2D 二维码',
+                  link: ''
+                },
+                {
+                  text: 'enum 枚举',
+                  link: ''
+                },
+                {
+                  text: 'IP',
+                  link: ''
+                },
+                {
+                  text: 'redis 缓存',
+                  link: ''
+                },
+                {
+                  text: 'context 上下文',
+                  link: ''
+                },
+              ]
+            },
+            {
+              text: '常用工具',
+              items: [
+
+              ]
             }
           ]
         },
