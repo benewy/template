@@ -37,3 +37,37 @@ Spring 管理的工具类：需要使用时，通过 `@Resource` 或 `@Autowired
     @Resource
     private SysUserService sysUserService;
 ```
+
+**注意：**
+
+除 [appConfig.excludePaths](/app/settings#application-yml) 配置的排除路径外，其余接口均需要携带`token`
+
+::: tip 注意
+在登陆成功之后，即可获得token凭证，Header中配置的token名称为`sa-token.token-name`，[查看详情](/app/settings#application-basic-yml)
+:::
+
+**token配置**
+
+Header：
+
+| 参数 | 说明 |
+| --- | --- |
+| access_token | 72c18da95552259dd7c4aaa52e9fa37f |
+
+### 请求结果
+
+::: tip 注意
+
+后台使用了统一的返回结果集，返回的数据将在`body`参数中，具体内容请查看下方 **返回参数** 表
+
+常用工具中的所有返回参数示例表的参数均已`body`为根节点开始
+
+:::
+
+**返回参数**
+
+| 参数 | 必选 | 类型 | 说明 |
+|---|---|---|---|
+| statusCodeValue | 是 | `int` | 请求状态码 |
+| statusCode | 是 | `HttpStatus` | 请求状态 |
+| body | 是 | `T` | 请求返回的数据集，返回结果为泛型 |

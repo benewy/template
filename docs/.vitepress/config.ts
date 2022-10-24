@@ -424,7 +424,26 @@ export default defineConfig({
             {
               text: '常用工具',
               items: [
-
+                {
+                  text: 'sys_agency 部门',
+                  link: '/utils/sys_agency'
+                },
+                {
+                  text: 'sys_agency_user 部门用户',
+                  link: '/utils/sys_agency_user'
+                },
+                {
+                  text: 'sys_area 行政区域',
+                  link: '/utils/sys_area'
+                },
+                {
+                  text: 'sys_files_service 文件操作',
+                  link: '/utils/sys_files_service'
+                },
+                {
+                  text: 'sys_filter_unit 文件操作',
+                  link: '/utils/sys_filter_unit'
+                },
               ]
             }
           ]
