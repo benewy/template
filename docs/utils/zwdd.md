@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # 政务钉钉工具
 
 > 用于操作政务钉钉，与政务钉钉交互
@@ -12,7 +16,7 @@
 
 > 政务钉钉的基础工具类
 
-### 使用
+### Usage
 
 示例：
 
@@ -24,6 +28,8 @@ public JsonObject getUserInfo(String auth_code) {
 }
 
 ```
+
+### Methods
 
 | 方法 | 返回类型 | 入参 | 说明 |
 |---|---|---|---|
@@ -38,6 +44,8 @@ public JsonObject getUserInfo(String auth_code) {
 
 > 用于手机政务钉钉的工具类
 
+### Methods
+
 | 方法 | 返回类型 | 入参 | 说明 |
 |---|---|---|---|
 | [getExecutableClient](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/utils/dd/ZWDDPhoneUtils.java#L66) | `ExecutableClient` | - | 获取一个新的ExecutableClient |
@@ -49,6 +57,8 @@ public JsonObject getUserInfo(String auth_code) {
 ## ZWDDQrcodeUtils
 
 > 用于政务钉钉二维码的工具类
+
+### Methods
 
 | 方法 | 返回类型 | 入参 | 说明 |
 |---|---|---|---|

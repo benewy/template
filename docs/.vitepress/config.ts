@@ -365,59 +365,59 @@ export default defineConfig({
                 },
                 {
                   text: 'file 文件操作',
-                  link: ''
+                  link: '/utils/file'
                 },
                 {
-                  text: 'IRS',
-                  link: ''
+                  text: 'IRS 信用档案',
+                  link: '/utils/irs'
                 },
                 {
-                  text: 'login_user 用户登录',
-                  link: ''
+                  text: 'login_user 登录用户',
+                  link: '/utils/login_user'
                 },
                 {
                   text: 'office 文档',
-                  link: ''
+                  link: '/utils/office'
                 },
                 {
                   text: 'page 分页',
-                  link: ''
+                  link: '/utils/page'
                 },
                 {
                   text: 'string_to_list 类型转换',
-                  link: ''
+                  link: '/utils/string_to_list'
                 },
                 {
                   text: 'sys_files 系统文件',
-                  link: ''
+                  link: '/utils/sys_files'
                 },
                 {
-                  text: 'app 应用',
-                  link: ''
+                  text: 'app 应用系统',
+                  link: '/utils/app'
                 },
                 {
                   text: 'class 类',
-                  link: ''
+                  link: '/utils/class'
                 },
                 {
                   text: 'code2D 二维码',
-                  link: ''
+                  link: '/utils/code2D'
                 },
                 {
                   text: 'enum 枚举',
-                  link: ''
+                  link: '/utils/enum'
                 },
                 {
                   text: 'IP',
-                  link: ''
+                  link: '/utils/ip'
                 },
                 {
                   text: 'redis 缓存',
-                  link: ''
+                  link: '/utils/redis'
                 },
                 {
                   text: 'context 上下文',
-                  link: ''
+                  link: '/utils/context'
                 },
               ]
             },
