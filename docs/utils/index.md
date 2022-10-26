@@ -22,12 +22,16 @@ outline: deep
 
 Spring 管理的工具类：需要使用时，通过 `@Resource` 或 `@Autowired` 或 `new` 一个工具类对象，即可使用工具类中的方法
 
-### 常用工具
+### 常用工具&Admin后台工具
 
-常用工具为项目中能够使用的常用 `Service` 服务
+常用工具及Admin后台工具为项目中能够使用的常用 `Service` 服务
 
 ::: tip 提示
+
 其中所有的服务都以全部交由 Spring 容器管理，如若需要使用其中的服务，可自行注入使用。基础服务位于 [system](https://github.com/elonehoo/benewy-template/tree/main/project/basic/src/main/java/com/beneway/basic/system)、用户登录服务 [service.sys_user](https://github.com/elonehoo/benewy-template/tree/main/project/core/src/main/java/com/beneway/core/service/sys_user)
+
+Admin后台服务位于 [Admin](https://github.com/elonehoo/benewy-template/tree/main/project/core/src/main/java/com/beneway/core/controller)
+
 :::
 
 示例
@@ -60,7 +64,9 @@ Header：
 
 后台使用了统一的返回结果集，返回的数据将在`body`参数中，具体内容请查看下方 **返回参数** 表
 
-常用工具中的所有返回参数示例表的参数均已`body`为根节点开始
+常用工具及Admin后台工具中的所有返回参数示例表的参数均已`body`为根节点开始
+
+参数前携带`-`则为上一个参数的子参数
 
 :::
 
