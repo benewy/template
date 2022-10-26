@@ -7,7 +7,7 @@ titleTemplate: 杭州融慧科技数据有限公司
 
 hero:
   name: 项目模板
-  text: 杭州融慧科技数据有限公司
+  text: 杭州融惠科技数据有限公司
   tagline: 适用于敏捷开发的 「TS + Spring」 实验模板，进行了技术栈的迭代。
   image:
     src: /logo.svg

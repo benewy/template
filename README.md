@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-杭州融慧科技数据有限公司的项目模板
+杭州融惠科技数据有限公司的项目模板
 </div>
 
 ## 特性
@@ -38,4 +38,4 @@
 
 ## License
 
-[GNU Lesser General Public](./LICENSE) License © 2022 杭州融慧科技数据有限公司
+[GNU Lesser General Public](./LICENSE) License © 2022 杭州融惠科技数据有限公司
