@@ -441,8 +441,36 @@ export default defineConfig({
                   link: '/utils/sys_files_service'
                 },
                 {
-                  text: 'sys_filter_unit 文件操作',
+                  text: 'sys_filter_unit 单位筛选',
                   link: '/utils/sys_filter_unit'
+                },
+                {
+                  text: 'sys_filter_user 用户筛选',
+                  link: '/utils/sys_filter_user'
+                },
+                {
+                  text: 'sys_message 消息',
+                  link: '/utils/sys_message'
+                },
+                {
+                  text: 'sys_role 角色',
+                  link: '/utils/sys_role'
+                },
+                {
+                  text: 'sys_tag 标签',
+                  link: '/utils/sys_tag'
+                },
+                {
+                  text: 'sys_unit 单位',
+                  link: '/utils/sys_unit'
+                },
+                {
+                  text: 'sys_user 用户资源',
+                  link: '/utils/sys_user'
+                },
+                {
+                  text: 'login 登录资源',
+                  link: '/utils/login'
                 },
               ]
             }

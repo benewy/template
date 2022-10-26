@@ -2,9 +2,9 @@
 outline: deep
 ---
 
-# SysFilterUnit 用户筛选
+# SysFilterUnit 单位筛选
 
-> 用于对用户的筛选配置，获取到不同的公共组件数据等
+> 用于对单位的筛选配置，获取到不同的公共组件数据等
 
 以下接口说明来源于项目根目录下 [SysFilterUnitController](https://github.com/elonehoo/benewy-template/blob/main/project/web/src/main/java/com/beneway/web/controller/system/SysFilterUnitController.java) 文件，可自行查看详情
 
@@ -62,8 +62,8 @@ HTTP方法： `GET`
 | pid | 是 | `Integer` | 父级id编号 |
 | unitName | 是 | `String` | 单位名称 |
 | sortNum | 是 | `sortNum` | 序号 |
-| type | 是 | `SysUnitTypeEnum` | 类型 |
-| ddType | 是 | `SysUnitDDTypeEnum` | 钉钉类型 |
+| type | 是 | `SysUnitTypeEnum` | 类型，点击 [详情](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/system/sys_unit/enums/SysUnitTypeEnum.java#L22) 查看详细内容 |
+| ddType | 是 | `SysUnitDDTypeEnum` | 钉钉类型，点击 [详情](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/system/sys_unit/enums/SysUnitDDTypeEnum.java#L20) 查看详细内容 |
 | organizationCode | 是 | `String` | 组织code |
 | unifiedSocialCreditCode | 是 | `String` | 统一社会信用代码 |
 | isLast | 是 | `Boolean` | 是否最后 |
@@ -96,8 +96,8 @@ HTTP方法： `GET`
 | pid | 是 | `Integer` | 父级id编号 |
 | unitName | 是 | `String` | 单位名称 |
 | sortNum | 是 | `sortNum` | 序号 |
-| type | 是 | `SysUnitTypeEnum` | 类型 |
-| ddType | 是 | `SysUnitDDTypeEnum` | 钉钉类型 |
+| type | 是 | `SysUnitTypeEnum` | 类型，点击 [详情](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/system/sys_unit/enums/SysUnitTypeEnum.java#L22) 查看详细内容 |
+| ddType | 是 | `SysUnitDDTypeEnum` | 钉钉类型，点击 [详情](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/system/sys_unit/enums/SysUnitDDTypeEnum.java#L20) 查看详细内容 |
 | organizationCode | 是 | `String` | 组织code |
 | unifiedSocialCreditCode | 是 | `String` | 统一社会信用代码 |
 | isLast | 是 | `Boolean` | 是否最后 |
