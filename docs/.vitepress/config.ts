@@ -473,6 +473,43 @@ export default defineConfig({
                   link: '/utils/login'
                 },
               ]
+            },
+            {
+              text: 'Admin 后台工具',
+              items: [
+                {
+                  text: 'sys_filter_unit 单位筛选',
+                  link: 'admin/sys_filter_unit'
+                },
+                {
+                  text: 'sys_filter_user 用户筛选',
+                  link: 'admin/sys_filter_user'
+                },
+                {
+                  text: 'sys_menu 菜单',
+                  link: 'admin/sys_menu'
+                },
+                {
+                  text: 'sys_role 角色',
+                  link: 'admin/sys_role'
+                },
+                {
+                  text: 'sys_tag 标签',
+                  link: 'admin/sys_tag'
+                },
+                {
+                  text: 'sys_tagMap 标签关联',
+                  link: 'admin/sys_tagMap'
+                },
+                {
+                  text: 'sys_unit 单位',
+                  link: 'admin/sys_unit'
+                },
+                {
+                  text: 'sys_user 用户',
+                  link: 'admin/sys_user'
+                }
+              ]
             }
           ]
         },

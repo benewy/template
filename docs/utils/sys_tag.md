@@ -33,4 +33,4 @@ HTTP方法： `GET`
 |---|---|---|---|
 | id | 是 | `Integer` | 标签id编号 |
 | tagType | 是 | `SysTagTypeEnum` | 标签分类，点击 [详情](https://github.com/elonehoo/benewy-template/blob/main/project/basic/src/main/java/com/beneway/basic/system/sys_tag/enums/SysTagTypeEnum.java#L6) 查看详细内容 |
-| id | 是 | `String` | 标签名称 |
+| tagName | 是 | `String` | 标签名称 |

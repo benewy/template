@@ -41,7 +41,7 @@ HTTP方法： `GET`
 
 ### 请求说明
 
-该接口所需权限
+该接口所需权限:
 
 permission = `sys:filterUnit:edit`
 
