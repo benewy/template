@@ -59,7 +59,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.12</version>
+            <version>1.2.14</version>
         </dependency>
         <!--mybatis plus-->
         <dependency>
@@ -86,25 +86,25 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.6</version>
+            <version>5.8.9</version>
         </dependency>
         <!--gson-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.1</version>
+            <version>2.10</version>
         </dependency>
         <!--joda-time-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.11.1</version>
+            <version>2.12.1</version>
         </dependency>
         <!--jackson-->
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-core</artifactId>
-          <version>2.13.4</version>
+          <version>2.14.0</version>
         </dependency>
         <!-- 政务钉钉 -->
         <dependency>
@@ -126,13 +126,13 @@
         <dependency>
           <groupId>com.alibaba</groupId>
           <artifactId>fastjson</artifactId>
-          <version>2.0.14</version>
+          <version>2.0.18.android</version>
         </dependency>
         <!--zxing-->
         <dependency>
           <groupId>com.google.zxing</groupId>
           <artifactId>core</artifactId>
-          <version>3.5.0</version>
+          <version>3.5.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/e-iceblue/spire.doc.free -->
         <dependency>
