@@ -59,7 +59,7 @@ public class AdminSysUserController {
      * @return
      */
     @PostMapping("/login")
-    public Result login(LoginFo loginFo) {
+    public Result login(@RequestBody LoginFo loginFo) {
         Result login = adminSysUserService.login(loginFo);
         return login;
     }

@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /lists
+    context-path: /template
 spring:
   profiles:
     include: basic,dev,basic-dev
