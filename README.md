@@ -19,11 +19,11 @@
 
 ### UI框架
 
-- [Ant Design Vue](https://2x.antdv.com/docs/vue/migration-v2-cn) - 提炼自企业级中后台产品的交互语言和视觉风格。
+- [Naive Ui](https://www.naiveui.com/zh-CN/dark) - 一个 Vue 3 组件库。 相当完整。 主题可定制。 使用 TypeScript 。 快速地。
 
 ### Icons
 
-- [@ant-design/icons-vue](https://2x.antdv.com/components/icon-cn) - 使用任意的图标。
+- [xicons](https://xicons.org/#/) - 使用任意的图标。
 
 ## 插件
 
@@ -34,7 +34,7 @@
 - [Vue Router](https://github.com/vuejs/router) - Vue.js 的官方路由
 - [Pinia](https://github.com/vuejs/pinia) - 直接的, 类型安全的, 使用 Composition api 的轻便灵活的 Vue 状态管理
 - [VueUse](https://github.com/vueuse/vueuse) - 实用的 Composition API 工具合集
-- [Windicss](https://github.com/windicss/windicss) - 下一代实用程序优先的 CSS 框架。
+- [TailwindCss](https://github.com/windicss/windicss) - 下一代实用程序优先的 CSS 框架。
 
 ## License
 
