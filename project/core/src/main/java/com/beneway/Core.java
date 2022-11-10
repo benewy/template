@@ -12,7 +12,7 @@
  * 许可证下的限制。
  */
 
-package com.beneway.core;
+package com.beneway;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
