@@ -22,18 +22,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    @Value("${spring.profiles.include}")
-    private String[] actives;
+  @Value("${spring.profiles.active}")
+  private String active;
 
-    @Value("${appConfig.excludePaths}")
-    private String[] excludePaths;
+  @Value("${appConfig.excludePaths}")
+  private String[] excludePaths;
 
-    @Value("${appConfig.moduleType}")
-    private String moduleType;
+  @Value("${appConfig.moduleType}")
+  private String moduleType;
 
-    public void setActive(String[] actives) {
-      if (this.actives == null){
-        this.actives = actives;
+  public void setActive(String active) {
+      if (this.active == null){
+        this.active = active;
       }
     }
 

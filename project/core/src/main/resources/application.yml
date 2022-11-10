@@ -3,7 +3,11 @@ server:
     context-path: /template
 spring:
   profiles:
-    include: basic,dev,basic-dev
+    active: dev
+    include: basic
+    group:
+      dev: basic-dev,core-dev
+      prod: basic-prod,core-prod
 appConfig:
   moduleType: admin
   excludePaths: /admin_sys_user/login,/admin_sys_user/qrLogin,/login/getLoginVerifyImg

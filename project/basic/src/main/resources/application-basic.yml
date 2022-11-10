@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: "basic"
+      on-profile: basic
 mybatis-plus:
   mapper-locations: classpath:com/beneway/basic/**/mapper/*.xml
   type-aliases-package: com.beneway.**.entity

@@ -63,12 +63,7 @@ public class AppUtils {
   }
 
   public Boolean isProd(){
-    for (String active : appConfig.getActives()) {
-      if ("prod".equals(active)){
-        return true;
-      }
-    }
-    return false;
+    return appConfig.getActive().equals("prod");
   }
 
 }
