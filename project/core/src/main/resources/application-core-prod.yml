@@ -11,9 +11,10 @@ spring:
       max-request-size: 100MB
   redis:
     database: 0
-    host: 127.0.0.1
-    port: 6379
-    password:      # 密码（默认为空）
+    host: containers-us-west-53.railway.app
+    port: 6265
+    username: default
+    password: pxTDGk97fT19jx1wmfvk      # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     lettuce:
       pool:
