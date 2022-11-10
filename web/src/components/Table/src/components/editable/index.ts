@@ -1,35 +1,18 @@
-import type { BasicColumn } from '/@/components/Table/src/types/table';
-
+import type { BasicColumn } from '@/components/Table/src/types/table';
 import { h, Ref } from 'vue';
 
 import EditableCell from './EditableCell.vue';
-import { isArray } from '/@/utils/is';
-
-interface Params {
-  text: string;
-  record: Recordable;
-  index: number;
-}
 
 export function renderEditCell(column: BasicColumn) {
-  return ({ text: value, record, index }: Params) => {
-    record.onValid = async () => {
-      if (isArray(record?.validCbs)) {
-        const validFns = (record?.validCbs || []).map((fn) => fn());
-        const res = await Promise.all(validFns);
-        return res.every((item) => !!item);
-      } else {
-        return false;
-      }
-    };
-
+  return (record, index) => {
+    const _key = column.key;
+    const value = record[_key];
     record.onEdit = async (edit: boolean, submit = false) => {
       if (!submit) {
         record.editable = edit;
       }
 
       if (!edit && submit) {
-        if (!(await record.onValid())) return false;
         const res = await record.onSubmitEdit?.();
         if (res) {
           record.editable = false;
@@ -43,7 +26,6 @@ export function renderEditCell(column: BasicColumn) {
       }
       return true;
     };
-
     return h(EditableCell, {
       value,
       record,
@@ -56,7 +38,6 @@ export function renderEditCell(column: BasicColumn) {
 export type EditRecordRow<T = Recordable> = Partial<
   {
     onEdit: (editable: boolean, submit?: boolean) => Promise<boolean>;
-    onValid: () => Promise<boolean>;
     editable: boolean;
     onCancel: Fn;
     onSubmit: Fn;

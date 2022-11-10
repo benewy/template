@@ -1,32 +1,19 @@
-/**
- * Global authority directive
- * Used for fine-grained control of component permissions
- * @Example v-auth="RoleEnum.TEST"
- */
-import type { App, Directive, DirectiveBinding } from 'vue';
+import { ObjectDirective } from 'vue';
+import { usePermission } from '@/hooks/web/usePermission';
 
-import { usePermission } from '/@/hooks/web/usePermission';
-
-function isAuth(el: Element, binding: any) {
-  const { hasPermission } = usePermission();
-
-  const value = binding.value;
-  if (!value) return;
-  if (!hasPermission(value)) {
-    el.parentNode?.removeChild(el);
-  }
-}
-
-const mounted = (el: Element, binding: DirectiveBinding<any>) => {
-  isAuth(el, binding);
+export const permission: ObjectDirective = {
+  mounted(el: HTMLButtonElement, binding) {
+    if (binding.value == undefined) return;
+    const { action, effect } = binding.value;
+    const { hasPermission } = usePermission();
+    if (!hasPermission(action)) {
+      if (effect == 'disabled') {
+        el.disabled = true;
+        el.style['disabled'] = 'disabled';
+        el.classList.add('n-button--disabled');
+      } else {
+        el.remove();
+      }
+    }
+  },
 };
-
-const authDirective: Directive = {
-  mounted,
-};
-
-export function setupPermissionDirective(app: App) {
-  app.directive('auth', authDirective);
-}
-
-export default authDirective;

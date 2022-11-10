@@ -2,7 +2,7 @@ import type { Ref } from 'vue';
 import type { BasicTableProps, TableActionType } from '../types/table';
 import { provide, inject, ComputedRef } from 'vue';
 
-const key = Symbol('basic-table');
+const key = Symbol('s-table');
 
 type Instance = TableActionType & {
   wrapRef: Ref<Nullable<HTMLElement>>;

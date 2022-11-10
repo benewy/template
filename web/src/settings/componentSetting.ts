@@ -1,51 +1,31 @@
-// Used to configure the general configuration of some components without modifying the components
-
-import type { SorterResult } from '../components/Table';
-
 export default {
-  // basic-table setting
   table: {
-    // Form interface request general configuration
-    // support xxx.xxx.xxx
-    fetchSetting: {
-      // The field name of the current page passed to the background
+    apiSetting: {
+      // 当前页的字段名
       pageField: 'page',
-      // The number field name of each page displayed in the background
+      // 每页数量字段名
       sizeField: 'pageSize',
-      // Field name of the form data returned by the interface
-      listField: 'items',
-      // Total number of tables returned by the interface field name
-      totalField: 'total',
+      // 接口返回的数据字段名
+      listField: 'list',
+      // 接口返回总页数字段名
+      totalField: 'pageCount',
     },
-    // Number of pages that can be selected
-    pageSizeOptions: ['10', '50', '80', '100'],
-    // Default display quantity on one page
+    //默认分页数量
     defaultPageSize: 10,
-    // Default Size
-    defaultSize: 'middle',
-    // Custom general sort function
-    defaultSortFn: (sortInfo: SorterResult) => {
-      const { field, order } = sortInfo;
-      if (field && order) {
-        return {
-          // The sort field passed to the backend you
-          field,
-          // Sorting method passed to the background asc/desc
-          order,
-        };
-      } else {
-        return {};
-      }
-    },
-    // Custom general filter function
-    defaultFilterFn: (data: Partial<Recordable<string[]>>) => {
-      return data;
-    },
+    //可切换每页数量集合
+    pageSizes: [10, 20, 30, 40, 50],
   },
-  // scrollbar setting
-  scrollbar: {
-    // Whether to use native scroll bar
-    // After opening, the menu, modal, drawer will change the pop-up scroll bar to native
-    native: false,
+  upload: {
+    //考虑接口规范不同
+    apiSetting: {
+      // 集合字段名
+      infoField: 'data',
+      // 图片地址字段名
+      imgField: 'photo',
+    },
+    //最大上传图片大小
+    maxSize: 2,
+    //图片上传类型
+    fileType: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/svg+xml'],
   },
 };

@@ -1,38 +1,42 @@
 import type { EChartsOption } from 'echarts';
 import type { Ref } from 'vue';
-import { useTimeoutFn } from '/@/hooks/core/useTimeout';
+
+import { useTimeoutFn } from '@/hooks/core/useTimeout';
 import { tryOnUnmounted } from '@vueuse/core';
 import { unref, nextTick, watch, computed, ref } from 'vue';
 import { useDebounceFn } from '@vueuse/core';
-import { useEventListener } from '/@/hooks/event/useEventListener';
-import { useBreakpoint } from '/@/hooks/event/useBreakpoint';
-import echarts from '/@/utils/lib/echarts';
-import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import { useEventListener } from '@/hooks/event/useEventListener';
+import { useBreakpoint } from '@/hooks/event/useBreakpoint';
+
+import echarts from '@/utils/lib/echarts';
+
+import { useDesignSetting } from '@/hooks/setting/useDesignSetting';
 
 export function useECharts(
   elRef: Ref<HTMLDivElement>,
-  theme: 'light' | 'dark' | 'default' = 'default',
+  theme: 'light' | 'dark' | 'default' = 'default'
 ) {
-  const { getDarkMode: getSysDarkMode } = useRootSetting();
+  const { getDarkTheme: getSysDarkTheme } = useDesignSetting();
 
-  const getDarkMode = computed(() => {
-    return theme === 'default' ? getSysDarkMode.value : theme;
+  const getDarkTheme = computed(() => {
+    const sysTheme: string = getSysDarkTheme.value ? 'dark' : 'light';
+    return theme === 'default' ? sysTheme : theme;
   });
+
   let chartInstance: echarts.ECharts | null = null;
   let resizeFn: Fn = resize;
-  const cacheOptions = ref({}) as Ref<EChartsOption>;
+  const cacheOptions = ref({});
   let removeResizeFn: Fn = () => {};
-
   resizeFn = useDebounceFn(resize, 200);
 
-  const getOptions = computed(() => {
-    if (getDarkMode.value !== 'dark') {
-      return cacheOptions.value as EChartsOption;
+  const getOptions = computed((): EChartsOption => {
+    if (getDarkTheme.value !== 'dark') {
+      return cacheOptions.value;
     }
     return {
       backgroundColor: 'transparent',
       ...cacheOptions.value,
-    } as EChartsOption;
+    };
   });
 
   function initCharts(t = theme) {
@@ -67,7 +71,7 @@ export function useECharts(
     nextTick(() => {
       useTimeoutFn(() => {
         if (!chartInstance) {
-          initCharts(getDarkMode.value as 'default');
+          initCharts(getDarkTheme.value as 'default');
 
           if (!chartInstance) return;
         }
@@ -83,28 +87,30 @@ export function useECharts(
   }
 
   watch(
-    () => getDarkMode.value,
+    () => getDarkTheme.value,
     (theme) => {
       if (chartInstance) {
         chartInstance.dispose();
         initCharts(theme as 'default');
         setOptions(cacheOptions.value);
       }
-    },
+    }
   );
 
-  tryOnUnmounted(() => {
+  tryOnUnmounted(disposeInstance);
+
+  function getInstance(): echarts.ECharts | null {
+    if (!chartInstance) {
+      initCharts(getDarkTheme.value as 'default');
+    }
+    return chartInstance;
+  }
+
+  function disposeInstance(){
     if (!chartInstance) return;
     removeResizeFn();
     chartInstance.dispose();
     chartInstance = null;
-  });
-
-  function getInstance(): echarts.ECharts | null {
-    if (!chartInstance) {
-      initCharts(getDarkMode.value as 'default');
-    }
-    return chartInstance;
   }
 
   return {
@@ -112,5 +118,6 @@ export function useECharts(
     resize,
     echarts,
     getInstance,
+    disposeInstance
   };
 }

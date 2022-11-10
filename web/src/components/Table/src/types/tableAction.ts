@@ -1,19 +1,20 @@
-import { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
-import { TooltipProps } from 'ant-design-vue/es/tooltip/Tooltip';
-import { RoleEnum } from '/@/enums/roleEnum';
-export interface ActionItem extends ButtonProps {
+import { NButton } from 'naive-ui';
+import type { Component } from 'vue';
+import { PermissionsEnum } from '@/enums/permissionsEnum';
+export interface ActionItem extends Partial<InstanceType<typeof NButton>> {
   onClick?: Fn;
   label?: string;
-  color?: 'success' | 'error' | 'warning';
-  icon?: string;
+  type?: 'success' | 'error' | 'warning' | 'info' | 'primary' | 'default';
+  // 设定 color 后会覆盖 type 的样式
+  color?: string;
+  icon?: Component;
   popConfirm?: PopConfirm;
   disabled?: boolean;
   divider?: boolean;
   // 权限编码控制是否显示
-  auth?: RoleEnum | RoleEnum[] | string | string[];
+  auth?: PermissionsEnum | PermissionsEnum[] | string | string[];
   // 业务控制是否显示
   ifShow?: boolean | ((action: ActionItem) => boolean);
-  tooltip?: string | TooltipProps;
 }
 
 export interface PopConfirm {
@@ -22,5 +23,5 @@ export interface PopConfirm {
   cancelText?: string;
   confirm: Fn;
   cancel?: Fn;
-  icon?: string;
+  icon?: Component;
 }

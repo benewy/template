@@ -1,36 +1,46 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-// The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
-
-import type { AxiosResponse } from 'axios';
-import type { RequestOptions, Result } from '/#/axios';
-import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { VAxios } from './Axios';
+import { AxiosTransform } from './axiosTransform';
+import axios, { AxiosResponse } from 'axios';
 import { checkStatus } from './checkStatus';
-import { useGlobSetting } from '/@/hooks/setting';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
-import { isString } from '/@/utils/is';
-import { getToken } from '/@/utils/auth';
-import { setObjToUrlParams, deepMerge } from '/@/utils';
-import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
-import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
-import { useUserStoreWithOut } from '/@/store/modules/user';
+import { RequestEnum, ResultEnum, ContentTypeEnum } from '@/enums/httpEnum';
+import { PageEnum } from '@/enums/pageEnum';
+
+import { useGlobSetting } from '@/hooks/setting';
+
+import { isString } from '@/utils/is/';
+import { deepMerge, isUrl } from '@/utils';
+import { setObjToUrlParams } from '@/utils/urlUtils';
+
+import { RequestOptions, Result, CreateAxiosOptions } from './types';
+
+import { useUserStoreWidthOut } from '@/store/modules/user';
 
 const globSetting = useGlobSetting();
-const urlPrefix = globSetting.urlPrefix;
-const { createMessage, createErrorModal } = useMessage();
+const urlPrefix = globSetting.urlPrefix || '';
+
+import router from '@/router';
+import { storage } from '@/utils/Storage';
 
 /**
  * @description: 数据处理，方便区分多种处理方式
  */
 const transform: AxiosTransform = {
   /**
-   * @description: 处理请求数据。如果数据不是预期格式，可直接抛出错误
+   * @description: 处理请求数据
    */
-  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
-    const { t } = useI18n();
-    const { isTransformResponse, isReturnNativeResponse } = options;
+  transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
+    const {
+      isShowMessage = true,
+      isShowErrorMessage,
+      isShowSuccessMessage,
+      successMessageText,
+      errorMessageText,
+      isTransformResponse,
+      isReturnNativeResponse,
+    } = options;
+
     // 是否返回原生响应头 比如：需要获取响应头时使用该属性
     if (isReturnNativeResponse) {
       return res;
@@ -40,63 +50,93 @@ const transform: AxiosTransform = {
     if (!isTransformResponse) {
       return res.data;
     }
-    // 错误的时候返回
 
     const { data } = res;
+
+    const $dialog = window['$dialog'];
+    const $message = window['$message'];
+
     if (!data) {
       // return '[HTTP] Request has no return value';
-      throw new Error(t('sys.api.apiRequestFailed'));
+      throw new Error('请求出错，请稍候重试');
     }
-    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    //  这里 code，result，message为 后台统一的字段，需要修改为项目自己的接口返回格式
     const { code, result, message } = data;
-
-    // 这里逻辑可以根据项目进行修改
+    // 请求成功
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
-    if (hasSuccess) {
+    // 是否显示提示信息
+    if (isShowMessage) {
+      if (hasSuccess && (successMessageText || isShowSuccessMessage)) {
+        // 是否显示自定义信息提示
+        $dialog.success({
+          type: 'success',
+          content: successMessageText || message || '操作成功！',
+        });
+      } else if (!hasSuccess && (errorMessageText || isShowErrorMessage)) {
+        // 是否显示自定义信息提示
+        $message.error(message || errorMessageText || '操作失败！');
+      } else if (!hasSuccess && options.errorMessageMode === 'modal') {
+        // errorMessageMode=‘custom-modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
+        $dialog.info({
+          title: '提示',
+          content: message,
+          positiveText: '确定',
+          onPositiveClick: () => {},
+        });
+      }
+    }
+
+    // 接口请求成功，直接返回结果
+    if (code === ResultEnum.SUCCESS) {
       return result;
     }
-
-    // 在此处根据自己项目的实际情况对不同的code执行不同的操作
-    // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
-    let timeoutMsg = '';
+    // 接口请求错误，统一提示错误信息 这里逻辑可以根据项目进行修改
+    let errorMsg = message;
     switch (code) {
-      case ResultEnum.TIMEOUT:
-        timeoutMsg = t('sys.api.timeoutMessage');
-        const userStore = useUserStoreWithOut();
-        userStore.setToken(undefined);
-        userStore.logout(true);
+      // 请求失败
+      case ResultEnum.ERROR:
+        $message.error(errorMsg);
         break;
-      default:
-        if (message) {
-          timeoutMsg = message;
-        }
+      // 登录超时
+      case ResultEnum.TIMEOUT:
+        const LoginName = PageEnum.BASE_LOGIN_NAME;
+        const LoginPath = PageEnum.BASE_LOGIN;
+        if (router.currentRoute.value?.name === LoginName) return;
+        // 到登录页
+        errorMsg = '登录超时，请重新登录!';
+        $dialog.warning({
+          title: '提示',
+          content: '登录身份已失效，请重新登录!',
+          positiveText: '确定',
+          //negativeText: '取消',
+          closable: false,
+          maskClosable: false,
+          onPositiveClick: () => {
+            storage.clear();
+            window.location.href = LoginPath;
+          },
+          onNegativeClick: () => {},
+        });
+        break;
     }
-
-    // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
-    // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
-    if (options.errorMessageMode === 'modal') {
-      createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
-    } else if (options.errorMessageMode === 'message') {
-      createMessage.error(timeoutMsg);
-    }
-
-    throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
+    throw new Error(errorMsg);
   },
 
   // 请求之前处理config
   beforeRequestHook: (config, options) => {
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
 
-    if (joinPrefix) {
+    const isUrlStr = isUrl(config.url as string);
+
+    if (!isUrlStr && joinPrefix) {
       config.url = `${urlPrefix}${config.url}`;
     }
 
-    if (apiUrl && isString(apiUrl)) {
+    if (!isUrlStr && apiUrl && isString(apiUrl)) {
       config.url = `${apiUrl}${config.url}`;
     }
     const params = config.params || {};
     const data = config.data || false;
-    formatDate && data && !isString(data) && formatRequestDate(data);
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
         // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
@@ -113,14 +153,13 @@ const transform: AxiosTransform = {
           config.data = data;
           config.params = params;
         } else {
-          // 非GET请求如果没有提供data，则将params视为data
           config.data = params;
           config.params = undefined;
         }
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(
             config.url as string,
-            Object.assign({}, config.params, config.data),
+            Object.assign({}, config.params, config.data)
           );
         }
       } else {
@@ -137,10 +176,11 @@ const transform: AxiosTransform = {
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token = getToken();
+    const userStore = useUserStoreWidthOut();
+    const token = userStore.getToken;
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
-      (config as Recordable).headers.Authorization = options.authenticationScheme
+      (config as Recordable).headers.access_token = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
         : token;
     }
@@ -148,47 +188,46 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 响应拦截器处理
-   */
-  responseInterceptors: (res: AxiosResponse<any>) => {
-    return res;
-  },
-
-  /**
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (error: any) => {
-    const { t } = useI18n();
-    const errorLogStore = useErrorLogStoreWithOut();
-    errorLogStore.addAjaxErrorInfo(error);
-    const { response, code, message, config } = error || {};
-    const errorMessageMode = config?.requestOptions?.errorMessageMode || 'none';
-    const msg: string = response?.data?.error?.message ?? '';
-    const err: string = error?.toString?.() ?? '';
-    let errMessage = '';
-
+    const $dialog = window['$dialog'];
+    const $message = window['$message'];
+    const { response, code, message } = error || {};
+    // TODO 此处要根据后端接口返回格式修改
+    const msg: string =
+      response && response.data && response.data.message ? response.data.message : '';
+    const err: string = error.toString();
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        errMessage = t('sys.api.apiTimeoutMessage');
+        $message.error('接口请求超时，请刷新页面重试!');
+        return;
       }
-      if (err?.includes('Network Error')) {
-        errMessage = t('sys.api.networkExceptionMsg');
-      }
-
-      if (errMessage) {
-        if (errorMessageMode === 'modal') {
-          createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });
-        } else if (errorMessageMode === 'message') {
-          createMessage.error(errMessage);
-        }
+      if (err && err.includes('Network Error')) {
+        $dialog.info({
+          title: '网络异常',
+          content: '请检查您的网络连接是否正常',
+          positiveText: '确定',
+          //negativeText: '取消',
+          closable: false,
+          maskClosable: false,
+          onPositiveClick: () => {},
+          onNegativeClick: () => {},
+        });
         return Promise.reject(error);
       }
     } catch (error) {
-      throw new Error(error as unknown as string);
+      throw new Error(error as any);
     }
-
-    checkStatus(error?.response?.status, msg, errorMessageMode);
-    return Promise.reject(error);
+    // 请求是否被取消
+    const isCancel = axios.isCancel(error);
+    if (!isCancel) {
+      checkStatus(error.response && error.response.status, msg);
+    } else {
+      console.warn(error, '请求被取消！');
+    }
+    //return Promise.reject(error);
+    return Promise.reject(response?.data);
   },
 };
 
@@ -196,17 +235,11 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     deepMerge(
       {
-        // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
-        // authentication schemes，e.g: Bearer
-        // authenticationScheme: 'Bearer',
-        authenticationScheme: '',
         timeout: 10 * 1000,
-        // 基础接口地址
-        // baseURL: globSetting.apiUrl,
-
+        authenticationScheme: '',
+        // 接口前缀
+        prefixUrl: urlPrefix,
         headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // 如果是form-data格式
-        // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式
         transform,
         // 配置项，下面的选项都可以在独立的接口请求中覆盖
@@ -216,13 +249,13 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否返回原生响应头 比如：需要获取响应头时使用该属性
           isReturnNativeResponse: false,
           // 需要对返回数据进行处理
-          isTransformResponse: true,
+          isTransformResponse: false,
           // post请求的时候添加参数到url
           joinParamsToUrl: false,
           // 格式化提交参数时间
           formatDate: true,
           // 消息提示类型
-          errorMessageMode: 'message',
+          errorMessageMode: 'none',
           // 接口地址
           apiUrl: globSetting.apiUrl,
           // 接口拼接地址
@@ -234,17 +267,21 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否携带token
           withToken: true,
         },
+        withCredentials: false,
       },
-      opt || {},
-    ),
+      opt || {}
+    )
   );
 }
-export const defHttp = createAxios();
 
-// other api url
-// export const otherHttp = createAxios({
+export const http = createAxios();
+
+// 项目，多个不同 api 地址，直接在这里导出多个
+// src/api ts 里面接口，就可以单独使用这个请求，
+// import { httpTwo } from '@/utils/http/axios'
+// export const httpTwo = createAxios({
 //   requestOptions: {
-//     apiUrl: 'xxx',
-//     urlPrefix: 'xxx',
+//     apiUrl: 'http://localhost:9001',
+//     urlPrefix: 'api',
 //   },
 // });

@@ -1,59 +1,35 @@
-import '/@/design/index.less';
-import 'virtual:windi-base.css';
-import 'virtual:windi-components.css';
-import 'virtual:windi-utilities.css';
-// Register icon sprite
-import 'virtual:svg-icons-register';
-import App from './App.vue';
+import './styles/tailwind.css';
 import { createApp } from 'vue';
-import { initAppConfigStore } from '/@/logics/initAppConfig';
-import { setupErrorHandle } from '/@/logics/error-handle';
-import { router, setupRouter } from '/@/router';
-import { setupRouterGuard } from '/@/router/guard';
-import { setupStore } from '/@/store';
-import { setupGlobDirectives } from '/@/directives';
-import { setupI18n } from '/@/locales/setupI18n';
-import { registerGlobComp } from '/@/components/registerGlobComp';
-
-// Importing on demand in local development will increase the number of browser requests by around 20%.
-// This may slow down the browser refresh speed.
-// Therefore, only enable on-demand importing in production environments .
-if (import.meta.env.DEV) {
-  import('ant-design-vue/dist/antd.less');
-}
+import { setupNaive, setupDirectives } from '@/plugins';
+import App from './App.vue';
+import router, { setupRouter } from './router';
+import { setupStore } from '@/store';
 
 async function bootstrap() {
   const app = createApp(App);
 
-  // Configure store
+  // 注册全局常用的 naive-ui 组件
+  setupNaive(app);
+
+  // 注册全局自定义组件
+  //setupCustomComponents();
+
+  // 注册全局自定义指令，如：v-permission权限指令
+  setupDirectives(app);
+
+  // 注册全局方法，如：app.config.globalProperties.$message = message
+  //setupGlobalMethods(app);
+
+  // 挂载状态管理
   setupStore(app);
 
-  // Initialize internal system configuration
-  initAppConfigStore();
+  // 挂载路由
+  await setupRouter(app);
 
-  // Register global components
-  registerGlobComp(app);
+  // 路由准备就绪后挂载APP实例
+  await router.isReady();
 
-  // Multilingual configuration
-  // Asynchronous case: language files may be obtained from the server side
-  await setupI18n(app);
-
-  // Configure routing
-  setupRouter(app);
-
-  // router-guard
-  setupRouterGuard(router);
-
-  // Register global directive
-  setupGlobDirectives(app);
-
-  // Configure global error handling
-  setupErrorHandle(app);
-
-  // https://next.router.vuejs.org/api/#isready
-  // await router.isReady();
-
-  app.mount('#app');
+  app.mount('#app', true);
 }
 
-bootstrap();
+void bootstrap();

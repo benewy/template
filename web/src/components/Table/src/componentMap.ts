@@ -1,27 +1,34 @@
 import type { Component } from 'vue';
 import {
-  Input,
-  Select,
-  Checkbox,
-  InputNumber,
-  Switch,
-  DatePicker,
-  TimePicker,
-} from 'ant-design-vue';
+  NInput,
+  NSelect,
+  NCheckbox,
+  NInputNumber,
+  NSwitch,
+  NDatePicker,
+  NTimePicker,
+} from 'naive-ui';
 import type { ComponentType } from './types/componentType';
-import { ApiSelect, ApiTreeSelect } from '/@/components/Form';
+
+export enum EventEnum {
+  NInput = 'on-input',
+  NInputNumber = 'on-input',
+  NSelect = 'on-update:value',
+  NSwitch = 'on-update:value',
+  NCheckbox = 'on-update:value',
+  NDatePicker = 'on-update:value',
+  NTimePicker = 'on-update:value',
+}
 
 const componentMap = new Map<ComponentType, Component>();
 
-componentMap.set('Input', Input);
-componentMap.set('InputNumber', InputNumber);
-componentMap.set('Select', Select);
-componentMap.set('ApiSelect', ApiSelect);
-componentMap.set('ApiTreeSelect', ApiTreeSelect);
-componentMap.set('Switch', Switch);
-componentMap.set('Checkbox', Checkbox);
-componentMap.set('DatePicker', DatePicker);
-componentMap.set('TimePicker', TimePicker);
+componentMap.set('NInput', NInput);
+componentMap.set('NInputNumber', NInputNumber);
+componentMap.set('NSelect', NSelect);
+componentMap.set('NSwitch', NSwitch);
+componentMap.set('NCheckbox', NCheckbox);
+componentMap.set('NDatePicker', NDatePicker);
+componentMap.set('NTimePicker', NTimePicker);
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component);

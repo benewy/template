@@ -1,11 +1,6 @@
-import { ThemeEnum } from '../enums/appEnum';
-
-export const prefixCls = 'vben';
-
-export const darkMode = ThemeEnum.LIGHT;
-
 // app theme preset color
-export const APP_PRESET_COLOR_LIST: string[] = [
+export const appThemeList: string[] = [
+  '#2d8cf0',
   '#0960bd',
   '#0084f4',
   '#009688',
@@ -15,34 +10,23 @@ export const APP_PRESET_COLOR_LIST: string[] = [
   '#0096c7',
   '#9c27b0',
   '#ff9800',
+  '#FF3D68',
+  '#00C1D4',
+  '#71EFA3',
+  '#171010',
+  '#78DEC7',
+  '#1768AC',
+  '#FB9300',
+  '#FC5404',
 ];
 
-// header preset color
-export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
-  '#ffffff',
-  '#151515',
-  '#009688',
-  '#5172DC',
-  '#018ffb',
-  '#409eff',
-  '#e74c3c',
-  '#24292e',
-  '#394664',
-  '#001529',
-  '#383f45',
-];
+const setting = {
+  //深色主题
+  darkTheme: false,
+  //系统主题色
+  appTheme: '#2d8cf0',
+  //系统内置主题色列表
+  appThemeList,
+};
 
-// sider preset color
-export const SIDE_BAR_BG_COLOR_LIST: string[] = [
-  '#001529',
-  '#212121',
-  '#273352',
-  '#ffffff',
-  '#191b24',
-  '#191a23',
-  '#304156',
-  '#001628',
-  '#28333E',
-  '#344058',
-  '#383f45',
-];
+export default setting;

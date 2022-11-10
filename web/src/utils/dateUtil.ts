@@ -1,20 +1,12 @@
-/**
- * Independent time operation tool to facilitate subsequent switch to dayjs
- */
-import moment from 'moment';
+import { format } from 'date-fns';
 
-const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 const DATE_FORMAT = 'YYYY-MM-DD ';
 
-export function formatToDateTime(
-  date: moment.MomentInput = undefined,
-  format = DATE_TIME_FORMAT,
-): string {
-  return moment(date).format(format);
+export function formatToDateTime(date: null, formatStr = DATE_TIME_FORMAT): string {
+  return format(date, formatStr);
 }
 
-export function formatToDate(date: moment.MomentInput = undefined, format = DATE_FORMAT): string {
-  return moment(date).format(format);
+export function formatToDate(date: null, formatStr = DATE_FORMAT): string {
+  return format(date, formatStr);
 }
-
-export const dateUtil = moment;

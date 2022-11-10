@@ -1,135 +1,29 @@
-import type { BasicColumn, BasicTableProps, CellFormat, GetColumnsParams } from '../types/table';
-import type { PaginationProps } from '../types/pagination';
-import type { ComputedRef } from 'vue';
-import { computed, Ref, ref, toRaw, unref, watch } from 'vue';
+import { ref, Ref, ComputedRef, unref, computed, watch, toRaw, h } from 'vue';
+import type { BasicColumn, BasicTableProps } from '../types/table';
+import { isEqual, cloneDeep } from 'lodash-es';
+import { isArray, isString, isBoolean, isFunction } from '@/utils/is';
+import { usePermission } from '@/hooks/web/usePermission';
+import { ActionItem } from '@/components/Table';
 import { renderEditCell } from '../components/editable';
-import { usePermission } from '/@/hooks/web/usePermission';
-import { useI18n } from '/@/hooks/web/useI18n';
-import { isArray, isBoolean, isFunction, isMap, isString } from '/@/utils/is';
-import { cloneDeep, isEqual } from 'lodash-es';
-import { formatToDate } from '/@/utils/dateUtil';
-import { ACTION_COLUMN_FLAG, DEFAULT_ALIGN, INDEX_COLUMN_FLAG, PAGE_SIZE } from '../const';
+import { NTooltip, NIcon } from 'naive-ui';
+import { FormOutlined } from '@vicons/antd';
 
-function handleItem(item: BasicColumn, ellipsis: boolean) {
-  const { key, dataIndex, children } = item;
-  item.align = item.align || DEFAULT_ALIGN;
-  if (ellipsis) {
-    if (!key) {
-      item.key = dataIndex;
-    }
-    if (!isBoolean(item.ellipsis)) {
-      Object.assign(item, {
-        ellipsis,
-      });
-    }
-  }
-  if (children && children.length) {
-    handleChildren(children, !!ellipsis);
-  }
-}
-
-function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean) {
-  if (!children) return;
-  children.forEach((item) => {
-    const { children } = item;
-    handleItem(item, ellipsis);
-    handleChildren(children, ellipsis);
-  });
-}
-
-function handleIndexColumn(
-  propsRef: ComputedRef<BasicTableProps>,
-  getPaginationRef: ComputedRef<boolean | PaginationProps>,
-  columns: BasicColumn[],
-) {
-  const { t } = useI18n();
-
-  const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef);
-
-  let pushIndexColumns = false;
-  if (unref(isTreeTable)) {
-    return;
-  }
-  columns.forEach(() => {
-    const indIndex = columns.findIndex((column) => column.flag === INDEX_COLUMN_FLAG);
-    if (showIndexColumn) {
-      pushIndexColumns = indIndex === -1;
-    } else if (!showIndexColumn && indIndex !== -1) {
-      columns.splice(indIndex, 1);
-    }
-  });
-
-  if (!pushIndexColumns) return;
-
-  const isFixedLeft = columns.some((item) => item.fixed === 'left');
-
-  columns.unshift({
-    flag: INDEX_COLUMN_FLAG,
-    width: 50,
-    title: t('component.table.index'),
-    align: 'center',
-    customRender: ({ index }) => {
-      const getPagination = unref(getPaginationRef);
-      if (isBoolean(getPagination)) {
-        return `${index + 1}`;
-      }
-      const { current = 1, pageSize = PAGE_SIZE } = getPagination;
-      return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1;
-    },
-    ...(isFixedLeft
-      ? {
-          fixed: 'left',
-        }
-      : {}),
-    ...indexColumnProps,
-  });
-}
-
-function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
-  const { actionColumn } = unref(propsRef);
-  if (!actionColumn) return;
-
-  const hasIndex = columns.findIndex((column) => column.flag === ACTION_COLUMN_FLAG);
-  if (hasIndex === -1) {
-    columns.push({
-      ...columns[hasIndex],
-      fixed: 'right',
-      ...actionColumn,
-      flag: ACTION_COLUMN_FLAG,
-    });
-  }
-}
-
-export function useColumns(
-  propsRef: ComputedRef<BasicTableProps>,
-  getPaginationRef: ComputedRef<boolean | PaginationProps>,
-) {
+export function useColumns(propsRef: ComputedRef<BasicTableProps>) {
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
   let cacheColumns = unref(propsRef).columns;
 
   const getColumnsRef = computed(() => {
     const columns = cloneDeep(unref(columnsRef));
 
-    handleIndexColumn(propsRef, getPaginationRef, columns);
     handleActionColumn(propsRef, columns);
-    if (!columns) {
-      return [];
-    }
-    const { ellipsis } = unref(propsRef);
-
-    columns.forEach((item) => {
-      const { customRender, slots } = item;
-
-      handleItem(
-        item,
-        Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
-      );
-    });
+    if (!columns) return [];
     return columns;
   });
 
-  function isIfShow(column: BasicColumn): boolean {
-    const ifShow = column.ifShow;
+  const { hasPermission } = usePermission();
+
+  function isIfShow(action: ActionItem): boolean {
+    const ifShow = action.ifShow;
 
     let isIfShow = true;
 
@@ -137,38 +31,51 @@ export function useColumns(
       isIfShow = ifShow;
     }
     if (isFunction(ifShow)) {
-      isIfShow = ifShow(column);
+      isIfShow = ifShow(action);
     }
     return isIfShow;
   }
-  const { hasPermission } = usePermission();
 
-  const getViewColumns = computed(() => {
-    const viewColumns = sortFixedColumn(unref(getColumnsRef));
+  const renderTooltip = (trigger, content) => {
+    return h(NTooltip, null, {
+      trigger: () => trigger,
+      default: () => content,
+    });
+  };
 
-    const columns = cloneDeep(viewColumns);
+  const getPageColumns = computed(() => {
+    const pageColumns = unref(getColumnsRef);
+    const columns = cloneDeep(pageColumns);
     return columns
       .filter((column) => {
-        return hasPermission(column.auth) && isIfShow(column);
+        return hasPermission(column.auth as string[]) && isIfShow(column);
       })
       .map((column) => {
-        const { slots, dataIndex, customRender, format, edit, editRow, flag } = column;
-
-        if (!slots || !slots?.title) {
-          column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
-          column.customTitle = column.title;
-          Reflect.deleteProperty(column, 'title');
-        }
-        const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
-        if (!customRender && format && !edit && !isDefaultAction) {
-          column.customRender = ({ text, record, index }) => {
-            return formatCell(text, format, record, index);
-          };
-        }
-
-        // edit table
-        if ((edit || editRow) && !isDefaultAction) {
-          column.customRender = renderEditCell(column);
+        //默认 ellipsis 为true
+        column.ellipsis = typeof column.ellipsis === 'undefined' ? { tooltip: true } : false;
+        const { edit } = column;
+        if (edit) {
+          column.render = renderEditCell(column);
+          if (edit) {
+            const title: any = column.title;
+            column.title = () => {
+              return renderTooltip(
+                h('span', {}, [
+                  h('span', { style: { 'margin-right': '5px' } }, title),
+                  h(
+                    NIcon,
+                    {
+                      size: 14,
+                    },
+                    {
+                      default: () => h(FormOutlined),
+                    }
+                  ),
+                ]),
+                '该列可编辑'
+              );
+            };
+          }
         }
         return column;
       });
@@ -178,148 +85,80 @@ export function useColumns(
     () => unref(propsRef).columns,
     (columns) => {
       columnsRef.value = columns;
-      cacheColumns = columns?.filter((item) => !item.flag) ?? [];
-    },
+      cacheColumns = columns;
+    }
   );
 
-  function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
-    if (!dataIndex || !value) {
-      return;
-    }
-    cacheColumns.forEach((item) => {
-      if (item.dataIndex === dataIndex) {
-        Object.assign(item, value);
-        return;
-      }
-    });
+  function handleActionColumn(propsRef: ComputedRef<BasicTableProps>, columns: BasicColumn[]) {
+    const { actionColumn } = unref(propsRef);
+    if (!actionColumn) return;
+    !columns.find((col) => col.key === 'action') &&
+      columns.push({
+        ...(actionColumn as any),
+      });
   }
-  /**
-   * set columns
-   * @param columnList key｜column
-   */
-  function setColumns(columnList: Partial<BasicColumn>[] | string[]) {
-    const columns = cloneDeep(columnList);
+
+  //设置
+  function setColumns(columnList: string[]) {
+    const columns: any[] = cloneDeep(columnList);
     if (!isArray(columns)) return;
 
-    if (columns.length <= 0) {
+    if (!columns.length) {
       columnsRef.value = [];
       return;
     }
-
-    const firstColumn = columns[0];
-
-    const cacheKeys = cacheColumns.map((item) => item.dataIndex);
-
-    if (!isString(firstColumn)) {
-      columnsRef.value = columns as BasicColumn[];
+    const cacheKeys = cacheColumns.map((item) => item.key);
+    //针对拖拽排序
+    if (!isString(columns[0])) {
+      columnsRef.value = columns;
     } else {
-      const columnKeys = columns as string[];
-      const newColumns: BasicColumn[] = [];
+      const newColumns: any[] = [];
       cacheColumns.forEach((item) => {
-        if (columnKeys.includes(item.dataIndex! || (item.key as string))) {
-          newColumns.push({
-            ...item,
-            defaultHidden: false,
-          });
-        } else {
-          newColumns.push({
-            ...item,
-            defaultHidden: true,
-          });
+        if (columnList.includes(item.key)) {
+          newColumns.push({ ...item });
         }
       });
-
-      // Sort according to another array
       if (!isEqual(cacheKeys, columns)) {
         newColumns.sort((prev, next) => {
-          return (
-            cacheKeys.indexOf(prev.dataIndex as string) -
-            cacheKeys.indexOf(next.dataIndex as string)
-          );
+          return cacheKeys.indexOf(prev.key) - cacheKeys.indexOf(next.key);
         });
       }
       columnsRef.value = newColumns;
     }
   }
 
-  function getColumns(opt?: GetColumnsParams) {
-    const { ignoreIndex, ignoreAction, sort } = opt || {};
-    let columns = toRaw(unref(getColumnsRef));
-    if (ignoreIndex) {
-      columns = columns.filter((item) => item.flag !== INDEX_COLUMN_FLAG);
-    }
-    if (ignoreAction) {
-      columns = columns.filter((item) => item.flag !== ACTION_COLUMN_FLAG);
-    }
-
-    if (sort) {
-      columns = sortFixedColumn(columns);
-    }
-
-    return columns;
+  //获取
+  function getColumns(): BasicColumn[] {
+    const columns = toRaw(unref(getColumnsRef));
+    return columns.map((item) => {
+      return { ...item, title: item.title, key: item.key, fixed: item.fixed || undefined };
+    });
   }
-  function getCacheColumns() {
-    return cacheColumns;
+
+  //获取原始
+  function getCacheColumns(isKey?: boolean): any[] {
+    return isKey ? cacheColumns.map((item) => item.key) : cacheColumns;
+  }
+
+  //更新原始数据单个字段
+  function setCacheColumnsField(key: string | undefined, value: Partial<BasicColumn>) {
+    if (!key || !value) {
+      return;
+    }
+    cacheColumns.forEach((item) => {
+      if (item.key === key) {
+        Object.assign(item, value);
+        return;
+      }
+    });
   }
 
   return {
     getColumnsRef,
     getCacheColumns,
-    getColumns,
+    setCacheColumnsField,
     setColumns,
-    getViewColumns,
-    setCacheColumnsByField,
+    getColumns,
+    getPageColumns,
   };
-}
-
-function sortFixedColumn(columns: BasicColumn[]) {
-  const fixedLeftColumns: BasicColumn[] = [];
-  const fixedRightColumns: BasicColumn[] = [];
-  const defColumns: BasicColumn[] = [];
-  for (const column of columns) {
-    if (column.fixed === 'left') {
-      fixedLeftColumns.push(column);
-      continue;
-    }
-    if (column.fixed === 'right') {
-      fixedRightColumns.push(column);
-      continue;
-    }
-    defColumns.push(column);
-  }
-  return [...fixedLeftColumns, ...defColumns, ...fixedRightColumns].filter(
-    (item) => !item.defaultHidden,
-  );
-}
-
-// format cell
-export function formatCell(text: string, format: CellFormat, record: Recordable, index: number) {
-  if (!format) {
-    return text;
-  }
-
-  // custom function
-  if (isFunction(format)) {
-    return format(text, record, index);
-  }
-
-  try {
-    // date type
-    const DATE_FORMAT_PREFIX = 'date|';
-    if (isString(format) && format.startsWith(DATE_FORMAT_PREFIX)) {
-      const dateFormat = format.replace(DATE_FORMAT_PREFIX, '');
-
-      if (!dateFormat) {
-        return text;
-      }
-      return formatToDate(text, dateFormat);
-    }
-
-    // Map
-    if (isMap(format)) {
-      return format.get(text);
-    }
-  } catch (error) {
-    return text;
-  }
 }

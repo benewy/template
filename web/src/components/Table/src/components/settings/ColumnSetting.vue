@@ -1,136 +1,112 @@
 <template>
-  <Tooltip placement="top">
-    <template #title>
-      <span>{{ t('component.table.settingColumn') }}</span>
+  <n-tooltip trigger="hover">
+    <template #trigger>
+      <div class="cursor-pointer table-toolbar-right-icon">
+        <n-popover trigger="click" :width="230" class="toolbar-popover" placement="bottom-end">
+          <template #trigger>
+            <n-icon size="18">
+              <SettingOutlined />
+            </n-icon>
+          </template>
+          <template #header>
+            <div class="table-toolbar-inner-popover-title">
+              <n-space>
+                <n-checkbox v-model:checked="checkAll" @update:checked="onCheckAll"
+                  >列展示</n-checkbox
+                >
+                <n-checkbox v-model:checked="selection" @update:checked="onSelection"
+                  >勾选列</n-checkbox
+                >
+                <n-button text type="info" size="small" class="mt-1" @click="resetColumns"
+                  >重置</n-button
+                >
+              </n-space>
+            </div>
+          </template>
+          <div class="table-toolbar-inner">
+            <n-checkbox-group v-model:value="checkList" @update:value="onChange">
+              <Draggable
+                v-model="columnsList"
+                animation="300"
+                item-key="key"
+                filter=".no-draggable"
+                :move="onMove"
+                @end="draggableEnd"
+              >
+                <template #item="{ element }">
+                  <div
+                    class="table-toolbar-inner-checkbox"
+                    :class="{
+                      'table-toolbar-inner-checkbox-dark': getDarkTheme === true,
+                      'no-draggable': element.draggable === false,
+                    }"
+                  >
+                    <span
+                      class="drag-icon"
+                      :class="{ 'drag-icon-hidden': element.draggable === false }"
+                    >
+                      <n-icon size="18">
+                        <DragOutlined />
+                      </n-icon>
+                    </span>
+                    <n-checkbox :value="element.key" :label="element.title" />
+                    <div class="fixed-item">
+                      <n-tooltip trigger="hover" placement="bottom">
+                        <template #trigger>
+                          <n-icon
+                            size="18"
+                            :color="element.fixed === 'left' ? '#2080f0' : undefined"
+                            class="cursor-pointer"
+                            @click="fixedColumn(element, 'left')"
+                          >
+                            <VerticalRightOutlined />
+                          </n-icon>
+                        </template>
+                        <span>固定到左侧</span>
+                      </n-tooltip>
+                      <n-divider vertical />
+                      <n-tooltip trigger="hover" placement="bottom">
+                        <template #trigger>
+                          <n-icon
+                            size="18"
+                            :color="element.fixed === 'right' ? '#2080f0' : undefined"
+                            class="cursor-pointer"
+                            @click="fixedColumn(element, 'right')"
+                          >
+                            <VerticalLeftOutlined />
+                          </n-icon>
+                        </template>
+                        <span>固定到右侧</span>
+                      </n-tooltip>
+                    </div>
+                  </div>
+                </template>
+              </Draggable>
+            </n-checkbox-group>
+          </div>
+        </n-popover>
+      </div>
     </template>
-    <Popover
-      placement="bottomLeft"
-      trigger="click"
-      @visibleChange="handleVisibleChange"
-      :overlayClassName="`${prefixCls}__cloumn-list`"
-      :getPopupContainer="getPopupContainer"
-    >
-      <template #title>
-        <div :class="`${prefixCls}__popover-title`">
-          <Checkbox
-            :indeterminate="indeterminate"
-            v-model:checked="checkAll"
-            @change="onCheckAllChange"
-          >
-            {{ t('component.table.settingColumnShow') }}
-          </Checkbox>
-
-          <Checkbox v-model:checked="checkIndex" @change="handleIndexCheckChange">
-            {{ t('component.table.settingIndexColumnShow') }}
-          </Checkbox>
-
-          <Checkbox
-            v-model:checked="checkSelect"
-            @change="handleSelectCheckChange"
-            :disabled="!defaultRowSelection"
-          >
-            {{ t('component.table.settingSelectColumnShow') }}
-          </Checkbox>
-
-          <a-button size="small" type="link" @click="reset">
-            {{ t('common.resetText') }}
-          </a-button>
-        </div>
-      </template>
-
-      <template #content>
-        <ScrollContainer>
-          <CheckboxGroup v-model:value="checkedList" @change="onChange" ref="columnListRef">
-            <template v-for="item in plainOptions" :key="item.value">
-              <div :class="`${prefixCls}__check-item`" v-if="!('ifShow' in item && !item.ifShow)">
-                <DragOutlined class="table-coulmn-drag-icon" />
-                <Checkbox :value="item.value">
-                  {{ item.label }}
-                </Checkbox>
-
-                <Tooltip
-                  placement="bottomLeft"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
-                  <template #title>
-                    {{ t('component.table.settingFixedLeft') }}
-                  </template>
-                  <Icon
-                    icon="line-md:arrow-align-left"
-                    :class="[
-                      `${prefixCls}__fixed-left`,
-                      {
-                        active: item.fixed === 'left',
-                        disabled: !checkedList.includes(item.value),
-                      },
-                    ]"
-                    @click="handleColumnFixed(item, 'left')"
-                  />
-                </Tooltip>
-                <Divider type="vertical" />
-                <Tooltip
-                  placement="bottomLeft"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
-                  <template #title>
-                    {{ t('component.table.settingFixedRight') }}
-                  </template>
-                  <Icon
-                    icon="line-md:arrow-align-left"
-                    :class="[
-                      `${prefixCls}__fixed-right`,
-                      {
-                        active: item.fixed === 'right',
-                        disabled: !checkedList.includes(item.value),
-                      },
-                    ]"
-                    @click="handleColumnFixed(item, 'right')"
-                  />
-                </Tooltip>
-              </div>
-            </template>
-          </CheckboxGroup>
-        </ScrollContainer>
-      </template>
-      <SettingOutlined />
-    </Popover>
-  </Tooltip>
+    <span>列设置</span>
+  </n-tooltip>
 </template>
-<script lang="ts">
-  import type { BasicColumn, ColumnChangeParam } from '../../types/table';
-  import {
-    defineComponent,
-    ref,
-    reactive,
-    toRefs,
-    watchEffect,
-    nextTick,
-    unref,
-    computed,
-  } from 'vue';
-  import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue';
-  import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue';
-  import { Icon } from '/@/components/Icon';
-  import { ScrollContainer } from '/@/components/Container';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useTableContext } from '../../hooks/useTableContext';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useSortable } from '/@/hooks/web/useSortable';
-  import { isFunction, isNullAndUnDef } from '/@/utils/is';
-  import { getPopupContainer as getParentContainer } from '/@/utils';
-  import { omit } from 'lodash-es';
 
-  interface State {
-    checkAll: boolean;
-    checkedList: string[];
-    defaultCheckList: string[];
-  }
+<script lang="ts">
+  import { ref, defineComponent, reactive, unref, toRaw, computed, toRefs, watchEffect } from 'vue';
+  import { useTableContext } from '../../hooks/useTableContext';
+  import { cloneDeep } from 'lodash-es';
+  import {
+    SettingOutlined,
+    DragOutlined,
+    VerticalRightOutlined,
+    VerticalLeftOutlined,
+  } from '@vicons/antd';
+  import Draggable from 'vuedraggable/src/vuedraggable';
+  import { useDesignSetting } from '@/hooks/setting/useDesignSetting';
 
   interface Options {
-    label: string;
-    value: string;
+    title: string;
+    key: string;
     fixed?: boolean | 'left' | 'right';
   }
 
@@ -138,44 +114,26 @@
     name: 'ColumnSetting',
     components: {
       SettingOutlined,
-      Popover,
-      Tooltip,
-      Checkbox,
-      CheckboxGroup: Checkbox.Group,
       DragOutlined,
-      ScrollContainer,
-      Divider,
-      Icon,
+      Draggable,
+      VerticalRightOutlined,
+      VerticalLeftOutlined,
     },
-    emits: ['columns-change'],
+    setup() {
+      const { getDarkTheme } = useDesignSetting();
+      const table: any = useTableContext();
+      const columnsList = ref<Options[]>([]);
+      const cacheColumnsList = ref<Options[]>([]);
 
-    setup(_, { emit, attrs }) {
-      const { t } = useI18n();
-      const table = useTableContext();
-
-      const defaultRowSelection = omit(table.getRowSelection(), 'selectedRowKeys');
-      let inited = false;
-
-      const cachePlainOptions = ref<Options[]>([]);
-      const plainOptions = ref<Options[]>([]);
-
-      const plainSortOptions = ref<Options[]>([]);
-
-      const columnListRef = ref<ComponentRef>(null);
-
-      const state = reactive<State>({
+      const state = reactive({
+        selection: false,
         checkAll: true,
-        checkedList: [],
+        checkList: [],
         defaultCheckList: [],
       });
 
-      const checkIndex = ref(false);
-      const checkSelect = ref(false);
-
-      const { prefixCls } = useDesign('basic-column-setting');
-
-      const getValues = computed(() => {
-        return unref(table?.getBindValues) || {};
+      const getSelection = computed(() => {
+        return state.selection;
       });
 
       watchEffect(() => {
@@ -185,281 +143,189 @@
         }
       });
 
-      watchEffect(() => {
-        const values = unref(getValues);
-        checkIndex.value = !!values.showIndexColumn;
-        checkSelect.value = !!values.rowSelection;
-      });
-
-      function getColumns() {
-        const ret: Options[] = [];
-        table.getColumns({ ignoreIndex: true, ignoreAction: true }).forEach((item) => {
-          ret.push({
-            label: (item.title as string) || (item.customTitle as string),
-            value: (item.dataIndex || item.title) as string,
-            ...item,
-          });
-        });
-        return ret;
-      }
-
+      //初始化
       function init() {
-        const columns = getColumns();
-
-        const checkList = table
-          .getColumns({ ignoreAction: true })
-          .map((item) => {
-            if (item.defaultHidden) {
-              return '';
-            }
-            return item.dataIndex || item.title;
-          })
-          .filter(Boolean) as string[];
-
-        if (!plainOptions.value.length) {
-          plainOptions.value = columns;
-          plainSortOptions.value = columns;
-          cachePlainOptions.value = columns;
-          state.defaultCheckList = checkList;
-        } else {
-          // const fixedColumns = columns.filter((item) =>
-          //   Reflect.has(item, 'fixed')
-          // ) as BasicColumn[];
-
-          unref(plainOptions).forEach((item: BasicColumn) => {
-            const findItem = columns.find((col: BasicColumn) => col.dataIndex === item.dataIndex);
-            if (findItem) {
-              item.fixed = findItem.fixed;
-            }
-          });
+        const columns: any[] = getColumns();
+        const checkList: any = columns.map((item) => item.key);
+        state.checkList = checkList;
+        state.defaultCheckList = checkList;
+        const newColumns = columns.filter((item) => item.key != 'action' && item.title != '操作');
+        if (!columnsList.value.length) {
+          columnsList.value = cloneDeep(newColumns);
+          cacheColumnsList.value = cloneDeep(newColumns);
         }
-        state.checkedList = checkList;
       }
 
-      // checkAll change
-      function onCheckAllChange(e: ChangeEvent) {
-        const checkList = plainOptions.value.map((item) => item.value);
-        if (e.target.checked) {
-          state.checkedList = checkList;
+      //切换
+      function onChange(checkList) {
+        if (state.selection) {
+          checkList.unshift('selection');
+        }
+        setColumns(checkList);
+      }
+
+      //设置
+      function setColumns(columns) {
+        table.setColumns(columns);
+      }
+
+      //获取
+      function getColumns() {
+        let newRet: any[] = [];
+        table.getColumns().forEach((item) => {
+          newRet.push({ ...item });
+        });
+        return newRet;
+      }
+
+      //重置
+      function resetColumns() {
+        state.checkList = [...state.defaultCheckList];
+        state.checkAll = true;
+        let cacheColumnsKeys: any[] = table.getCacheColumns();
+        let newColumns = cacheColumnsKeys.map((item) => {
+          return {
+            ...item,
+            fixed: undefined,
+          };
+        });
+        setColumns(newColumns);
+        columnsList.value = newColumns;
+      }
+
+      //全选
+      function onCheckAll(e) {
+        let checkList = table.getCacheColumns(true);
+        if (e) {
+          setColumns(checkList);
+          state.checkList = checkList;
+        } else {
+          setColumns([]);
+          state.checkList = [];
+        }
+      }
+
+      //拖拽排序
+      function draggableEnd() {
+        const newColumns = toRaw(unref(columnsList));
+        columnsList.value = newColumns;
+        setColumns(newColumns);
+      }
+
+      //勾选列
+      function onSelection(e) {
+        let checkList = table.getCacheColumns();
+        if (e) {
+          checkList.unshift({ type: 'selection', key: 'selection' });
           setColumns(checkList);
         } else {
-          state.checkedList = [];
-          setColumns([]);
+          checkList.splice(0, 1);
+          setColumns(checkList);
         }
       }
 
-      const indeterminate = computed(() => {
-        const len = plainOptions.value.length;
-        let checkdedLen = state.checkedList.length;
-        unref(checkIndex) && checkdedLen--;
-        return checkdedLen > 0 && checkdedLen < len;
-      });
-
-      // Trigger when check/uncheck a column
-      function onChange(checkedList: string[]) {
-        const len = plainOptions.value.length;
-        state.checkAll = checkedList.length === len;
-
-        const sortList = unref(plainSortOptions).map((item) => item.value);
-        checkedList.sort((prev, next) => {
-          return sortList.indexOf(prev) - sortList.indexOf(next);
-        });
-        setColumns(checkedList);
+      function onMove(e) {
+        if (e.draggedContext.element.draggable === false) return false;
+        return true;
       }
 
-      // reset columns
-      function reset() {
-        state.checkedList = [...state.defaultCheckList];
-        state.checkAll = true;
-        plainOptions.value = unref(cachePlainOptions);
-        plainSortOptions.value = unref(cachePlainOptions);
-        setColumns(table.getCacheColumns());
-      }
-
-      // Open the pop-up window for drag and drop initialization
-      function handleVisibleChange() {
-        if (inited) return;
-        nextTick(() => {
-          const columnListEl = unref(columnListRef);
-          if (!columnListEl) return;
-          const el = columnListEl.$el as any;
-          if (!el) return;
-          // Drag and drop sort
-          const { initSortable } = useSortable(el, {
-            handle: '.table-coulmn-drag-icon ',
-            onEnd: (evt) => {
-              const { oldIndex, newIndex } = evt;
-              if (isNullAndUnDef(oldIndex) || isNullAndUnDef(newIndex) || oldIndex === newIndex) {
-                return;
-              }
-              // Sort column
-              const columns = getColumns();
-
-              if (oldIndex > newIndex) {
-                columns.splice(newIndex, 0, columns[oldIndex]);
-                columns.splice(oldIndex + 1, 1);
-              } else {
-                columns.splice(newIndex + 1, 0, columns[oldIndex]);
-                columns.splice(oldIndex, 1);
-              }
-
-              plainSortOptions.value = columns;
-              plainOptions.value = columns;
-              setColumns(columns);
-            },
-          });
-          initSortable();
-          inited = true;
-        });
-      }
-
-      // Control whether the serial number column is displayed
-      function handleIndexCheckChange(e: ChangeEvent) {
-        table.setProps({
-          showIndexColumn: e.target.checked,
-        });
-      }
-
-      // Control whether the check box is displayed
-      function handleSelectCheckChange(e: ChangeEvent) {
-        table.setProps({
-          rowSelection: e.target.checked ? defaultRowSelection : undefined,
-        });
-      }
-
-      function handleColumnFixed(item: BasicColumn, fixed?: 'left' | 'right') {
-        if (!state.checkedList.includes(item.dataIndex as string)) return;
-
-        const columns = getColumns() as BasicColumn[];
-        const isFixed = item.fixed === fixed ? false : fixed;
-        const index = columns.findIndex((col) => col.dataIndex === item.dataIndex);
+      //固定
+      function fixedColumn(item, fixed) {
+        if (!state.checkList.includes(item.key)) return;
+        let columns = getColumns();
+        const isFixed = item.fixed === fixed ? undefined : fixed;
+        let index = columns.findIndex((res) => res.key === item.key);
         if (index !== -1) {
           columns[index].fixed = isFixed;
         }
-        item.fixed = isFixed;
-
-        if (isFixed && !item.width) {
-          item.width = 100;
-        }
-        table.setCacheColumnsByField?.(item.dataIndex, { fixed: isFixed });
+        table.setCacheColumnsField(item.key, { fixed: isFixed });
+        columnsList.value[index].fixed = isFixed;
         setColumns(columns);
       }
 
-      function setColumns(columns: BasicColumn[] | string[]) {
-        table.setColumns(columns);
-        const data: ColumnChangeParam[] = unref(plainOptions).map((col) => {
-          const visible =
-            columns.findIndex(
-              (c: BasicColumn | string) =>
-                c === col.value || (typeof c !== 'string' && c.dataIndex === col.value),
-            ) !== -1;
-          return { dataIndex: col.value, fixed: col.fixed, visible };
-        });
-
-        emit('columns-change', data);
-      }
-
-      function getPopupContainer() {
-        return isFunction(attrs.getPopupContainer)
-          ? attrs.getPopupContainer()
-          : getParentContainer();
-      }
-
       return {
-        t,
         ...toRefs(state),
-        indeterminate,
-        onCheckAllChange,
+        columnsList,
+        getDarkTheme,
         onChange,
-        plainOptions,
-        reset,
-        prefixCls,
-        columnListRef,
-        handleVisibleChange,
-        checkIndex,
-        checkSelect,
-        handleIndexCheckChange,
-        handleSelectCheckChange,
-        defaultRowSelection,
-        handleColumnFixed,
-        getPopupContainer,
+        onCheckAll,
+        onSelection,
+        onMove,
+        resetColumns,
+        fixedColumn,
+        draggableEnd,
+        getSelection,
       };
     },
   });
 </script>
+
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-basic-column-setting';
-
-  .table-coulmn-drag-icon {
-    margin: 0 5px;
-    cursor: move;
-  }
-
-  .@{prefix-cls} {
-    &__popover-title {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  .table-toolbar {
+    &-inner-popover-title {
+      padding: 3px 0;
     }
 
-    &__check-item {
+    &-right {
+      &-icon {
+        margin-left: 12px;
+        font-size: 16px;
+        color: var(--text-color);
+        cursor: pointer;
+
+        :hover {
+          color: #1890ff;
+        }
+      }
+    }
+  }
+
+  .table-toolbar-inner {
+    &-checkbox {
       display: flex;
       align-items: center;
-      min-width: 100%;
-      padding: 4px 16px 8px 0;
+      padding: 10px 14px;
+
+      &:hover {
+        background: #e6f7ff;
+      }
+
+      .drag-icon {
+        display: inline-flex;
+        margin-right: 8px;
+        cursor: move;
+        &-hidden {
+          visibility: hidden;
+          cursor: default;
+        }
+      }
+
+      .fixed-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-left: auto;
+      }
 
       .ant-checkbox-wrapper {
-        width: 100%;
+        flex: 1;
 
         &:hover {
-          color: @primary-color;
+          color: #1890ff !important;
         }
       }
     }
 
-    &__fixed-left,
-    &__fixed-right {
-      color: rgb(0 0 0 / 45%);
-      cursor: pointer;
-
-      &.active,
+    &-checkbox-dark {
       &:hover {
-        color: @primary-color;
-      }
-
-      &.disabled {
-        color: @disabled-color;
-        cursor: not-allowed;
+        background: hsla(0, 0%, 100%, 0.08);
       }
     }
+  }
 
-    &__fixed-right {
-      transform: rotate(180deg);
-    }
-
-    &__cloumn-list {
-      svg {
-        width: 1em !important;
-        height: 1em !important;
-      }
-
-      .ant-popover-inner-content {
-        // max-height: 360px;
-        padding-right: 0;
-        padding-left: 0;
-        // overflow: auto;
-      }
-
-      .ant-checkbox-group {
-        width: 100%;
-        min-width: 260px;
-        // flex-wrap: wrap;
-      }
-
-      .scrollbar {
-        height: 220px;
-      }
+  .toolbar-popover {
+    .n-popover__content {
+      padding: 0;
     }
   }
 </style>

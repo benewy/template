@@ -6,7 +6,6 @@ export type VueNode = VNodeChild | JSX.Element;
 type PropTypes = VueTypesInterface & {
   readonly style: VueTypeValidableDef<CSSProperties>;
   readonly VNodeChild: VueTypeValidableDef<VueNode>;
-  // readonly trueBool: VueTypeValidableDef<boolean>;
 };
 
 const propTypes = createTypes({

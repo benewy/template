@@ -1,104 +1,88 @@
 import type { UserConfig, ConfigEnv } from 'vite';
-import pkg from './package.json';
-import moment from 'moment';
 import { loadEnv } from 'vite';
 import { resolve } from 'path';
-import { generateModifyVars } from './build/generate/generateModifyVars';
 import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';
 import { OUTPUT_DIR } from './build/constant';
+import { createProxy } from './build/vite/proxy';
+import pkg from './package.json';
+import { format } from 'date-fns';
+const { dependencies, devDependencies, name, version } = pkg;
+
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+};
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
 
-const { dependencies, devDependencies, name, version } = pkg;
-const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-};
-
 export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
-
   const env = loadEnv(mode, root);
-
-  // The boolean type read by loadEnv is a string. This function can be converted to boolean type
   const viteEnv = wrapperEnv(env);
-
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_DROP_CONSOLE } = viteEnv;
-
+  const { VITE_PUBLIC_PATH, VITE_PORT, VITE_GLOB_PROD_MOCK, VITE_PROXY } =
+    viteEnv;
+  const prodMock = VITE_GLOB_PROD_MOCK;
   const isBuild = command === 'build';
-
   return {
     base: VITE_PUBLIC_PATH,
-    root,
+    esbuild: {},
     resolve: {
       alias: [
-        {
-          find: 'vue-i18n',
-          replacement: 'vue-i18n/dist/vue-i18n.cjs.js',
-        },
-        // /@/xxxx => src/xxxx
-        {
-          find: /\/@\//,
-          replacement: pathResolve('src') + '/',
-        },
-        // /#/xxxx => types/xxxx
         {
           find: /\/#\//,
           replacement: pathResolve('types') + '/',
         },
-      ],
-    },
-    server: {
-      // Listening on all local IPs
-      host: true,
-      port: VITE_PORT,
-    },
-    build: {
-      target: 'es2015',
-      outDir: OUTPUT_DIR,
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // Used to delete console in production environment
-          drop_console: VITE_DROP_CONSOLE,
+        {
+          find: '@',
+          replacement: pathResolve('src') + '/',
         },
-      },
-      // Turning off brotliSize display can slightly reduce packaging time
-      brotliSize: false,
-      chunkSizeWarningLimit: 2000,
+      ],
+      dedupe: ['vue'],
     },
+    plugins: createVitePlugins(viteEnv, isBuild, prodMock),
     define: {
-      // setting vue-i18-next
-      // Suppress warning
-      __INTLIFY_PROD_DEVTOOLS__: false,
       __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
-
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: generateModifyVars(),
+          modifyVars: {},
           javascriptEnabled: true,
+          additionalData: `@import "src/styles/var.less";`,
         },
       },
     },
-
-    // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
-    plugins: createVitePlugins(viteEnv, isBuild),
-
+    server: {
+      host: true,
+      port: VITE_PORT,
+      proxy: createProxy(VITE_PROXY),
+      // proxy: {
+      //     '/api': {
+      //         target: '',
+      //         changeOrigin: true,
+      //         rewrite: (path) => path.replace(/^\/api/, '/api/v1')
+      //     }
+      // }
+    },
     optimizeDeps: {
-      // @iconify/iconify: The dependency is dynamically and virtually loaded by @purge-icons/generated, so it needs to be specified explicitly
-      include: [
-        '@iconify/iconify',
-        'ant-design-vue/es/locale/zh_CN',
-        'moment/dist/locale/zh-cn',
-        'ant-design-vue/es/locale/en_US',
-        'moment/dist/locale/eu',
-      ],
-      exclude: ['vue-demi', 'consolidate'],
+      include: [],
+      exclude: ['vue-demi'],
+    },
+    build: {
+      target: 'es2015',
+      cssTarget: 'chrome80',
+      outDir: OUTPUT_DIR,
+      // terserOptions: {
+      //   compress: {
+      //     keep_infinity: true,
+      //     drop_console: VITE_DROP_CONSOLE,
+      //   },
+      // },
+      brotliSize: false,
+      chunkSizeWarningLimit: 2000,
     },
   };
 };

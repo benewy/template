@@ -1,27 +1,21 @@
 import type { FunctionalComponent, defineComponent } from 'vue';
 import type { ComponentType } from '../../types/componentType';
-import { componentMap } from '/@/components/Table/src/componentMap';
+import { componentMap } from '@/components/Table/src/componentMap';
 
-import { Popover } from 'ant-design-vue';
 import { h } from 'vue';
+
+import { NPopover } from 'naive-ui';
 
 export interface ComponentProps {
   component: ComponentType;
   rule: boolean;
   popoverVisible: boolean;
   ruleMessage: string;
-  getPopupContainer?: Fn;
 }
 
 export const CellComponent: FunctionalComponent = (
-  {
-    component = 'Input',
-    rule = true,
-    ruleMessage,
-    popoverVisible,
-    getPopupContainer,
-  }: ComponentProps,
-  { attrs },
+  { component = 'NInput', rule = true, ruleMessage, popoverVisible }: ComponentProps,
+  { attrs }
 ) => {
   const Comp = componentMap.get(component) as typeof defineComponent;
 
@@ -30,15 +24,24 @@ export const CellComponent: FunctionalComponent = (
     return DefaultComp;
   }
   return h(
-    Popover,
+    NPopover,
+    { 'display-directive': 'show', show: !!popoverVisible, manual: 'manual' },
     {
-      overlayClassName: 'edit-cell-rule-popover',
-      visible: !!popoverVisible,
-      ...(getPopupContainer ? { getPopupContainer } : {}),
-    },
-    {
-      default: () => DefaultComp,
-      content: () => ruleMessage,
-    },
+      trigger: () => DefaultComp,
+      default: () =>
+        h(
+          'span',
+          {
+            style: {
+              color: 'red',
+              width: '90px',
+              display: 'inline-block',
+            },
+          },
+          {
+            default: () => ruleMessage,
+          }
+        ),
+    }
   );
 };
