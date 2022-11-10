@@ -160,12 +160,12 @@ public class CreditDataUtils {
         }
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        System.out.println("------------");
-        System.out.println(query("91330000142944445H"));
+//        System.out.println(query("91330000142944445H"));
 //        System.out.println("------------");
 //        System.out.println(queryAssess("91330000142944445H"));
 //        querySeriousdishonesty("91330106MA2CEGF66C", "杭州融惠数据科技有限公司");
-    }
+//    }
 
 }

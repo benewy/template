@@ -180,9 +180,4 @@ public class OfficeToPdf {
             return false;
         }
     }
-
-
-    public static void main(String[] args) {
-
-    }
 }

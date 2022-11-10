@@ -30,17 +30,17 @@ import java.io.FileOutputStream;
  */
 public class PdfUtils {
 
-    public static void main(String[] args) {
-        String pdfPath = "/Users/lichen/Desktop/应急处突小程序上架材料清单/2.压测报告/报告.pdf";
-        String outputFileName = "/Users/lichen/Downloads/1.pdf";
-        String imagePath = "/Users/lichen/Downloads/水印.png";
-
-        try {
-            addWaterMaker(pdfPath, imagePath, outputFileName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//        String pdfPath = "/Users/lichen/Desktop/应急处突小程序上架材料清单/2.压测报告/报告.pdf";
+//        String outputFileName = "/Users/lichen/Downloads/1.pdf";
+//        String imagePath = "/Users/lichen/Downloads/水印.png";
+//
+//        try {
+//            addWaterMaker(pdfPath, imagePath, outputFileName);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * 添加水印
