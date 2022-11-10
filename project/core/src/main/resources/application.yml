@@ -3,7 +3,7 @@ server:
     context-path: /template
 spring:
   profiles:
-    active: dev # 当前使用环境，group的key值
+    active: prod # 当前使用环境，group的key值
     include: basic # 公共环境配置
     group:
       dev: basic-dev,core-dev # dev环境
