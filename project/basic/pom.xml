@@ -200,6 +200,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
+            <!--maven编译-->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
