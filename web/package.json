@@ -42,8 +42,7 @@
     "vfonts": "^0.0.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
-    "vue-types": "^4.2.1",
-    "vuedraggable": "^2.24.3"
+    "vue-types": "^4.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
@@ -91,7 +90,8 @@
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-style-import": "^2.0.0",
     "vue-demi": "^0.13.11",
-    "vue-eslint-parser": "^9.1.0"
+    "vue-eslint-parser": "^9.1.0",
+    "vuedraggable": "^4.1.0"
   },
   "lint-staged": {
     "*.{vue,js,ts,tsx}": "eslint --fix"
