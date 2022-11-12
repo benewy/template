@@ -1,8 +1,7 @@
 package com.beneway;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import logon.tracer.helper.AlarmLogHelper;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class AppTest {
+
+  @Test
+  public void testLogonTracer() {
+    AlarmLogHelper.getPrintLogInstance().error("123", new Exception("teshi"));
+  }
 
 }
 

@@ -36,6 +36,34 @@
             <version>1.32.0</version>
         </dependency>
 
+        <!--日志告警-->
+        <dependency>
+          <groupId>logon.tracer</groupId>
+          <artifactId>logon-tracer-spring-boot-starter</artifactId>
+          <version>0.0.1</version>
+          <exclusions>
+            <exclusion>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-reload4j</artifactId>
+            </exclusion>
+            <exclusion>
+              <groupId>javax.mail</groupId>
+              <artifactId>mail</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
+        <!--邮件-->
+        <dependency>
+          <groupId>com.sun.mail</groupId>
+          <artifactId>jakarta.mail</artifactId>
+        </dependency>
 
     </dependencies>
+    <repositories>
+      <repository>
+        <id>github</id>
+        <name>The Maven Repository on Github</name>
+        <url>https://maven.pkg.github.com/logon-tracer/core/</url>
+      </repository>
+    </repositories>
 </project>

@@ -8,6 +8,12 @@ spring:
     group:
       dev: basic-dev,core-dev # dev环境
       prod: basic-prod,core-prod # prod环境
+  # 若使用此功能还需要配置Core的jvm参数：-Dlog4j.skipJansi=false，无需彩色日志输出可不用配置jvm参数
+  output:
+    ansi:
+      enabled: always   # 支持输出ANSI颜色的类库,
 appConfig:
   moduleType: admin
   excludePaths: /admin_sys_user/login,/admin_sys_user/qrLogin,/login/getLoginVerifyImg
+logging:
+  config: classpath:log4j2/log4j2-spring.xml # 使用自定义的日志文件
