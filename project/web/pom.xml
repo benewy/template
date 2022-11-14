@@ -38,24 +38,15 @@
 
         <!--日志告警-->
         <dependency>
-          <groupId>logon.tracer</groupId>
-          <artifactId>logon-tracer-spring-boot-starter</artifactId>
-          <version>0.0.1</version>
+            <groupId>logon.tracer</groupId>
+            <artifactId>logon-tracer-spring-boot-starter</artifactId>
+            <version>0.0.3-beta2</version>
           <exclusions>
             <exclusion>
               <groupId>org.slf4j</groupId>
               <artifactId>slf4j-reload4j</artifactId>
             </exclusion>
-            <exclusion>
-              <groupId>javax.mail</groupId>
-              <artifactId>mail</artifactId>
-            </exclusion>
           </exclusions>
-        </dependency>
-        <!--邮件-->
-        <dependency>
-          <groupId>com.sun.mail</groupId>
-          <artifactId>jakarta.mail</artifactId>
         </dependency>
 
     </dependencies>
