@@ -22,6 +22,24 @@ spring:
         max-wait: 10000ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
+  alarm-log:
+    warn:
+      mail:
+        enabled: true
+        smtpHost: smtp.163.com   # smtp服务器地址
+        smtpPort: 465   # smtp服务器端口号
+        to:    # 邮件接收者
+        from:    # 邮件发送者
+        username:    # smtp服务器 用户名
+        password:    # smtp服务器 密码
+      warn-exception-extend: false  # 是否开启警告异常扩展
+      simple-warn-info: false
+      print-stack-trace: true
+      max-retry-times: 3  # 最大重试次数
+      retry-sleep-millis: 3000  # 每次重试的等待间隔，最终效果 [retrySleepMillis * ( 1 << maxRetryTimes )]
+      do-warn-exception:  # 获取日志中指定的异常类的完整路径信息
+        - java.lang.Throwable
+        - java.lang.Exception
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印SQL语句

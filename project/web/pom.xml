@@ -36,6 +36,25 @@
             <version>1.32.0</version>
         </dependency>
 
+        <!--日志告警-->
+        <dependency>
+            <groupId>logon.tracer</groupId>
+            <artifactId>logon-tracer-spring-boot-starter</artifactId>
+            <version>0.0.3-beta2</version>
+          <exclusions>
+            <exclusion>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-reload4j</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>
 
     </dependencies>
+    <repositories>
+      <repository>
+        <id>github</id>
+        <name>The Maven Repository on Github</name>
+        <url>https://maven.pkg.github.com/logon-tracer/core/</url>
+      </repository>
+    </repositories>
 </project>
