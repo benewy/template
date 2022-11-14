@@ -2,7 +2,6 @@
 import { VAxios } from './Axios';
 import { AxiosTransform } from './axiosTransform';
 import axios, { AxiosResponse } from 'axios';
-import { checkStatus } from './checkStatus';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '@/enums/httpEnum';
 import { PageEnum } from '@/enums/pageEnum';
@@ -51,19 +50,13 @@ const transform: AxiosTransform = {
       return res.data;
     }
 
-    const { data } = res;
-
     const $dialog = window['$dialog'];
     const $message = window['$message'];
-
-    if (!data) {
-      // return '[HTTP] Request has no return value';
-      throw new Error('请求出错，请稍候重试');
-    }
     //  这里 code，result，message为 后台统一的字段，需要修改为项目自己的接口返回格式
-    const { code, result, message } = data;
+    const code = res.status
+    const message = res.data
     // 请求成功
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = code === ResultEnum.SUCCESS;
     // 是否显示提示信息
     if (isShowMessage) {
       if (hasSuccess && (successMessageText || isShowSuccessMessage)) {
@@ -88,10 +81,10 @@ const transform: AxiosTransform = {
 
     // 接口请求成功，直接返回结果
     if (code === ResultEnum.SUCCESS) {
-      return result;
+      return res;
     }
     // 接口请求错误，统一提示错误信息 这里逻辑可以根据项目进行修改
-    let errorMsg = message;
+    let errorMsg = message.toString();
     switch (code) {
       // 请求失败
       case ResultEnum.ERROR:
@@ -193,10 +186,11 @@ const transform: AxiosTransform = {
   responseInterceptorsCatch: (error: any) => {
     const $dialog = window['$dialog'];
     const $message = window['$message'];
-    const { response, code, message } = error || {};
+    const res = error.response || {};
+    const code = res.status
+    const message = res.data
     // TODO 此处要根据后端接口返回格式修改
-    const msg: string =
-      response && response.data && response.data.message ? response.data.message : '';
+    const msg: string = res.data;
     const err: string = error.toString();
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
@@ -222,12 +216,11 @@ const transform: AxiosTransform = {
     // 请求是否被取消
     const isCancel = axios.isCancel(error);
     if (!isCancel) {
-      checkStatus(error.response && error.response.status, msg);
+      $message.error(msg);
     } else {
       console.warn(error, '请求被取消！');
     }
-    //return Promise.reject(error);
-    return Promise.reject(response?.data);
+    return Promise.reject(res);
   },
 };
 
@@ -249,7 +242,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否返回原生响应头 比如：需要获取响应头时使用该属性
           isReturnNativeResponse: false,
           // 需要对返回数据进行处理
-          isTransformResponse: false,
+          isTransformResponse: true,
           // post请求的时候添加参数到url
           joinParamsToUrl: false,
           // 格式化提交参数时间

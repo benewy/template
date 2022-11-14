@@ -536,8 +536,8 @@
     &-main {
       height: 32px;
       display: flex;
-      max-width: 100%;
-      min-width: 100%;
+      max-width: 98%;
+      min-width: 98%;
 
       .tabs-card {
         -webkit-box-flex: 1;

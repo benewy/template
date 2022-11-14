@@ -150,14 +150,12 @@
     },
     setup(props) {
       const userStore = useUserStore();
-      const useLockscreen = useLockscreenStore();
       const message = useMessage();
       const dialog = useDialog();
       const { getNavMode, getNavTheme, getHeaderSetting, getMenuSetting, getCrumbsSetting } =
         useProjectSetting();
 
-      const { username } = userStore?.info || {};
-
+      const { username } = userStore?.info.data || {};
       const drawerSetting = ref();
 
       const state = reactive({
