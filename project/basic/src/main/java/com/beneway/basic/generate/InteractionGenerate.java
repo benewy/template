@@ -235,7 +235,7 @@ public class InteractionGenerate {
 
   private static void getGitUserEmail() {
     if (Objects.nonNull(gitConfig)) {
-      DEFAULT_ARGUMENTS.put("email", gitConfig.get("name"));
+      DEFAULT_ARGUMENTS.put("email", gitConfig.get("email"));
     }
   }
 
