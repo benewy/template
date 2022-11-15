@@ -76,7 +76,6 @@
           <groupId>com.baomidou</groupId>
           <artifactId>mybatis-plus-generator</artifactId>
           <version>3.5.2</version>
-          <scope>provided</scope>
         </dependency>
         <!-- redis -->
         <dependency>
@@ -185,7 +184,6 @@
           <groupId>org.apache.velocity</groupId>
           <artifactId>velocity-engine-core</artifactId>
           <version>2.3</version>
-          <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -199,18 +197,6 @@
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
-            </plugin>
-            <!--maven编译-->
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.8.1</version>
-              <configuration>
-                <excludes>
-                  <!-- 去除指定的包，及其包下的类-->
-                  <exclude>**/basic/generate/**</exclude>
-                </excludes>
-              </configuration>
             </plugin>
         </plugins>
 
@@ -230,9 +216,6 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                 </includes>
-                <excludes>
-                  <exclude>**/template/**</exclude>
-                </excludes>
                 <filtering>false</filtering>
             </resource>
         </resources>
