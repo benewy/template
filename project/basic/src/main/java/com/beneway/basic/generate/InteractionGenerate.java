@@ -110,15 +110,11 @@ public class InteractionGenerate {
   }
 
   private static String moduleDir() {
-    String outputDir = "%s\\src\\main\\java\\";
-    if (DEFAULT_ARGUMENTS.get("module").equals("\'\'")) {
-      return String.format(outputDir, System.getProperty("user.dir"));
-    } else {
-      outputDir = "%s\\" + outputDir;
-      String dir = System.getProperty("user.dir");
-      String path = dir.substring(0, dir.lastIndexOf("\\"));
-      return String.format(outputDir, path, DEFAULT_ARGUMENTS.get("module"));
-    }
+    String outputDir = "%s\\project\\%s\\src\\main\\java\\";
+    String dir = System.getProperty("user.dir");
+    String module = DEFAULT_ARGUMENTS.get("module");
+    String path = String.format(outputDir, dir, module).replace("\\", File.separator);
+    return path;
   }
 
   // 过滤不参与生成的表
@@ -141,7 +137,7 @@ public class InteractionGenerate {
   }
 
   private static void generator() {
-    DEFAULT_ARGUMENTS.put("module", "\'\'");
+    DEFAULT_ARGUMENTS.put("module", "basic");
     DEFAULT_ARGUMENTS.put("parent", "com.beneway.basic");
     DEFAULT_TABLES.forEach(InteractionGenerate::singleExecute);
   }
@@ -229,7 +225,7 @@ public class InteractionGenerate {
   }
 
   private static void getGitUserName() {
-    if (!gitConfig.containsKey("name")) {
+    if (Objects.isNull(gitConfig)) {
       System.out.println("作者名称自动获取失败,请输入作者名称？");
       DEFAULT_ARGUMENTS.put("author", scanner.next());
     } else {
@@ -238,8 +234,8 @@ public class InteractionGenerate {
   }
 
   private static void getGitUserEmail() {
-    if (gitConfig.containsKey("email")) {
-      DEFAULT_ARGUMENTS.put("email", gitConfig.get("name"));
+    if (Objects.nonNull(gitConfig)) {
+      DEFAULT_ARGUMENTS.put("email", gitConfig.get("email"));
     }
   }
 
