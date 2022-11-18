@@ -5,10 +5,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      name: tl-seven-lists
-      url: jdbc:mysql://containers-us-west-116.railway.app:6602/template?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: L2eEBqvnbgqjF0MPXFMp
+      name: template
+      url: jdbc:mysql://localhost:3306/template?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      username: username
+      password: password
       driver-class-name: com.mysql.cj.jdbc.Driver
       initial-size: 10
       max-active: 100
@@ -39,15 +39,15 @@ spring:
 # 钉钉配置信息
 dd-config:
   domainname: openplatform-pro.ding.zj.gov.cn
-  tenantId: 196729
+  tenantId: xxxxxx
   pc:
     key:
     secret:
     appId:
   qrcode:
-    key: zsht-ydjr_dingoa-cab47knRJraym
-    secret: ht6X4YAUMHIwwDX0G0E23A4rwTNtKA71HL5vJ25k
+    key: xxxxxxxxxxxxxxx
+    secret: xxxxxxxxxxxxxxx
   phone:
-    key: tlxcsyxgl-7kNKGm00PEeJ54mIbAJv
-    secret: XNwJ576faxPk8q31Jo98vBbYg3Z6pF0ed5d30U8L
+    key: xxxxxxxxxxxxxxx
+    secret: xxxxxxxxxxxxxxx
     appId:
