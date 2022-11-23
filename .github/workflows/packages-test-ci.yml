@@ -1,0 +1,47 @@
+name: Packages Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+      - name: Install dependencies
+        run: cd web & pnpm install --frozen-lockfile
+      - name: Build
+        run: cd web & pnpm run build
+
+  spring-boot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: maven-settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: '[{"id": "github", "username": "elonehoo", "password": "${GITHUB_TOKEN_REF}"}]'
+          githubServer: false
+      - name: Install dependencies
+        run: cd project & mvn install -DskipTests
+      - name: Run Build with Maven
+        run: cd project & mvn package
+        env:
+          GITHUB_TOKEN_REF: ${{ secrets.GH_PAT_FOR_ACTIONS_TOKEN }}
