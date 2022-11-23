@@ -48,4 +48,4 @@ jobs:
       - name: Run Build with Maven
         run: cd project && mvn package
         env:
-          GITHUB_TOKEN_REF: ${{ secrets.GH_PAT_FOR_ACTIONS_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
