@@ -34,9 +34,9 @@ jobs:
         with:
           servers: |
             [{
-                "id": "sonatype-nexus-snapshots",
-                "username": "${{ secrets.SONATYPE_USERNAME }}",
-                "password": "${{ secrets.SONATYPE_PASSWORD }}"
+                "id": "github",
+                "username": "elonehoo",
+                "password": "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"
             }]
       - name: Set up JDK
         uses: actions/setup-java@v2
