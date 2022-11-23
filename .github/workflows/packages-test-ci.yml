@@ -20,9 +20,9 @@ jobs:
         with:
           version: latest
       - name: Install dependencies
-        run: cd web & pnpm install --frozen-lockfile
+        run: pnpm -C web install --frozen-lockfile
       - name: Build
-        run: cd web & pnpm run build
+        run: pnpm -C web run build
 
   spring-boot:
     runs-on: ubuntu-latest
@@ -40,8 +40,8 @@ jobs:
           servers: '[{"id": "github", "username": "elonehoo", "password": "${GITHUB_TOKEN_REF}"}]'
           githubServer: false
       - name: Install dependencies
-        run: cd project & mvn install -DskipTests
+        run: cd project && mvn install -DskipTests
       - name: Run Build with Maven
-        run: cd project & mvn package
+        run: cd project && mvn package
         env:
           GITHUB_TOKEN_REF: ${{ secrets.GH_PAT_FOR_ACTIONS_TOKEN }}
