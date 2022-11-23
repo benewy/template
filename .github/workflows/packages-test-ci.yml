@@ -35,7 +35,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: maven-settings
-        uses: s4u/maven-settings-action@v2
+        uses: s4u/maven-settings-action@v2.8.0
         with:
           servers: '[{"id": "github", "username": "elonehoo", "password": "${GITHUB_TOKEN_REF}"}]'
           githubServer: false
