@@ -76,6 +76,7 @@ public class AuthInterceptor implements HandlerInterceptor {
   }
 
   private void error( HttpServletResponse httpServletResponse, Result result, Exception exception){
+
     AutoExceptionInfo.setExceptionInfo(result.getStatusCode().value(), result.getBody().toString(), exception);
     try {
       httpServletResponse.setCharacterEncoding("utf-8");

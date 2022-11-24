@@ -17,6 +17,7 @@ package com.beneway.web.controller.system;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.system.sys_files.po.SysFiles;
 import com.beneway.basic.system.sys_files.service.SysFilesService;
 import com.beneway.basic.utils.file.FileRuntimeException;
@@ -27,6 +28,7 @@ import com.beneway.basic.utils.sys_files.FileTypeEnum;
 import com.beneway.basic.utils.sys_files.SysFilesUtils;
 import com.restful.Result;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -139,7 +141,7 @@ public class SysFilesController {
     public void previewFile(@PathVariable("fileId") String fileId, HttpServletResponse response){
         SysFiles sysFiles = sysFilesService.getById(fileId);
         if (sysFiles == null){
-            throw new RRException("文件不存在");
+            throw new ResultException(HttpStatus.NOT_FOUND,"文件不存在");
         }
 
         File file = sysFilesService.getFile(sysFiles);

@@ -17,7 +17,9 @@ package com.beneway.basic.utils;
 import com.beneway.basic.config.AppConfig;
 import com.beneway.basic.enums.UserTypeEnum;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -37,7 +39,7 @@ public class AppUtils {
     if (UserTypeEnum.SYSTEM.equals(userType)) {
       return LoginUserUtils.getLoginUserId();
     } else {
-      throw new RRException("类型错误");
+      throw new ResultException(HttpStatus.NOT_FOUND,"类型错误");
     }
   }
 
@@ -50,7 +52,7 @@ public class AppUtils {
     if ("admin".equals(moduleType) || "dd".equals(moduleType)) {
       return UserTypeEnum.SYSTEM;
     } else {
-      throw new RRException("类型错误");
+      throw new ResultException(HttpStatus.NOT_FOUND,"类型错误");
     }
   }
 

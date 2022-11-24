@@ -19,6 +19,7 @@ import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.log.log_login.enums.LoginTypeEnum;
 import com.beneway.basic.log.log_login.service.LogLoginService;
 import com.beneway.basic.system.sys_user.entity.po.SysUser;
@@ -32,6 +33,7 @@ import com.beneway.core.service.sys_user.AdminSysUserService;
 import com.beneway.web.service.LoginService;
 import com.google.gson.JsonObject;
 import com.restful.Result;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,7 +82,7 @@ public class AdminSysUserServiceImpl implements AdminSysUserService {
         if (StrUtil.isNotEmpty(loginNumStr)) {
             int loginNum = Integer.parseInt(loginNumStr);
             if (loginNum > 10) {
-                throw new RRException("密码错误超过10次账号已被冻结24小时，联系管理员进行解冻");
+                throw new ResultException(HttpStatus.LOCKED,"密码错误超过10次账号已被冻结24小时，联系管理员进行解冻");
             }
         }
 

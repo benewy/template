@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.system.sys_filter_unit.service.SysFilterUnitService;
 import com.beneway.basic.system.sys_menu.service.SysMenuPermissionService;
 import com.beneway.basic.system.sys_role.service.SysRoleService;
@@ -48,6 +49,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -190,7 +192,7 @@ public class SysUserServiceImplement extends ServiceImpl<SysUserDao, SysUser> im
         int unitIndex = unitIdList.indexOf(unitId);
 
         if (unitIndex < 0) {
-            throw new RRException("用户不存在该单位");
+          throw new ResultException(HttpStatus.NOT_FOUND,"用户不存在该单位");
         } else {
             this.update(new LambdaUpdateWrapper<SysUser>()
                     .set(SysUser::getCurrentUnitIndex, unitIndex)

@@ -19,6 +19,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.system.sys_filter_unit.enums.SysFilterUnitModeEnum;
 import com.beneway.basic.system.sys_filter_unit.service.SysFilterUnitService;
 import com.beneway.basic.system.sys_filter_user.dao.SysFilterUserDao;
@@ -39,6 +40,7 @@ import com.beneway.basic.system.sys_user.entity.po.SysUser;
 import com.beneway.basic.system.sys_user.service.SysUserService;
 import com.beneway.basic.utils.ClassUtil;
 import com.restful.Result;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -328,7 +330,7 @@ public class SysFilterUserServiceImpl implements SysFilterUserService {
         if (SysFilterUserTypeEnum.ALL.equals(type)
            || SysFilterUserTypeEnum.UNIT.equals(type)) {
             if (unitId == null) {
-                throw new RRException("单位id不能为空!");
+              throw new ResultException(HttpStatus.BAD_REQUEST,"单位id不能为空!");
             } else {
                 unitIdList = sysUnitService.getIdListByPid(unitId);
             }

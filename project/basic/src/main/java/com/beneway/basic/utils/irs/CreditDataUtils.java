@@ -18,10 +18,12 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.beneway.basic.exception.RRException;
+import com.beneway.basic.exception.ResultException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -85,7 +87,7 @@ public class CreditDataUtils {
             return fileUrl;
         } else {
             String msg = jsonObject.get("msg").getAsString();
-            throw new RRException("查询企业信用报告获取失败，" + msg);
+            throw new ResultException(HttpStatus.INTERNAL_SERVER_ERROR,"查询企业信用报告获取失败，" + msg);
         }
     }
 
@@ -126,7 +128,7 @@ public class CreditDataUtils {
             return map;
         } else {
             String msg = jsonObject.get("msg").getAsString();
-            throw new RRException("查询企业信用评报告获取失败，" + msg);
+            throw new ResultException(HttpStatus.INTERNAL_SERVER_ERROR,"查询企业信用评报告获取失败，" + msg);
         }
     }
 
@@ -156,16 +158,7 @@ public class CreditDataUtils {
             return belong;
         } else {
             String msg = jsonObject.get("msg").getAsString();
-            throw new RRException("查询严重失信名单报告获取失败，" + msg);
+            throw new ResultException(HttpStatus.INTERNAL_SERVER_ERROR,"查询严重失信名单报告获取失败，" + msg);
         }
     }
-
-//    public static void main(String[] args) {
-//        System.out.println("------------");
-//        System.out.println(query("91330000142944445H"));
-//        System.out.println("------------");
-//        System.out.println(queryAssess("91330000142944445H"));
-//        querySeriousdishonesty("91330106MA2CEGF66C", "杭州融惠数据科技有限公司");
-//    }
-
 }
