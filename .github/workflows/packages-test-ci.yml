@@ -37,7 +37,7 @@ jobs:
       - name: maven-settings
         uses: s4u/maven-settings-action@v2.8.0
         with:
-          servers: '[{"id": "github", "username": "elonehoo", "password": "${GITHUB_TOKEN}"}]'
+          servers: '[{"id": "github", "username": "elonehoo", "password": "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"}]'
           githubServer: false
       - name: Install dependencies
         run: cd project && mvn install -DskipTests
