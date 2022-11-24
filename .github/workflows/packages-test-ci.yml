@@ -37,6 +37,7 @@ jobs:
       - name: maven-settings-xml-action
         uses: whelk-io/maven-settings-xml-action@v20
         with:
+          repositories: '[{ "id": "central", "url": "https://repo1.maven.org/maven2" },{"id":"github","url":"https://maven.pkg.github.com/logon-tracer/core/","snapshots": {"enabled": "true"}}]'
           servers: '[{ "id": "github", "username": "cjloveqhy", "password": "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" }]'
       - name: Install dependencies
         run: cd project && mvn install -DskipTests
