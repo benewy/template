@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Maven Action
-        uses: s4u/setup-maven-action@1.6.0
+        uses: s4u/setup-maven-action@v1.6.0
         with:
           java-version: 17
           maven-version: '3.8.6'
