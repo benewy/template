@@ -1,10 +1,7 @@
-name: Packages Test
+name: Pull Test
 
 on:
-  push:
-    paths:
-      - "web/**"
-      - "project/**"
+  pull_request:
     branches:
       - main
 
@@ -46,3 +43,4 @@ jobs:
         run: cd project && mvn package
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
