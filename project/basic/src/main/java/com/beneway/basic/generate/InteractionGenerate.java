@@ -185,6 +185,7 @@ public class InteractionGenerate {
                     .enableTableFieldAnnotation()
                     .enableLombok()
                     .enableChainModel()
+                    .enableActiveRecord()
                     .idType(IdType.ASSIGN_UUID)
                     .mapperBuilder()
                     .superClass(BaseMapper.class)

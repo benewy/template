@@ -1,6 +1,11 @@
 package ${package.Controller};
 
+#set($service = ${table.serviceName})
+#set($len=$service.length())
+#set($service=$service.substring(1,$len))
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.beneway.basic.${table.entityPath}.service.$service;
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -24,6 +29,7 @@ import ${superControllerClassPackage};
 @Controller
 #end
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@RequiredArgsConstructor
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
@@ -33,6 +39,8 @@ public class ${table.controllerName} extends ${superControllerClass} {
 #else
 public class ${table.controllerName} {
 #end
+
+  private final $service ${table.entityPath}Service;
 
 }
 #end
