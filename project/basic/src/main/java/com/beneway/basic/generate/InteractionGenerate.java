@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.io.*;
 import java.sql.Connection;
@@ -180,13 +181,14 @@ public class InteractionGenerate {
                     .formatServiceFileName("%sService")
                     .formatServiceImplFileName("%sServiceImpl")
                     .entityBuilder()
+                    .enableFileOverride()
                     .enableTableFieldAnnotation()
                     .enableLombok()
                     .enableChainModel()
-                    .idType(IdType.ASSIGN_ID)
+                    .idType(IdType.ASSIGN_UUID)
                     .mapperBuilder()
                     .superClass(BaseMapper.class)
-                    .enableMapperAnnotation()
+                    .mapperAnnotation(Mapper.class)
                     .formatMapperFileName("%sDao")
                     .formatXmlFileName("%sMapper")
                     .build())
@@ -198,7 +200,7 @@ public class InteractionGenerate {
             .templateConfig(builder -> builder
                     .disable(TemplateType.ENTITY,
                             TemplateType.SERVICE,
-                            TemplateType.SERVICEIMPL,
+                            TemplateType.SERVICE_IMPL,
                             TemplateType.MAPPER,
                             TemplateType.XML)
                     .controller("/template/controller/controller.java.vm")
