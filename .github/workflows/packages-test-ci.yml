@@ -29,16 +29,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@1.6.0
         with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: maven-settings
-        uses: s4u/maven-settings-action@v2.8.0
-        with:
-          servers: '[{"id": "github", "username": "elonehoo", "password": "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"}]'
-          githubServer: false
+          java-version: 17
+          maven-version: '3.8.6'
+          settings-servers: '[{"id": "github", "username": "elonehoo", "password": "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"}]'
       - name: Install dependencies
         run: cd project && mvn install -DskipTests
       - name: Run Build with Maven
