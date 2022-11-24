@@ -12,7 +12,7 @@
 - 🍍 [使用 Pinia 的状态管理](https://pinia.vuejs.org)
 - 🔥 使用 [新的 `<script setup>` 语法](https://github.com/vuejs/rfcs/pull/227)
 - 🤙🏻 默认开启 [响应性语法糖](https://vuejs.org/guide/extras/reactivity-transform.html)
-- 🦾 [SpringBoot 2.7.3](https://github.com/spring-projects/spring-boot) - 最先进的 SpringBoot 版本。
+- 🦾 [SpringBoot 2.7.5](https://github.com/spring-projects/spring-boot) - 最先进的 SpringBoot 版本。
 - 📦 [MyBatis](https://github.com/mybatis/mybatis-3), [MyBatis plus](https://github.com/baomidou/mybatis-plus) - 自定义 SQL、存储过程以及高级映射的持久层框架。
 
 ## 预配置
