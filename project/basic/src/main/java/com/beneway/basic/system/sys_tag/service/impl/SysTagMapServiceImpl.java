@@ -8,10 +8,10 @@ import com.beneway.basic.system.sys_tag.po.SysTag;
 import com.beneway.basic.system.sys_tag.po.SysTagMap;
 import com.beneway.basic.system.sys_tag.service.SysTagMapService;
 import com.beneway.basic.system.sys_tag.service.SysTagService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;

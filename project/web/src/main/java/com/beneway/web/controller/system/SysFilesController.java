@@ -27,14 +27,14 @@ import com.beneway.basic.utils.sys_files.FilePathEnum;
 import com.beneway.basic.utils.sys_files.FileTypeEnum;
 import com.beneway.basic.utils.sys_files.SysFilesUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

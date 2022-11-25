@@ -34,14 +34,13 @@ import com.beneway.basic.system.sys_unit.entity.po.SysUnit;
 import com.beneway.basic.system.sys_user.entity.po.SysUserRole;
 import com.beneway.basic.system.sys_user.entity.vo.LoginUserInfo;
 import com.beneway.basic.system.sys_user.service.SysUserRoleService;
-import com.beneway.basic.system.sys_user.service.SysUserService;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.beneway.basic.utils.page.PageUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;

@@ -21,9 +21,9 @@ import com.beneway.basic.system.sys_agency_user.service.SysAgencyUserService;
 import com.beneway.basic.system.sys_agency_user.vo.SysAgencyUserVo;
 import com.beneway.basic.utils.ClassUtil;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 
 /**
  *

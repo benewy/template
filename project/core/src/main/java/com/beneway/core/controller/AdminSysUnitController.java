@@ -19,9 +19,9 @@ import com.beneway.basic.system.sys_unit.entity.vo.SysUnitVo;
 import com.beneway.basic.system.sys_unit.service.SysUnitService;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController

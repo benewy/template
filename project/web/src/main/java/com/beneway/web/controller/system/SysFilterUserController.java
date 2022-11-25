@@ -20,12 +20,12 @@ import com.beneway.basic.system.sys_filter_user.service.SysFilterUserService;
 import com.beneway.basic.system.sys_unit.entity.vo.SysUnitVo;
 import com.beneway.basic.system.sys_user.entity.po.SysUser;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

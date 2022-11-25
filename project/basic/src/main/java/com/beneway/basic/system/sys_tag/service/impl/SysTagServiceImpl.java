@@ -12,10 +12,10 @@ import com.beneway.basic.system.sys_tag.service.SysTagService;
 import com.beneway.basic.system.sys_tag.vo.SysTagVo;
 import com.beneway.basic.utils.page.PageUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service("SysTagService")

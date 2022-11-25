@@ -35,9 +35,9 @@ import com.beneway.basic.system.sys_unit.service.SysUnitService;
 import com.beneway.basic.utils.ClassUtil;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;

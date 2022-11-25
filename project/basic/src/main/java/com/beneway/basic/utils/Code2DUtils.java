@@ -21,9 +21,9 @@ import cn.hutool.extra.qrcode.QrConfig;
 import com.beneway.basic.utils.sys_files.FilePathEnum;
 import com.beneway.basic.utils.sys_files.SysFilesUtils;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;

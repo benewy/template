@@ -23,9 +23,9 @@ import com.beneway.basic.system.sys_role.service.SysRoleService;
 import com.beneway.basic.system.sys_role.vo.SysRoleVo;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

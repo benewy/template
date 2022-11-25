@@ -9,11 +9,11 @@
 package com.beneway.basic.utils;
 
 import com.alibaba.fastjson.JSON;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**

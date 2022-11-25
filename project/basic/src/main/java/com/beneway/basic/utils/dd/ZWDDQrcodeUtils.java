@@ -21,12 +21,11 @@ import com.alibaba.xxpt.gateway.shared.client.http.IntelligentPostClient;
 import com.beneway.basic.system.token.dao.TokenDao;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * @email 2434017367@qq.com

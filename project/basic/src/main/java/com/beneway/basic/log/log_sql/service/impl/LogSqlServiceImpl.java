@@ -18,9 +18,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.beneway.basic.log.log_sql.dao.LogSqlDao;
 import com.beneway.basic.log.log_sql.entity.po.LogSql;
 import com.beneway.basic.log.log_sql.service.LogSqlService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * sql日志表

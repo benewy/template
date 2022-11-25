@@ -19,9 +19,9 @@ import com.beneway.basic.system.sys_filter_user.service.SysFilterUserService;
 import com.beneway.basic.system.sys_filter_user.vo.SysFilterUserVo;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

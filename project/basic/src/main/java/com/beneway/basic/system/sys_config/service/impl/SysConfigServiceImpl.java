@@ -20,9 +20,8 @@ import com.beneway.basic.system.sys_config.dao.SysConfigDao;
 import com.beneway.basic.system.sys_config.enums.SysConfigKeyEnum;
 import com.beneway.basic.system.sys_config.po.SysConfig;
 import com.beneway.basic.system.sys_config.service.SysConfigService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * 系统配置表

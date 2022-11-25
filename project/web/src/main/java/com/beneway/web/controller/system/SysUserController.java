@@ -20,9 +20,9 @@ import com.beneway.basic.system.sys_user.entity.vo.SysUserComVo;
 import com.beneway.basic.system.sys_user.service.SysUserService;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

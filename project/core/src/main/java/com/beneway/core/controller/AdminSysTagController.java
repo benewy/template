@@ -23,9 +23,9 @@ import com.beneway.basic.system.sys_tag.service.SysTagService;
 import com.beneway.basic.system.sys_tag.vo.SysTagVo;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController

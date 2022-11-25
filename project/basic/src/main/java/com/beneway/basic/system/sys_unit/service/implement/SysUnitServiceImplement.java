@@ -34,6 +34,7 @@ import com.beneway.basic.system.sys_user_unit.entity.po.SysUserUnit;
 import com.beneway.basic.system.sys_user_unit.service.SysUserUnitService;
 import com.beneway.basic.utils.ClassUtil;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -43,7 +44,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;

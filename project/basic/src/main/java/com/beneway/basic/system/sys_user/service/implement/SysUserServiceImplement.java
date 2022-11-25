@@ -43,6 +43,7 @@ import com.beneway.basic.utils.ClassUtil;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.beneway.basic.utils.page.PageUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheConfig;
@@ -53,7 +54,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 

@@ -18,6 +18,8 @@ import com.beneway.basic.config.AppConfig;
 import com.beneway.web.interceptor.AuthInterceptor;
 import com.beneway.web.interceptor.ReqLogInterceptor;
 import com.beneway.web.xss.XssFilter;
+import jakarta.annotation.Resource;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +27,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
-import javax.servlet.DispatcherType;
 import java.util.logging.Logger;
 
 @Configuration

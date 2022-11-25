@@ -23,9 +23,9 @@ import com.beneway.basic.system.sys_files.po.SysFiles;
 import com.beneway.basic.system.sys_files.service.SysFilesService;
 import com.beneway.basic.utils.sys_files.FilePathEnum;
 import com.beneway.basic.utils.sys_files.SysFilesUtils;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
