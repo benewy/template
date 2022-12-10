@@ -19,10 +19,10 @@ import com.beneway.basic.enums.UserTypeEnum;
 import com.beneway.basic.exception.RRException;
 import com.beneway.basic.exception.ResultException;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 @Component
 public class AppUtils {

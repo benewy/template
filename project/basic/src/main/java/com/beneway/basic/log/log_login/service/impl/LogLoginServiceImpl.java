@@ -22,9 +22,9 @@ import com.beneway.basic.log.log_login.enums.LoginTypeEnum;
 import com.beneway.basic.log.log_login.service.LogLoginService;
 import com.beneway.basic.utils.AppUtils;
 import com.beneway.basic.utils.IPUtil;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 /**

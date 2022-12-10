@@ -18,10 +18,10 @@ import cn.hutool.core.collection.CollUtil;
 import com.beneway.basic.system.sys_unit.entity.po.SysUnit;
 import com.beneway.basic.system.sys_unit.enums.SysUnitTypeEnum;
 import com.beneway.basic.system.sys_user.entity.vo.LoginUserInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 

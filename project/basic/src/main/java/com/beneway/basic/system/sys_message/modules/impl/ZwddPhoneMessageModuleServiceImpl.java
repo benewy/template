@@ -21,9 +21,9 @@ import com.beneway.basic.system.sys_user.entity.po.SysUser;
 import com.beneway.basic.system.sys_user.service.SysUserService;
 import com.beneway.basic.utils.dd.ZWDDPhoneUtils;
 import com.beneway.basic.utils.dd.entity.msg.Card;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

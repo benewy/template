@@ -25,11 +25,11 @@ import com.beneway.basic.utils.SpringContextHolder;
 import com.beneway.web.exception.AutoExceptionInfo;
 import com.beneway.web.interceptor.service.LoginUserService;
 import com.google.gson.Gson;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;

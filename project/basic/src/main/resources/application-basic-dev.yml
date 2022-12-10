@@ -6,9 +6,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       name: template
-      url: jdbc:mysql://localhost:3306/template?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-      username: username
-      password: password
+      url: jdbc:mysql://192.168.0.128:3307/tl-seven-lists?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: Beneway2021
       driver-class-name: com.mysql.cj.jdbc.Driver
       initial-size: 10
       max-active: 100

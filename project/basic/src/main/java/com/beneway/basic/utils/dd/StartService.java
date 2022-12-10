@@ -14,12 +14,11 @@
 
 package com.beneway.basic.utils.dd;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * 服务启动时执行的方法

@@ -19,13 +19,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.beneway.basic.system.sys_area.dao.SysAreaDao;
 import com.beneway.basic.system.sys_area.po.SysArea;
 import com.beneway.basic.system.sys_area.service.SysAreaService;
+import jakarta.annotation.Resource;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

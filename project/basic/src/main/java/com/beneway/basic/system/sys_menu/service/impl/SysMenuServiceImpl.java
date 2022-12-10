@@ -28,6 +28,7 @@ import com.beneway.basic.system.sys_role.service.SysRoleService;
 import com.beneway.basic.utils.ClassUtil;
 import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -36,7 +37,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -26,9 +26,9 @@ import com.beneway.basic.system.sys_agency.vo.SysAgencyVo;
 import com.beneway.basic.utils.ClassUtil;
 import com.beneway.basic.utils.page.PageUtils;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -19,9 +19,9 @@ import com.beneway.basic.system.sys_filter_unit.service.SysFilterUnitService;
 import com.beneway.basic.system.sys_filter_unit.vo.SysFilterUnitVo;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ import java.util.List;
 @RequestMapping("/admin_sys_filter_unit")
 public class AdminSysFilterUnitController {
 
-    @Resource
+    @Resource(name = "sysFilterUnitService")
     private SysFilterUnitService sysFilterUnitService;
 
     /**

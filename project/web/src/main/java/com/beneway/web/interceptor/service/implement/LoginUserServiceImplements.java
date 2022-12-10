@@ -21,9 +21,7 @@ import com.beneway.basic.utils.login_user.LoginUserUtils;
 import com.beneway.web.annotation.ReqApi;
 import com.beneway.web.interceptor.service.LoginUserService;
 import com.restful.Result;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 public class LoginUserServiceImplements implements LoginUserService {
 

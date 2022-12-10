@@ -15,8 +15,7 @@
 package com.beneway.web.utils;
 
 import cn.hutool.core.util.StrUtil;
-
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class RequestUtils {
 

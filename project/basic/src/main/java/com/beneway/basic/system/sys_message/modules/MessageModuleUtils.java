@@ -19,12 +19,11 @@ import com.beneway.basic.enums.UserTypeEnum;
 import com.beneway.basic.system.sys_message.modules.enums.MessageModuleEnum;
 import com.beneway.basic.utils.AppUtils;
 import com.beneway.basic.utils.SpringContextHolder;
+import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;

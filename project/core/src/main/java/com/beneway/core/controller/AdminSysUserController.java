@@ -26,9 +26,9 @@ import com.beneway.core.entity.sys_user.fo.LoginFo;
 import com.beneway.core.service.sys_user.AdminSysUserService;
 import com.beneway.web.annotation.ReqApi;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @RestController

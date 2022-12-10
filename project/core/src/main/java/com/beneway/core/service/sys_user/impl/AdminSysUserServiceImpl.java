@@ -33,11 +33,10 @@ import com.beneway.core.service.sys_user.AdminSysUserService;
 import com.beneway.web.service.LoginService;
 import com.google.gson.JsonObject;
 import com.restful.Result;
+import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 
 @Service("adminSysUserService")
 public class AdminSysUserServiceImpl implements AdminSysUserService {
